@@ -7,8 +7,8 @@ This is a collection of Rust algorithm snippets maintained by jh05013. This is m
 Each emoji denotes the following:
 - 🏗️ Constructor.
 - 💬 Description.
-- 🔍 Constraints. If not specified, it means the constraint is obvious. It will regardless specify what happens if the constraints are not satisfied (as ⚠️).
-- 🕒 Time complexity. If not specified, it means the time complexity is obvious.
+- 🔍 Constraints. If not specified, it is obvious.
+- 🕒 Time complexity. If not specified, it is either \\( O(1) \\) or not useful.
 - ℹ️ Extra information.
 - ⚠️ Caution & panic.
 

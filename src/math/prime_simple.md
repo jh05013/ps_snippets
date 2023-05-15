@@ -16,13 +16,13 @@ A simple \\( O(\sqrt{n}) \\)-time primality test.
 #    false // n <= 1
 #}
 #
-fn main() {
-    for n in 0..100 {
-        if is_prime(n) {
-            print!("{} ", n); // 2 3 5 ... 97
-        }
+#fn main() {
+for n in 0..100 {
+    if is_prime(n) {
+        print!("{} ", n); // 2 3 5 ... 97
     }
 }
+#}
 ```
 
 ## Code

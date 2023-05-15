@@ -16,6 +16,7 @@ Competitive programming uses so much stdin/stdout IO that Rustaceans in Online J
 `fn new() -> Self`
 
 - 🏗️ Creates a new OJ wrapper.
+- 🕒 Proportional to the whole input size.
 
 `fn read<T: FromStr>(&mut self) -> T`
 
@@ -25,7 +26,7 @@ Competitive programming uses so much stdin/stdout IO that Rustaceans in Online J
 
 `fn read_vec<T: FromStr>(&mut self, n: usize) -> Vec<T>`
 
-- 💬 Reads and returns a vector of `n` values from stdin.
+- 💬 Reads and returns a vector of \\( n \\) values from stdin.
 - ⚠️ Panics on EOF.
 - ⚠️ Panics if any token read cannot be parsed into `T`.
 

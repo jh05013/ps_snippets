@@ -53,7 +53,6 @@ fn main() {
     ds.union(2, 1);
     println!("{}", ds.find(0) == ds.find(2)); // true
 }
-
 ```
 
 ## Code

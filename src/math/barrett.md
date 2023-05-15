@@ -17,6 +17,7 @@
 `fn modpow(&self, mut x: u64, mut k: u64) -> u64`
 
 - 💬 Returns \\( x^k \\) modulo \\( n \\).
+- 🕒 \\( O(\log k) \\).
 
 ## Example
 
