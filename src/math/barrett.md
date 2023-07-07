@@ -1,9 +1,8 @@
 # Barrett Reduction
 
-## `Barrett`
+A utility for fixed-mod where the modulo base is not known in compile time. It is much faster than a naive `%`.
 
-- 💬 A utility for fixed-mod where the modulo base is not known in compile time.
-- ℹ️ It is much faster than a naive `%`.
+## `Barrett`
 
 `fn new(n: u64) -> Self`
 

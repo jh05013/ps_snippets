@@ -120,3 +120,19 @@ mod oj_io {
     pub fn at(s: &String, i: usize) -> char { s.as_bytes()[i] as char }
 } use oj_io::*;
 ```
+
+# Compile Error?
+If the compiler is not new enough to support `io::read_to_string`, change `new()` to the following:
+
+```rust,noplayground
+        pub fn new() -> Self {
+            let mut inp = String::new();
+            stdin().read_to_string(&mut inp).unwrap();
+            let input = Box::leak(inp.into_boxed_str()).split_whitespace();
+            OJ { buffer: input, out: BufWriter::new(stdout()) }
+        }
+```
+
+# Practice Problems
+- [LC Many A + B](https://judge.yosupo.jp/problem/many_aplusb) 2M reads, 1M writes, 214 ms
+- [BOJ 15552 빠른 A+B](https://www.acmicpc.net/problem/15552)

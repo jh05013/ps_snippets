@@ -35,3 +35,6 @@ fn is_prime(n: u64) -> bool {
     false // n <= 1
 }
 ```
+
+# Practice Problems
+- [BOJ 4134 다음 소수](https://www.acmicpc.net/problem/4134)
