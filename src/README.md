@@ -14,5 +14,6 @@ Each emoji denotes the following:
 
 ## Other Rust Snippets
 
-- [bamgoeSN's Rust snippets](https://bamgoesn.github.io/rust-ps-md/intro.html)
-- [kiwiyou's Rust snippets](https://snippets.kiwiyou.dev/)
+- [bamgoeSN](https://bamgoesn.github.io/rust-ps-md/intro.html)
+- [kiwiyou](https://snippets.kiwiyou.dev/)
+- [Bubbler](https://github.com/Bubbler-4/rust-problem-solving/tree/main/competitive/src/competelib)

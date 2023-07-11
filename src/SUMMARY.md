@@ -22,6 +22,7 @@
 	- [Disjoint Set](./ds/README_disjoint_set.md)
 		- [Minimal](./ds/disjoint_set.md)
 	- [Range Queries](./ds/README_range.md)
+	    - [Static Search](./ds/static_search.md)
 		- [Segment Tree]()
 - [Graph](./graph/README.md)
 	- [Representation](./graph/repr.md)
