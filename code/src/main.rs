@@ -1,11 +1,21 @@
-use std::io::*;
-use std::fmt::{Debug, Display};
+#[allow(unused_imports)] use std::collections::*;
+#[allow(unused_imports)] use std::{fmt,cmp,ops};
 
-pub struct OJ {
-    buffer: std::str::SplitWhitespace<'static>,
-    pub out: BufWriter<Stdout>
+fn main() {
+	let mut oj = OJ::new();
+	
 }
 
+////////////// LIB ////////////////////////
+
+
+
+// Input/output wrapper
+use std::io::*;
+pub struct OJ {
+	buffer: std::str::SplitWhitespace<'static>,
+	pub out: BufWriter<Stdout>
+}
 impl OJ {
 	pub fn new() -> Self {
 		let mut inp = String::new();
@@ -23,9 +33,13 @@ impl OJ {
 	}
 
 	// OUTPUT
-	pub fn write<T: Display>(&mut self, v: T, end: &str) { write!(self.out, "{}{}", v, end).unwrap(); }
-	pub fn debug<T: Debug>(&mut self, v: T, end: &str) { write!(self.out, "{:?}{}", v, end).unwrap(); }
-	pub fn quit<T: Display>(&mut self, v: T) {
+	pub fn write<T: fmt::Display>(&mut self, v: T, end: &str) {
+		write!(self.out, "{}{}", v, end).unwrap();
+	}
+	pub fn debug<T: fmt::Debug>(&mut self, v: T, end: &str) {
+		write!(self.out, "{:?}{}", v, end).unwrap();
+	}
+	pub fn quit<T: fmt::Display>(&mut self, v: T) {
 		self.write(v,""); self.out.flush().unwrap(); std::process::exit(0);
 	}
 }

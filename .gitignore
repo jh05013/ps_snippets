@@ -1,7 +1,4 @@
 book
 *.code-workspace
 
-cargo-oj/target
-cargo-oj/input.txt
-cargo-oj/src/bin
-cargo-oj/src/lib.rs
+code/target
