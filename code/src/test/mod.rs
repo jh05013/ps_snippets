@@ -1,4 +1,9 @@
-pub mod hello_world_test;
+mod hello_world_test;
+
+// how am i supposed to test io
+// mod io_test;
 
 // math
-pub mod modint_test;
+mod modint_test;
+mod gcd_test;
+mod div_floors_test;
