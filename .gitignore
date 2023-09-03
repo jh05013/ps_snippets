@@ -2,3 +2,5 @@ book
 *.code-workspace
 
 code/target
+code/src/main.rs
+code/input.txt
