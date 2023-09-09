@@ -4,3 +4,8 @@ book
 code/target
 code/src/main.rs
 code/input.txt
+src/main.rs
+
+# Added by cargo
+
+/target

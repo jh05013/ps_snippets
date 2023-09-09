@@ -3,6 +3,7 @@
 [Introduction](README.md)
 
 - [Basic](./basic/README.md)
+	- [std Goodness](./basic/std.md)
 	- [IO](./basic/io.md)
 	- [Num]()
 - [Math](./math/README.md)
