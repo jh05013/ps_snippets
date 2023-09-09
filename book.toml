@@ -1,9 +1,0 @@
-[book]
-authors = ["jh05013"]
-language = "en"
-multilingual = false
-src = "src"
-title = "jh's PS Snippets"
-
-[output.html]
-mathjax-support = true
