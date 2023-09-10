@@ -19,7 +19,8 @@ use std::{io::*, str::*, fmt::*};
 /// ```
 /// 
 /// # Practice Problems
-/// - [BOJ 15552 빠른 A+B](https://www.acmicpc.net/problem/15552) / [LC Many A+B](https://judge.yosupo.jp/problem/many_aplusb) `read`, `write`
+/// - [BOJ 15552 빠른 A+B](https://www.acmicpc.net/problem/15552) `read`, `write`
+/// - [LC Many A+B](https://judge.yosupo.jp/problem/many_aplusb)
 /// - [BOJ 10951 A+B - 4](https://www.acmicpc.net/problem/10951) `try_read`
 /// - [BOJ 2750 수 정렬하기](https://www.acmicpc.net/problem/2750) `read_vec`
 pub struct OJ {

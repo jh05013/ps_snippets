@@ -1,6 +1,7 @@
 //! Iterator for a floor division of `n`.
 //! 
 //! It can be proven that for a non-negative integer $ N $, the expression $ \lfloor \frac{N}{x} \rfloor $ for integer $ x $ can have $ O(\sqrt{N}) $ different values.
+//! 
 //! # Practice Problems
 //! - [LC Enumerate Quotients](https://judge.yosupo.jp/problem/enumerate_quotients) 1e12, 108 ms
 //! - [BOJ 26056 수열의 합 2](https://www.acmicpc.net/problem/26056) 1e14, twice in 436 ms
@@ -39,7 +40,8 @@ pub struct DivFloors { n: u64, x: u64, last: u64 }
 /// ```
 /// 
 pub fn div_floors(n: u64) -> DivFloors {
-	DivFloors { n, x: 1, last: 0 }
+	if n == 0 { DivFloors { n, x: 0, last: 1 } }
+	else { DivFloors { n, x: 1, last: 0 } }
 }
 
 impl Iterator for DivFloors {

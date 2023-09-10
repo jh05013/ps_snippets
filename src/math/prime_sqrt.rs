@@ -68,11 +68,13 @@ pub fn next_prime(mut n: u64) -> u64 {
 	n+1
 }
 
-/// Returns the `n`-th prime.
+/// Returns the `n`-th prime. `n` is 1-based, so `nth_prime(1) == 2`.
 /// 
 /// 🕒 $(O(n \sqrt n \log n))$ (see <https://en.wikipedia.org/wiki/Prime_number_theorem>)
-pub fn nth_prime(n: u64) -> u64 {
-	assert!(n != 0);
+/// 
+/// ⚠️ Panics if `n == 0`.
+pub fn nth_prime(n: usize) -> u64 {
+	assert!(n != 0, "nth_prime(0) is not allowed");
 	let mut p = 2;
 	for _ in 1..n { p = next_prime(p); }
 	p
