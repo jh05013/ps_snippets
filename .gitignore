@@ -1,10 +1,8 @@
 book
 *.code-workspace
 
-code/target
-code/src/main.rs
-code/input.txt
 src/main.rs
+input.txt
 
 # Added by cargo
 
