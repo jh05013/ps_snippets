@@ -18,7 +18,7 @@
 //! 
 //! # Practice Problems
 //! - [eolymp 571 The greatest common divisor](https://www.eolymp.com/en/problems/571) `gcd`
-//! - [BOJ 13241 최소공배수](https://www.acmicpc.net/problem/13241) `lcm`
+//! - [eolymp 135 LCM](https://www.eolymp.com/en/problems/135) `lcm` (use `u128`)
 //! - [PE 5 Smallest Multiple](https://projecteuler.net/problem=5) `lcm`
 
 /// Greatest common divisor.
