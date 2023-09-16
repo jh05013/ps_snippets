@@ -14,5 +14,6 @@
 pub mod io;
 
 pub mod math;
+pub mod ds;
 
 mod test;
