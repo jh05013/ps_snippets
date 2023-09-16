@@ -3,9 +3,11 @@
 // Numbers
 pub mod modint;
 
+// Prime numbers
+pub mod prime;
+
 // Number theory
 pub mod gcd;
-pub mod prime_sqrt;
 
 // Other stuffs
 pub mod barrett;
