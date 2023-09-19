@@ -11,6 +11,7 @@
 //! - [BOJ 4134 다음 소수](https://www.acmicpc.net/problem/4134) `next_prime`
 //! - [PE 7 10001st Prime](https://projecteuler.net/problem=7) `nth_prime`
 
+/// See [`factorize`].
 pub struct Factorize {
 	n: u64, d: u64
 }
@@ -42,7 +43,7 @@ impl Iterator for Factorize {
 /// 
 /// # Example
 /// ```
-/// use ps_snippets::math::prime_sqrt::*;
+/// use ps_snippets::prime::prime_sqrt::*;
 /// 
 /// let mut fac = factorize(20);
 /// assert_eq!(fac.next(), Some((2, 2)));

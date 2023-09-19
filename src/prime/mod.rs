@@ -5,5 +5,6 @@
 
 pub mod prime;
 
+pub mod prime_sqrt;
 pub mod basic_sieve;
 pub mod segmented_sieve;

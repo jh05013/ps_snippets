@@ -1,6 +1,6 @@
 //! Math.
 //! 
-//! For prime-related utilities such as Eratosthenes sieve, check out [`prime`].
+//! For prime-related utilities such as Eratosthenes sieve, check out the `prime` module.
 
 // Numbers
 pub mod modint;

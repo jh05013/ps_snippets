@@ -1,5 +1,5 @@
 //! A segmented Eratosthenes sieve which is around 5 times faster
-//! than [`basic_sieve`].
+//! than [`BasicSieve`].
 //! 
 //! The trick is to generate prime numbers in batches of intervals,
 //! making them cache-friendly and thus faster to sieve.
