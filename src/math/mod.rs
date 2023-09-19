@@ -1,10 +1,9 @@
 //! Math.
+//! 
+//! For prime-related utilities such as Eratosthenes sieve, check out [`prime`].
 
 // Numbers
 pub mod modint;
-
-// Prime numbers
-pub mod prime;
 
 // Number theory
 pub mod gcd;

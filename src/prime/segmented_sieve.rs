@@ -1,9 +1,35 @@
+//! A segmented Eratosthenes sieve which is around 5 times faster
+//! than [`basic_sieve`].
+//! 
+//! The trick is to generate prime numbers in batches of intervals,
+//! making them cache-friendly and thus faster to sieve.
+//! 
+//! # Example
+//! ```
+//! # use ps_snippets::prime::segmented_sieve::*;
+//! let sieve = SegmentedSieve::new(100);
+//! let mut it = sieve.range_primes(10, 15);
+//! assert_eq!(it.next(), Some(11));
+//! assert_eq!(it.next(), Some(13));
+//! assert_eq!(it.next(), None);
+//! assert_eq!(sieve.primes().count(), 25);
+//! ```
+//! 
+//! # Practice Problems
+//! - [SPOJ TDPRIME Printing some primes](https://www.spoj.com/problems/TDPRIMES/) 1e8, 0.4s
+//! - [LC Enumerate Primes](https://judge.yosupo.jp/problem/enumerate_primes) 5e8, 1.4s
 
+/// A trait for generating prime numbers in a range.
 pub trait RangePrime {
+	/// The largest integer that the sieve has preprocessed.
+	/// For [`SegmentedSieve`], this is roughly the square root of `gen_limit`.
 	fn sieve_size(&self) -> usize;
+	/// The largest integer that can be sieved.
 	fn gen_limit(&self) -> u64;
+	/// A function to iterate through all primes from `l` to `r`.
 	fn range_primes(&self, l: u64, r: u64) -> Box<dyn Iterator<Item = u64> + '_>;
 
+	/// A function to iterate through all primes from 2 to `gen_limit`.
 	fn primes(&self) -> Box<dyn Iterator<Item = u64> + '_> {
 		let n = self.sieve_size() as u64;
 		let gl = self.gen_limit();
@@ -16,6 +42,7 @@ pub trait RangePrime {
 	}
 }
 
+/// A segmented sieve.
 #[derive(Clone, Debug, Default)]
 pub struct SegmentedSieve {
 	sieve_size: usize,
@@ -24,6 +51,7 @@ pub struct SegmentedSieve {
 }
 
 impl SegmentedSieve {
+	/// Creates a new segmented sieve that can sieve up to `n`.
 	pub fn new(n: u64) -> Self {
 		let ssz = (((n as f64).sqrt() as u64) + 2) as usize;
 		let mut sieve: Vec<bool> = vec![true; ssz+1];

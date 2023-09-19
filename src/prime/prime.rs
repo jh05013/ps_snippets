@@ -7,8 +7,8 @@
 /// 
 /// # Example
 /// ```
-/// # use ps_snippets::math::prime::basic_sieve::*;
-/// # use ps_snippets::math::prime::prime::PrimeSieve;
+/// # use ps_snippets::prime::basic_sieve::*;
+/// # use ps_snippets::prime::prime::PrimeSieve;
 /// let sieve = BasicSieve::new(100);
 /// assert_eq!(sieve.prime_limit(), 100);
 /// assert!(sieve.is_prime(17));
@@ -53,8 +53,8 @@ impl<'a> Iterator for Factorization<'a> {
 /// 
 /// # Example
 /// ```
-/// # use ps_snippets::math::prime::basic_sieve::BasicSieve;
-/// # use ps_snippets::math::prime::prime::Factorizer;
+/// # use ps_snippets::prime::basic_sieve::BasicSieve;
+/// # use ps_snippets::prime::prime::Factorizer;
 /// let fact = Factorizer::new(BasicSieve::new(10));
 /// assert_eq!(fact.prime_limit, 10);
 /// assert_eq!(fact.factorize_limit, 100);
@@ -93,8 +93,8 @@ impl Factorizer {
 	/// 
 	/// # Examples
 	/// ```
-	/// # use ps_snippets::math::prime::basic_sieve::BasicSieve;
-	/// # use ps_snippets::math::prime::prime::Factorizer;
+	/// # use ps_snippets::prime::basic_sieve::BasicSieve;
+	/// # use ps_snippets::prime::prime::Factorizer;
 	/// let fact = Factorizer::new(BasicSieve::new(10));
 	/// let mut terms = fact.factorize(100);
 	/// assert_eq!(terms.next(), Some((2, 2)));
@@ -113,8 +113,8 @@ impl Factorizer {
 	/// 
 	/// # Examples
 	/// ```
-	/// # use ps_snippets::math::prime::basic_sieve::BasicSieve;
-	/// # use ps_snippets::math::prime::prime::Factorizer;
+	/// # use ps_snippets::prime::basic_sieve::BasicSieve;
+	/// # use ps_snippets::prime::prime::Factorizer;
 	/// let fact = Factorizer::new(BasicSieve::new(10));
 	/// assert_eq!(fact.first_factor(30), Some(2));
 	/// assert_eq!(fact.first_factor(17), Some(17));
@@ -130,8 +130,8 @@ impl Factorizer {
 	/// 
 	/// # Examples
 	/// ```
-	/// # use ps_snippets::math::prime::basic_sieve::BasicSieve;
-	/// # use ps_snippets::math::prime::prime::Factorizer;
+	/// # use ps_snippets::prime::basic_sieve::BasicSieve;
+	/// # use ps_snippets::prime::prime::Factorizer;
 	/// let fact = Factorizer::new(BasicSieve::new(10));
 	/// assert!(fact.is_prime(17));
 	/// assert!(!fact.is_prime(20));

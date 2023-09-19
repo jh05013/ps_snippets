@@ -16,8 +16,8 @@ use super::prime::*;
 /// 
 /// # Example
 /// ```rust
-/// # use ps_snippets::math::prime::basic_sieve::*;
-/// # use ps_snippets::math::prime::prime::PrimeSieve;
+/// # use ps_snippets::prime::basic_sieve::*;
+/// # use ps_snippets::prime::prime::PrimeSieve;
 /// let sieve = BasicSieve::new(100);
 /// assert_eq!(sieve.lp[17], 17);
 /// assert_eq!(sieve.lp[24], 2);

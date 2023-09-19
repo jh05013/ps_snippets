@@ -6,3 +6,4 @@
 pub mod prime;
 
 pub mod basic_sieve;
+pub mod segmented_sieve;
