@@ -17,4 +17,6 @@ pub mod math;
 pub mod prime;
 pub mod ds;
 
+pub mod graph;
+
 mod test;

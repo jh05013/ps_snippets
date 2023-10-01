@@ -1,5 +1,3 @@
-//! TODO document this
-
 const MOD: i32 = 1000000007;
 const MODL: i64 = MOD as i64;
 
@@ -80,4 +78,30 @@ impl DivAssign for Modint {
 #[allow(clippy::suspicious_arithmetic_impl)]
 impl Div for Modint { type Output = Self;
 	fn div(self, b: Self) -> Self { self * b.inv() }
+}
+
+// factorial
+#[derive(Clone, Debug, Default)]
+pub struct Modfact {
+	pub fact: Vec<Modint>,
+	pub ifact: Vec<Modint>,
+}
+
+impl Modfact {
+	pub fn new(n: usize) -> Self {
+		let mut fact = vec![modint(1)];
+		for i in 1..=n {
+			fact.push(fact[i-1] * modint(i as i64));
+		}
+		let mut ifact = vec![fact[n].inv(); n+1];
+		for i in (0..n).rev() {
+			ifact[i] = ifact[i+1] * modint((i+1) as i64);
+		}
+		Self { fact, ifact }
+	}
+	pub fn len(&self) -> usize { self.fact.len() }
+
+	pub fn comb(&self, n: usize, r: usize) -> Modint {
+		self.fact[n] * self.ifact[r] * self.ifact[n-r]
+	}
 }
