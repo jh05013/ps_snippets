@@ -1,15 +1,23 @@
 pub mod lazy_segtree {
 	use std::fmt::Debug;
 
+	/// `T` must implement this trait for [`LazySegtree`].
 	pub trait LazyMonoid: Copy + Debug {
 		type Lazy: Copy + Debug + PartialEq;
+		/// Identity of the value operation.
 		const ID: Self;
+		/// Identity of the lazy operation.
 		const LAZY_ID: Self::Lazy;
+		/// The value operation.
 		fn op(a: Self, b: Self) -> Self;
+		/// The lazy operation.
 		fn op_lazy(a: Self::Lazy, b: Self::Lazy) -> Self::Lazy;
+		/// Tries to apply the lazy into the value.
+		/// If unsuccessful (Segment Tree Beats), returns [`None`].
 		fn unlazy(v: Self, size: usize, lz: Self::Lazy) -> Option<Self>;
 	}
 
+	/// The lazy segment tree.
 	#[derive(Clone, Debug, Default)]
 	pub struct LazySegtree<T: LazyMonoid> {
 		n: usize,
@@ -18,10 +26,12 @@ pub mod lazy_segtree {
 	}
 
 	impl<T: LazyMonoid> LazySegtree<T> {
+		/// Constructs a new lazy segment tree of length `n`.
 		pub fn new(n: usize) -> Self {
 			let sz = n.next_power_of_two();
 			Self { n: sz, arr: vec![T::ID; sz*2], lazy: vec![T::LAZY_ID; sz*2] }
 		}
+		/// Constructs a new lazy segment tree out of `vals`.
 		pub fn from_vec(vals: &[T]) -> Self {
 			let sz = vals.len().next_power_of_two();
 			let mut arr = vec![T::ID; sz*2];
@@ -30,10 +40,12 @@ pub mod lazy_segtree {
 			Self { n: sz, arr, lazy: vec![T::LAZY_ID; sz*2] }
 		}
 
+		/// Applies the lazy operation of `val` to the indices `l..=r`.
 		pub fn update(&mut self, l: usize, r: usize, val: T::Lazy) {
 			assert!(l <= r && r < self.n, "Tried to update on {} {}",l,r);
 			self.update_inner(l, r, val, 1, 0, self.n-1);
 		}
+		/// Returns the result of the value operation over the indices `l..=r`.
 		pub fn query(&mut self, l: usize, r: usize) -> T {
 			assert!(l <= r && r < self.n, "Tried to query {} {}",l,r);
 			self.query_inner(l, r, 1, 0, self.n-1)
@@ -87,4 +99,4 @@ pub mod lazy_segtree {
 		}
 	}
 }
-pub use lazy_segtree::*;
+pub use lazy_segtree::{LazyMonoid, LazySegtree};
