@@ -8,8 +8,10 @@ pub mod range_sum {
 	
 	impl<T> RangeSum<T> where
 	T: Clone + Default + AddAssign + SubAssign {
+		/// Constructs an empty range sum DS.
+		pub fn new() -> Self { Self::default() }
 		/// Constructs a new range sum DS out of `vals`.
-		pub fn new(mut vals: Vec<T>) -> Self {
+		pub fn from_vec(mut vals: Vec<T>) -> Self {
 			let n = vals.len();
 			for i in 1..n { let v = vals[i-1].clone(); vals[i] += v; }
 			Self { pref: vals }
@@ -42,4 +44,5 @@ pub mod range_sum {
 			while self.len() < n { self.pref.push(self.whole()); }
 		}
 	}	
-} pub use range_sum::RangeSum;
+}
+pub use range_sum::RangeSum;

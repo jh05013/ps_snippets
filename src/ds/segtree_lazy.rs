@@ -1,38 +1,36 @@
-pub mod lazy_segtree {
-	use std::fmt::Debug;
-
+pub mod segtree_lazy {
 	/// `T` must implement this trait for [`LazySegtree`].
-	pub trait LazyMonoid: Copy + Debug {
-		type Lazy: Copy + Debug + PartialEq;
+	pub trait LazyMonoid {
+		type V: Copy;
+		type Lazy: Copy + PartialEq;
 		/// Identity of the value operation.
-		const ID: Self;
+		const ID: Self::V;
 		/// Identity of the lazy operation.
 		const LAZY_ID: Self::Lazy;
 		/// The value operation.
-		fn op(a: Self, b: Self) -> Self;
+		fn op(lhs: Self::V, rhs: Self::V) -> Self::V;
 		/// The lazy operation.
-		fn op_lazy(a: Self::Lazy, b: Self::Lazy) -> Self::Lazy;
-		/// Tries to apply the lazy into the value.
-		/// If unsuccessful (Segment Tree Beats), returns [`None`].
-		fn unlazy(v: Self, size: usize, lz: Self::Lazy) -> Option<Self>;
+		fn op_lazy(cur: Self::Lazy, up: Self::Lazy) -> Self::Lazy;
+		/// Applies the lazy into the value.
+		fn unlazy(v: Self::V, size: usize, lz: Self::Lazy) -> Self::V;
 	}
 
 	/// The lazy segment tree.
 	#[derive(Clone, Debug, Default)]
-	pub struct LazySegtree<T: LazyMonoid> {
+	pub struct SegtreeLazy<T: LazyMonoid> {
 		n: usize,
-		arr: Vec<T>,
+		arr: Vec<T::V>,
 		lazy: Vec<T::Lazy>,
 	}
 
-	impl<T: LazyMonoid> LazySegtree<T> {
+	impl<T: LazyMonoid> SegtreeLazy<T> {
 		/// Constructs a new lazy segment tree of length `n`.
 		pub fn new(n: usize) -> Self {
 			let sz = n.next_power_of_two();
 			Self { n: sz, arr: vec![T::ID; sz*2], lazy: vec![T::LAZY_ID; sz*2] }
 		}
 		/// Constructs a new lazy segment tree out of `vals`.
-		pub fn from_vec(vals: &[T]) -> Self {
+		pub fn from_slice(vals: &[T::V]) -> Self {
 			let sz = vals.len().next_power_of_two();
 			let mut arr = vec![T::ID; sz*2];
 			for i in 0..vals.len() { arr[i+sz] = vals[i]; }
@@ -40,14 +38,14 @@ pub mod lazy_segtree {
 			Self { n: sz, arr, lazy: vec![T::LAZY_ID; sz*2] }
 		}
 
-		/// Applies the lazy operation of `val` to the indices `l..=r`.
-		pub fn update(&mut self, l: usize, r: usize, val: T::Lazy) {
-			assert!(l <= r && r < self.n, "Tried to update on {} {}",l,r);
-			self.update_inner(l, r, val, 1, 0, self.n-1);
+		/// Applies the lazy operation of `lz` to the indices `l..=r`.
+		pub fn update(&mut self, l: usize, r: usize, lz: T::Lazy) {
+			assert!(l <= r && r < self.n, "Bad update range [{}, {}]",l,r);
+			self.update_inner(l, r, lz, 1, 0, self.n-1);
 		}
 		/// Returns the result of the value operation over the indices `l..=r`.
-		pub fn query(&mut self, l: usize, r: usize) -> T {
-			assert!(l <= r && r < self.n, "Tried to query {} {}",l,r);
+		pub fn query(&mut self, l: usize, r: usize) -> T::V {
+			assert!(l <= r && r < self.n, "Bad query range [{}, {}]",l,r);
 			self.query_inner(l, r, 1, 0, self.n-1)
 		}
 
@@ -57,17 +55,7 @@ pub mod lazy_segtree {
 				self.lazy[i*2] = T::op_lazy(self.lazy[i*2], self.lazy[i]);
 				self.lazy[i*2+1] = T::op_lazy(self.lazy[i*2+1], self.lazy[i]);
 			}
-			if let Some(v) = T::unlazy(self.arr[i], nr-nl+1, self.lazy[i]) {
-				self.arr[i] = v;
-				self.lazy[i] = T::LAZY_ID;
-				return;
-			}
-			
-			assert!(i < self.n, "Unlazy failed for leaf {:?} <- {:?}", self.arr[i], self.lazy[i]);
-			let mid = (nl+nr)/2;
-			self.propagate(i*2, nl, mid);
-			self.propagate(i*2+1, mid+1, nr);
-			self.arr[i] = T::op(self.arr[i*2], self.arr[i*2+1]);
+			self.arr[i] = T::unlazy(self.arr[i], nr-nl+1, self.lazy[i]);
 			self.lazy[i] = T::LAZY_ID;
 		}
 
@@ -76,7 +64,7 @@ pub mod lazy_segtree {
 			self.propagate(x, nl, nr);
 			if r < nl || nr < l { return; }
 			if l <= nl && nr <= r {
-				self.lazy[x] = T::op_lazy(self.lazy[x], val);
+				self.lazy[x] = val;
 				self.propagate(x, nl, nr);
 				return;
 			}
@@ -87,7 +75,7 @@ pub mod lazy_segtree {
 		}
 
 		fn query_inner(&mut self, l: usize, r: usize,
-		x: usize, nl: usize, nr: usize) -> T {
+		x: usize, nl: usize, nr: usize) -> T::V {
 			self.propagate(x, nl, nr);
 			if r < nl || nr < l { return T::ID; }
 			if l <= nl && nr <= r { return self.arr[x]; }
@@ -99,4 +87,4 @@ pub mod lazy_segtree {
 		}
 	}
 }
-pub use lazy_segtree::{LazyMonoid, LazySegtree};
+pub use segtree_lazy::{LazyMonoid, SegtreeLazy};

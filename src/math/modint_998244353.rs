@@ -1,6 +1,6 @@
 pub mod modint_998244353 {
-	const MOD: i32 = 998244353;
-	const MODL: i64 = MOD as i64;
+	pub const MOD: i32 = 998244353;
+	pub const MODL: i64 = MOD as i64;
 	
 	use std::ops::*;
 	use std::fmt::*;
@@ -23,7 +23,7 @@ pub mod modint_998244353 {
 		}
 	
 		pub fn inv(&self) -> Self {
-			assert!(self.v != 0);
+			assert!(self.v != 0, "Cannot invert 0");
 			self.pow((MOD-2) as u64)
 		}
 	}
@@ -103,7 +103,11 @@ pub mod modint_998244353 {
 		pub fn len(&self) -> usize { self.fact.len() }
 	
 		pub fn comb(&self, n: usize, r: usize) -> Modint {
+			assert!(r <= n && n < self.len(),
+				"Bad comb-query values ({}, {})", n, r
+			);
 			self.fact[n] * self.ifact[r] * self.ifact[n-r]
 		}
 	}	
-} pub use modint_998244353::{Modint, Modfact, modint};
+}
+pub use modint_998244353::{MOD, MODL, Modint, Modfact, modint};
