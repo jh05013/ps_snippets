@@ -1,4 +1,5 @@
-pub mod rand {
+pub mod rand_mod {
+	/// A random [`u32`] generator.
 	pub struct Rng32([u32; 4]);
 
 	impl Rng32 {
@@ -8,6 +9,9 @@ pub mod rand {
 			z = (z ^ (z >> 13)).wrapping_mul(0xc2b2ae35);
 			z ^ (z >> 16)
 		}
+
+		/// Initializes a new generator.
+		#[allow(clippy::new_without_default)]
 		pub fn new() -> Self {
 			let mut seed = 0;
 			unsafe { std::arch::x86_64::_rdrand32_step(&mut seed) };
@@ -17,7 +21,10 @@ pub mod rand {
 				prev
 			}))
 		}
+
+		/// Generates an integer in `[0, n)`.
 		pub fn next(&mut self, n: u32) -> u32 {
+			assert!(n != 0, "Bad RNG bound 0");
 			let [x, y, z, w] = &mut self.0;
 			let res = x.wrapping_add(*w);
 			let t = x.wrapping_shl(9);
@@ -31,6 +38,7 @@ pub mod rand {
 		}
 	}
 	
+	/// A random [`u64`] generator.
 	pub struct Rng64([u64; 4]);
 	
 	impl Rng64 {
@@ -40,6 +48,9 @@ pub mod rand {
 			z = (z ^ (z >> 27)).wrapping_mul(0x94d049bb133111eb);
 			z ^ (z >> 31)
 		}
+
+		/// Initializes a new generator.
+		#[allow(clippy::new_without_default)]
 		pub fn new() -> Self {
 			let mut seed = 0;
 			unsafe { std::arch::x86_64::_rdrand64_step(&mut seed) };
@@ -49,7 +60,10 @@ pub mod rand {
 				prev
 			}))
 		}
+
+		/// Generates an integer in `[0, n)`.
 		pub fn next(&mut self, n: u64) -> u64 {
+			assert!(n != 0, "Bad RNG bound 0");
 			let [x, y, z, w] = &mut self.0;
 			let res = x.wrapping_add(*w);
 			let t = x.wrapping_shl(17);
@@ -62,4 +76,5 @@ pub mod rand {
 			((res as u128 * n as u128) >> 64) as u64
 		}
 	}
-} pub use rand::*;
+}
+pub use rand_mod::{Rng32, Rng64};

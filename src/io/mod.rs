@@ -1,93 +1,49 @@
-//! IO.
+//! Easier IO interface specifically designed for online judges.
+//! 
+//! # Caution
+//! The following **unique IO rules** apply to all IO wrappers:
+//! - Do not create more than one instance of IO wrappers.
+//! - Do not directly read from stdin or write to stdout once an IO wrapper is created.
 
-use std::{io::*, str::*, fmt::*};
-
-/// IO wrapper for online judge environments.
+/// IO wrapper that reads the whole input, ignoring all whitespaces.
+/// 
+/// To save memory, use TODO. To read by lines, use TODO.
+/// 
+/// # Read
+/// - `try_read::<T>()` tries to read a value of type `T`, returning [`Result`].
+///   It fails on EOF or a token that cannot be parsed as `T`.
+/// - `read::<T>()` reads a value of type `T`.
+/// - `read_vec::<T>(n)` reads `n` values of type `T` into a [`Vec`].
+/// 
+/// # Write
+/// - `write(v)` prints `v`.
+/// - `debug(v)` prints `v` in [`Debug`] form.
+/// - `sp()` prints `' '`.
+/// - `ln()` prints `'\n'`.
+/// - `quit(v)` prints `v` and quits.
+/// 
+/// Write methods can be chained, e.g. `oj.write(1).sp().write(2)` prints `1 2`.
+/// 
+/// # Caution
+/// - Unique IO rules apply.
+/// - `read` and `read_vec` panics on failure.
 /// 
 /// # Example
 /// The following code solves [BOJ 15552](https://www.acmicpc.net/problem/15552)
 /// and [LC Many A+B](https://judge.yosupo.jp/problem/many_aplusb):
 /// ```no_run
-/// use ps_snippets::io::*;
+/// use ps_snippets::io::oj_default::*;
 /// 
 /// let mut oj = OJ::new();
 /// for _ in 0..oj.read() {
 ///     let a: i64 = oj.read();
 ///     let b: i64 = oj.read();
-///     oj.write(a+b, LN);
+///     oj.write(a+b).ln();
 /// }
 /// ```
 /// 
 /// # Practice Problems
-/// - [BOJ 15552 빠른 A+B](https://www.acmicpc.net/problem/15552) `read`, `write`
-/// - [LC Many A+B](https://judge.yosupo.jp/problem/many_aplusb)
+/// - [LC Many A+B](https://judge.yosupo.jp/problem/many_aplusb) = [BOJ 15552 빠른 A+B](https://www.acmicpc.net/problem/15552) `read`, `write`
 /// - [BOJ 10951 A+B - 4](https://www.acmicpc.net/problem/10951) `try_read`
 /// - [BOJ 2750 수 정렬하기](https://www.acmicpc.net/problem/2750) `read_vec`
-pub struct OJ {
-	buffer: std::str::SplitWhitespace<'static>,
-	out: BufWriter<Stdout>
-}
-
-impl OJ {
-	/// Creates an IO wrapper for stdin.
-	/// 
-	/// ⚠️ Do NOT make more than one instance of this,
-	/// or try to directly read from stdin after creating this.
-	#[allow(clippy::new_without_default)]
-	pub fn new() -> Self {
-		let mut inp = String::new();
-		stdin().read_to_string(&mut inp).unwrap();
-		let input = Box::leak(inp.into_boxed_str()).split_whitespace();
-		OJ { buffer: input, out: BufWriter::new(stdout()) }
-	}
-
-	/// Tries to read a value of type `T` from stdin.
-	/// 
-	/// On failure (`EOF` or `Failed parse`), returns [`Err`].
-	pub fn try_read<T: FromStr>(&mut self) -> std::result::Result<T, &str> {
-		self.buffer.next().ok_or("EOF")?.parse().or(Err("Failed parse"))
-	}
-
-	/// Reads a value of type `T` from stdin, panicking on failure.
-	pub fn read<T: FromStr>(&mut self) -> T { self.try_read().unwrap() }
-
-	/// Reads `n` values of type `T` from stdin into [`Vec`],
-	/// panicking on failure.
-	pub fn read_vec<T: FromStr>(&mut self, n: usize) -> Vec<T> {
-		(0..n).map(|_| self.read()).collect()
-	}
-
-	/// Prints `v`, followed by `end`.
-	/// 
-	/// If you need a more sophisticated output, try `write(format!(...), EM)`.
-	/// 
-	/// `end` can be any string, but the following shorthands are available:
-	/// - [`EM`] is an empty string.
-	/// - [`SP`] is a space.
-	/// - [`LN`] is a newline.
-	pub fn write<T: Display>(&mut self, v: T, end: &str) {
-		write!(self.out, "{}{}", v, end).unwrap();
-	}
-
-	/// Prints `v` in the debugging format, followed by `end`.
-	/// 
-	/// `end` can be any string, but the following shorthands are available:
-	/// - [`EM`] is an empty string.
-	/// - [`SP`] is a space.
-	/// - [`LN`] is a newline.
-	pub fn debug<T: Debug>(&mut self, v: T, end: &str) {
-		write!(self.out, "{:?}{}", v, end).unwrap();
-	}
-
-	/// Prints `v` and exits the program.
-	pub fn quit<T: Display>(&mut self, v: T) {
-		self.write(v,""); self.out.flush().unwrap(); std::process::exit(0);
-	}
-}
-
-/// Empty string (`""`).
-pub static EM: &str = "";
-/// Space (`" "`).
-pub static SP: &str = " ";
-/// Newline (`\n`).
-pub static LN: &str = "\n";
+pub mod oj_default;

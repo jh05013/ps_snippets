@@ -1,4 +1,4 @@
-pub mod gcd {
+pub mod gcd_mod {
 	/// Greatest common divisor.
 	pub trait Gcd {
 		/// `a.gcd(b)` is the greatest common divisor of `a` and `b`.
@@ -25,4 +25,4 @@ pub mod gcd {
 	}
 	impl_gcd_lcm!(u8 u16 u32 u64 u128 usize);
 }
-pub use gcd::{Gcd, Lcm};
+pub use gcd_mod::{Gcd, Lcm};

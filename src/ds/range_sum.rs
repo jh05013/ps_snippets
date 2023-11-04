@@ -1,4 +1,4 @@
-pub mod range_sum {
+pub mod range_sum_mod {
 	use std::ops::*;
 
 	#[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -7,7 +7,7 @@ pub mod range_sum {
 	}
 	
 	impl<T> RangeSum<T> where
-	T: Clone + Default + AddAssign + SubAssign {
+	T: Clone + Default + AddAssign + Sub<Output=T> {
 		/// Constructs an empty range sum DS.
 		pub fn new() -> Self { Self::default() }
 		/// Constructs a new range sum DS out of `vals`.
@@ -20,18 +20,16 @@ pub mod range_sum {
 		pub fn len(&self) -> usize { self.pref.len() }
 		/// Returns whether `vals` is empty.
 		pub fn is_empty(&self) -> bool { self.pref.is_empty() }
-	
-		/// Returns `vals[0] + ... + vals[i]`.
-		pub fn pref_sum(&self, i: usize) -> T { self.pref[i].clone() }
+
+		/// Returns `vals[i] + ... + vals[j]`.
+		pub fn sum(&self, i: usize, j: usize) -> T {
+			assert!(i <= j, "Bad query range [{}, {}]", i, j);
+			if i == 0 { self.pref[j].clone() }
+			else { self.pref[j].clone() - self.pref[i-1].clone() }
+		}
 		/// Returns the sum of all `vals[i]`, or 0 if empty.
 		pub fn whole(&self) -> T {
 			if self.is_empty() { T::default() } else { self.pref.last().unwrap().clone() }
-		}
-		/// Returns `vals[i] + ... + vals[j]`.
-		pub fn sum(&self, i: usize, j: usize) -> T {
-			let mut z = self.pref[j].clone();
-			if i != 0 { z -= self.pref[i-1].clone(); }
-			z
 		}
 	
 		/// Pushes `v` at the end of `vals`.
@@ -39,10 +37,10 @@ pub mod range_sum {
 			let mut z = self.whole(); z += v;
 			self.pref.push(z)
 		}
-		/// Pushes `0` at the end of `vals` until its size is >= `n`.
-		pub fn extend_to(&mut self, n: usize) {
-			while self.len() < n { self.pref.push(self.whole()); }
+		/// Truncates or extends (with 0) `vals` to length `n`.
+		pub fn resize(&mut self, n: usize) {
+			self.pref.resize(n, self.whole());
 		}
 	}	
 }
-pub use range_sum::RangeSum;
+pub use range_sum_mod::RangeSum;

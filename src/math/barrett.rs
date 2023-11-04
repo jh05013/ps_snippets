@@ -1,5 +1,5 @@
 /// A Barrett reduction interface.
-pub mod barrett {
+pub mod barrett_mod {
 	#[derive(Debug, Clone)]
 	pub struct Barrett { n: u64, m: u128 }
 	
@@ -27,4 +27,4 @@ pub mod barrett {
 		}
 	}
 }
-pub use barrett::Barrett;
+pub use barrett_mod::Barrett;

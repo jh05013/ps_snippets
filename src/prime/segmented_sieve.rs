@@ -65,7 +65,7 @@ impl SegmentedSieve {
 		}
 		Self {
 			sieve_size: ssz,
-			n: n as u64,
+			n,
 			primes: (3..=ssz).filter(|&i| sieve[i]).collect::<Vec<_>>()
 		}
 	}

@@ -1,4 +1,4 @@
-pub mod segtree_lazy {
+pub mod segtree_lazy_mod {
 	/// `T` must implement this trait for [`LazySegtree`].
 	pub trait LazyMonoid {
 		type V: Copy;
@@ -33,7 +33,7 @@ pub mod segtree_lazy {
 		pub fn from_slice(vals: &[T::V]) -> Self {
 			let sz = vals.len().next_power_of_two();
 			let mut arr = vec![T::ID; sz*2];
-			for i in 0..vals.len() { arr[i+sz] = vals[i]; }
+			arr[sz..(vals.len() + sz)].copy_from_slice(vals);
 			for i in (1..sz).rev() { arr[i] = T::op(arr[i*2], arr[i*2+1]); }
 			Self { n: sz, arr, lazy: vec![T::LAZY_ID; sz*2] }
 		}
@@ -87,4 +87,4 @@ pub mod segtree_lazy {
 		}
 	}
 }
-pub use segtree_lazy::{LazyMonoid, SegtreeLazy};
+pub use segtree_lazy_mod::{LazyMonoid, SegtreeLazy};

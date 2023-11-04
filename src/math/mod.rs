@@ -2,6 +2,7 @@
 //! 
 //! For prime-related utilities such as Eratosthenes sieve, check out the `prime` module.
 
+/*
 /// Modulo `1000000007` integers.
 /// 
 /// There is also a `998244353` version: see [`modint_998244353`].
@@ -73,73 +74,7 @@
 /// - [BOJ 13977 이항 계수와 쿼리](https://www.acmicpc.net/problem/13977)
 /// 
 pub mod modint_1000000007;
-
-/// Modulo `998244353` integers.
-/// 
-/// There is also a `1000000007` version: see [`modint_1000000007`].
-/// For any other prime modulo, copy-paste the source code and change
-/// the constant `MOD`.
-/// 
-/// # `Modint`
-/// 
-/// ## Initialization
-/// - `new(n)` constructs an integer for `n` modulo `998244353`.
-/// - `modint(n)` is a shorthand for `Modint::new(n)`.
-/// 
-/// ## Operations
-/// - Input and output.
-/// - Conversion to/from `i32`.
-/// - All arithmetic operators, either in-place or not.
-///   Division takes $O(\log\ MOD)$.
-/// - `inv()` returns the multiplicative inverse in $O(\log\ MOD)$.
-/// - Negation.
-/// - `pow(n)` returns the `n`-th power in $O(\log n)$.
-/// 
-/// ## Caution
-/// Panics on division by or inversion of 0.
-/// 
-/// ## Example
-/// ```
-/// # use ps_snippets::math::modint_998244353::modint;
-/// let a = modint(12345);
-/// let b = modint(54321);
-/// assert_eq!(a*b, modint(12345i64 * 54321 % 998244353));
-/// assert_eq!(a * a.inv(), modint(1));
-/// assert_eq!(a.pow(3), a*a*a);
-/// ```
-/// 
-/// # `Modfact`
-/// A modulo factorial map allowing for a constant-time modulo
-/// factorial for small values of `n`.
-/// 
-/// ## Initialization
-/// `new(n)` constructs a modulo factorial map up to `n`.
-/// 
-/// ## Fields
-/// - `fact[i]` is $i!$ modulo 998244353.
-/// - `ifact[i]` is the inverse of $i!$ modulo 998244353.
-/// 
-/// ## Queries
-/// - `len()` returns `n`.
-/// - `comb(n, r)` returns the binomial coefficient of `n` and `r`,
-///    modulo 998244353, in $O(1)$.
-/// 
-/// ## Caution
-/// `comb` panics if `0 <= r <= n < fact.len()` is not satisfied.
-/// 
-/// ## Example
-/// ```
-/// # use ps_snippets::math::modint_998244353::*;
-/// let mf = Modfact::new(10);
-/// assert_eq!(mf.fact[5], modint(5*4*3*2*1));
-/// assert_eq!(mf.fact[5] * mf.ifact[5], modint(1));
-/// assert_eq!(mf.comb(10, 4), modint(10*9*8*7/4/3/2/1));
-/// ```
-/// 
-/// ## Practice Problems
-/// See [`modint_1000000007`].
-/// 
-pub mod modint_998244353;
+*/
 
 /// Greatest common divisor and least common multiple.
 /// - `Gcd` trait supports `a.gcd(b)`, the greatest common divisor.

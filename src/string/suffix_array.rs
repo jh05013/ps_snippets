@@ -1,8 +1,9 @@
-pub mod suffix_array {
+pub mod suffix_array_mod {
 	// https://bamgoesn.github.io/rust-ps-md/strings/salcp.html
+
 	pub fn suffix_array<T: Ord>(s: &[T]) -> Vec<usize> {
 		use std::collections::*;
-		if s.len() == 0 { return vec![]; }
+		if s.is_empty() { return vec![]; }
 		else if s.len() == 1 { return vec![0]; }
 
 		let n = s.len();
@@ -66,7 +67,10 @@ pub mod suffix_array {
 		(sa, lcp)
 	}
 
-	pub fn binsearch_in_sa<T: Ord>(s: &[T], needle: &[T], sa: &Vec<usize>)
+	/// If `needle` is a subslice of `s`, returns `Some(l, r)` where
+	/// `sa[i]` are the starting indices of `needle` in `s`.
+	/// Otherwise, returns `None`.
+	pub fn binsearch_in_sa<T: Ord>(s: &[T], needle: &[T], sa: &[usize])
 	-> Option<(usize, usize)> {
 		let l = sa.partition_point(|&si| &s[si..] < needle);
 		if !s[sa[l]..].starts_with(needle) { return None; }
@@ -76,4 +80,4 @@ pub mod suffix_array {
 		Some((l, r-1))
 	}
 }
-pub use suffix_array::{suffix_array, sa_lcp, binsearch_in_sa};
+pub use suffix_array_mod::{suffix_array, sa_lcp, binsearch_in_sa};

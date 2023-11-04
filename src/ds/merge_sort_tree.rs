@@ -1,12 +1,12 @@
-pub mod merge_sort_tree {
+pub mod merge_sort_tree_mod {
 	/// The merge-sort tree.
 	#[derive(Clone, Debug, Default)]
-	pub struct MergeSortTree<T: Clone + Ord> {
+	pub struct MergeSortTree<T: Clone + PartialOrd> {
 		n: usize,
 		tree: Vec<Vec<T>>,
 	}
 
-	impl<T: Clone + Ord> MergeSortTree<T> {
+	impl<T: Clone + PartialOrd + std::fmt::Display> MergeSortTree<T> {
 		/// Constructs a new merge-sort tree out of `vals`.
 		pub fn new(vals: Vec<T>) -> Self {
 			let n = vals.len();
@@ -16,19 +16,20 @@ pub mod merge_sort_tree {
 			);
 			for i in (1..n).rev() {
 				let mut v = tree[2*i].clone();
-				v.append(&mut tree[2*i+1].clone()); v.sort();
+				v.append(&mut tree[2*i+1].clone());
+				v.sort_by(|a,b| a.partial_cmp(b).unwrap());
 				tree[i] = v;
 			}
 			Self { n, tree }
 		}
 		/// Returns the size of `vals`.
+		#[allow(clippy::len_without_is_empty)]
 		pub fn len(&self) -> usize { self.n }
 
-		/// Returns the number of elements in `vals[l..=r]`
-		/// whose value lies in `[val_l..=val_r]`.
+		/// Returns the number of elements in `vals[l..=r]` whose value lies in `[val_l..=val_r]`.
 		pub fn count(&self, l: usize, r: usize, val_l: T, val_r: T) -> usize {
-			assert!(l <= r && r < self.n, "Bad query range [{}, {}]", l,r);
-			assert!(val_l <= val_r, "Bad query-value range");
+			assert!(l <= r && r < self.n, "Bad query range [{}, {}]", l, r);
+			assert!(val_l <= val_r, "Bad query-value range [{}, {}]", val_l, val_r);
 			let mut ans = 0;
 			let (mut l, mut r) = (l + self.n, r + self.n+1);
 			while l < r {
@@ -51,11 +52,11 @@ pub mod merge_sort_tree {
 		}
 	}
 
-	impl<T: Clone + Ord> std::ops::Index<usize> for MergeSortTree<T> {
+	impl<T: Clone + PartialOrd> std::ops::Index<usize> for MergeSortTree<T> {
 		type Output = T;
 		fn index(&self, index: usize) -> &Self::Output {
 			&self.tree[self.n + index][0]
 		}
 	}
 }
-pub use merge_sort_tree::MergeSortTree;
+pub use merge_sort_tree_mod::MergeSortTree;

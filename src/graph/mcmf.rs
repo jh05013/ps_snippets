@@ -1,6 +1,6 @@
 // edited from https://bamgoesn.github.io/rust-ps-md/graphs/flow/mcmf.html
 // TODO: support edge lookup
-pub mod mcmf {
+pub mod mcmf_mod {
 	use std::collections::VecDeque;
 
 	#[derive(Clone, Debug, Default)]
@@ -75,4 +75,4 @@ pub mod mcmf {
 		}
 	}
 }
-pub use mcmf::{Edge, Mcmf};
+pub use mcmf_mod::Mcmf;

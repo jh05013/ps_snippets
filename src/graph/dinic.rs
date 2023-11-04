@@ -1,10 +1,11 @@
-pub mod dinic {
+pub mod dinic_mod {
 	#[derive(Clone, Debug)]
 	pub struct Edge {
 		pub src: usize, pub targ: usize,
 		res: u64, pub orig: u64,
 		rev: usize
 	}
+	#[derive(Copy, Clone, Debug)]
 	pub struct EdgeIndex(usize, usize);
 
 	impl Edge {
@@ -20,11 +21,14 @@ pub mod dinic {
 	}
 
 	impl Dinic {
+		/// Initializes a graph with `n` vertices.
 		pub fn new(n: usize) -> Self { Self {
 			n, adj: vec![vec![]; n],
 			dis: vec![0; n], pnt: vec![0; n]
 		}}
 
+		/// Connects from `s` to `e` with capacity `cap`,
+		/// and returns the edge index.
 		pub fn connect(&mut self, s: usize, e: usize, cap: u64) -> EdgeIndex {
 			let el = self.adj[e].len();
 			let sl = self.adj[s].len();
@@ -37,6 +41,7 @@ pub mod dinic {
 			EdgeIndex(s, sl)
 		}
 
+		/// Sends and returns the maximum flow from `src` to `sink`.
 		pub fn max_flow(&mut self, src: usize, sink: usize) -> u64 {
 			let mut ans = 0u64;
 			while self.bfs(src, sink) {
@@ -50,6 +55,8 @@ pub mod dinic {
 			ans
 		}
 
+		/// Sends and returns the minimum cut between `src` and `sink`,
+		/// along with the list of vertices in the `src` side.
 		pub fn min_cut(&mut self, src: usize, sink: usize)
 		-> (u64, Vec<usize>) {
 			let f = self.max_flow(src, sink);
@@ -94,4 +101,5 @@ pub mod dinic {
 			&self.adj[ei.0][ei.1]
 		}
 	}
-} pub use dinic::Dinic;
+}
+pub use dinic_mod::Dinic;

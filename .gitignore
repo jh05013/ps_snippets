@@ -2,7 +2,7 @@ book
 *.code-workspace
 
 src/main.rs
-input.txt
+*.txt
 
 # Added by cargo
 

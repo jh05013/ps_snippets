@@ -13,10 +13,12 @@
 
 pub mod io;
 
+pub mod ds;
+pub mod geometry;
+pub mod graph;
 pub mod math;
 pub mod prime;
-pub mod ds;
-
-pub mod graph;
+pub mod rand;
+pub mod string;
 
 mod test;

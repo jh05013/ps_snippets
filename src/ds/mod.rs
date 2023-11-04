@@ -2,17 +2,38 @@
 
 /// A static range sum data structure.
 /// 
+/// TODO: support non-invertible prefix operations, e.g. max.
+/// 
+/// # Initialization
+/// - `new()` constructs an empty range sum DS.
+/// - `from_vec(vals: Vec<T>)` constructs a range sum DS out of `vals`.
+/// 
+/// # Queries
+/// - `len()` returns `n`.
+/// - `is_empty()` returns true iff `vals` is empty.
+/// - `sum(i, j)` returns `vals[i] + ... + vals[j]`.
+/// - `whole()` returns the sum of all `vals[_]`, or 0 if empty.
+/// 
+/// # Updates
+/// - `push(v)` inserts `v` at the end of `vals`.
+/// - `resize(n)` truncates or extends (with 0) `vals` to length `n`.
+/// 
+/// # Caution
+/// `sum` panics if `0 <= l <= r < n` are not satisfied.
+/// 
 /// # Examples
 /// ```
 /// # use ps_snippets::ds::range_sum::RangeSum;
 /// let rs = RangeSum::from_vec(vec![1, 3, 5, 7, 9]);
 /// assert_eq!(rs.len(), 5);
-/// assert_eq!(rs.pref_sum(2), 1+3+5);
+/// assert_eq!(rs.sum(0, 2), 1+3+5);
 /// assert_eq!(rs.sum(1, 3), 3+5+7);
 /// assert_eq!(rs.whole(), 1+3+5+7+9);
 /// let mut rs2 = rs;
 /// rs2.push(11);
 /// assert_eq!(rs2.sum(3, 5), 7+9+11);
+/// rs2.resize(2);
+/// assert_eq!(rs2.whole(), 1+3);
 /// ```
 /// 
 /// # Practice Problems
@@ -22,6 +43,8 @@ pub mod range_sum;
 
 /// A merge-sort tree.
 /// 
+/// `T` must implement [`Clone`] + [`PartialOrd`] + [`std::fmt::Display`] (for error messages).
+/// 
 /// # Initialization
 /// - `new(vals: Vec<T>)` constructs a merge-sort tree out of `vals`.
 ///   Takes $O(n \log n)$ where $n = |vals|$.
@@ -29,7 +52,7 @@ pub mod range_sum;
 /// # Queries
 /// - `len()` returns `n`.
 /// - `count(l, r, val_l, val_r)` returns the number of elements in
-///   `vals[l..=r] whose value lies in the range `[val_l..=val_r]`.
+///   `vals[l..=r]` whose value lies in the range `[val_l..=val_r]`.
 ///   Takes $O(n \log^2 n)$.
 /// 
 /// # Caution
@@ -41,6 +64,10 @@ pub mod range_sum;
 /// let mst = MergeSortTree::new(vec![1, 3, 5, 2, 4, 6]);
 /// assert_eq!(mst.count(1, 3, 3, 10), 2); // <3>, <5>, 2
 /// ```
+/// 
+/// # Practice Problems
+/// - [BOJ 13537 수열과 쿼리 1](https://www.acmicpc.net/problem/13537) 1e5 elements, 1e5 queries
+/// - [BOJ 13544 수열과 쿼리 3](https://www.acmicpc.net/problem/13544) 1e5 elements, 1e5 queries
 pub mod merge_sort_tree;
 
 /// A lazy segment tree.
@@ -81,6 +108,10 @@ pub mod merge_sort_tree;
 /// - `update` and `query` panics if `0 <= l <= r < n` is not satisfied.
 /// 
 /// # Examples
+/// The following implementation supports range additon and range sum.
+/// Note that `RangeFenwick` (TODO) is better for this task,
+/// and this example is just for demonstration:
+/// 
 /// ```
 /// # use ps_snippets::ds::segtree_lazy::*;
 /// struct St;
@@ -108,6 +139,53 @@ pub mod merge_sort_tree;
 /// ```
 /// 
 /// # Practice Problems
-/// - [BOJ 10999 구간 합 구하기 2](https://www.acmicpc.net/problem/10999)
-/// - [LC Range Affine Range Sum](https://judge.yosupo.jp/problem/range_affine_range_sum) = [BOJ 13925 수열과 쿼리 13](https://www.acmicpc.net/problem/13925)
+/// - [BOJ 10999 구간 합 구하기 2](https://www.acmicpc.net/problem/10999) 1e6 elements, 2e4 queries
+/// - [LC Range Affine Range Sum](https://judge.yosupo.jp/problem/range_affine_range_sum) 5e5 elements, 5e5 queries
 pub mod segtree_lazy;
+
+/// A minimum-in-queue data structure, commonly called deque DP trick.
+/// 
+/// Notably, all operations take amortized constant time.
+/// 
+/// If you need a maximum-in-queue data structure, wrap it with [`std::cmp::Reverse`].
+/// 
+/// `T` must implement [`PartialOrd`].
+/// 
+/// # Initialization
+/// - `new()` initializes an empty queue.
+/// 
+/// # Basic Methods
+/// - `len()` returns the length of the queue.
+/// - `is_empty()` returns `true` iff the queue is empty.
+/// 
+/// # Update
+/// - `push(v)` pushes `v` into the queue.
+/// - `pop()` pops from the queue and returns `true` if the queue is not empty; otherwise returns `false`.
+/// 
+/// Do not be confused with the internal data structure used to implement this,
+/// especially if you know how deque DP trick works;
+/// `len` and `pop` are concerned with its abstract representation, not its implementation.
+/// Refer to the example below for further clarification.
+/// 
+/// # Query
+/// - `get()` returns the minimum value in the queue, if any; otherwise returns [`None`].
+/// - `most_recent()` returns the most recent value inserted into the queue.
+/// 
+/// # Example
+/// ```
+/// use ps_snippets::ds::queue_min::*;
+/// 
+/// let mut q = QueueMin::new(); // []
+/// q.push(1);
+/// q.push(3);
+/// q.push(2); // [1, 3, 2]
+/// assert_eq!(q.most_recent(), Some(&2));
+/// assert_eq!(q.get(), Some(&1));
+/// assert!(q.pop()); // [3, 2]
+/// assert_eq!(q.get(), Some(&2));
+/// ```
+/// 
+/// # Practice Problems
+/// - [BOJ 11003 최솟값 찾기](https://www.acmicpc.net/problem/11003)
+/// - [BOJ 10129 작은 새](https://www.acmicpc.net/problem/10129)
+pub mod queue_min;

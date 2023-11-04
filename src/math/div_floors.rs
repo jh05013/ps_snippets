@@ -1,4 +1,4 @@
-pub mod div_floors {
+pub mod div_floors_mod {
 	/// See [`div_floors`].
 	pub struct DivFloors { n: u64, x: u64, last: u64 }
 
@@ -31,4 +31,4 @@ pub mod div_floors {
 		}
 	}
 }
-pub use div_floors::div_floors;
+pub use div_floors_mod::div_floors;

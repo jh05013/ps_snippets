@@ -46,6 +46,8 @@ pub mod degree_ordered {
 	impl DegreeOrderedGraph {
 		/// Returns the number of vertices.
 		pub fn len(&self) -> usize { self.adj.len() }
+		/// Returns true iff empty.
+		pub fn is_empty(&self) -> bool { self.adj.is_empty() }
 
 		/// Returns the degree of vertex `v`.
 		pub fn degree(&self, v: usize) -> usize { self.adj[v].len() }
@@ -90,5 +92,4 @@ pub mod degree_ordered {
 		}
 	}
 }
-pub use degree_ordered::DogConstructor;
-pub use degree_ordered::DegreeOrderedGraph;
+pub use degree_ordered::{DogConstructor, DegreeOrderedGraph};
