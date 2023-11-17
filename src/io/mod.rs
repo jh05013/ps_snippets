@@ -13,6 +13,8 @@
 /// - `try_read::<T>()` tries to read a value of type `T`, returning [`Result`].
 ///   It fails on EOF or a token that cannot be parsed as `T`.
 /// - `read::<T>()` reads a value of type `T`.
+///   - `i32()`, `i64()`, `u32()`, `u64()`, `f64()`, and `string()` are
+///     the specializations of `read`.
 /// - `read_vec::<T>(n)` reads `n` values of type `T` into a [`Vec`].
 /// 
 /// # Write
@@ -36,8 +38,7 @@
 /// 
 /// let mut oj = OJ::new();
 /// for _ in 0..oj.read() {
-///     let a: i64 = oj.read();
-///     let b: i64 = oj.read();
+///     let (a, b) = (oj.i64(), oj.i64());
 ///     oj.write(a+b).ln();
 /// }
 /// ```

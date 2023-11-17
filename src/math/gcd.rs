@@ -16,10 +16,18 @@ pub mod gcd_mod {
 	macro_rules! impl_gcd_lcm {
 		($($T:ty) *) => { $(
 			impl Gcd for $T { fn gcd(self, b: Self) -> Self {
-				if b == 0 { self } else { b.gcd(self % b) }
+				if self == 0 || b == 0 { return self | b; }
+				let (mut a, mut b) = (self, b);
+				let gcd_exponent_on_two = (a | b).trailing_zeros();
+				a >>= a.trailing_zeros(); b >>= b.trailing_zeros();
+				while a != b {
+					if a < b { core::mem::swap(&mut a, &mut b); }
+					a -= b; a >>= a.trailing_zeros();
+				}
+				a << gcd_exponent_on_two
 			} }
 			impl Lcm for $T { fn lcm(self, b: Self) -> Self {
-				if b == 0 { 0 } else { self * b / self.gcd(b) }
+				if b == 0 { 0 } else { self / self.gcd(b) * b }
 			} }
 		)* };
 	}

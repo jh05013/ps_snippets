@@ -51,7 +51,7 @@ pub mod range_sum;
 /// 
 /// # Queries
 /// - `len()` returns `n`.
-/// - `count(l, r, val_l, val_r)` returns the number of elements in
+/// - `count(l, r, &val_l, &val_r)` returns the number of elements in
 ///   `vals[l..=r]` whose value lies in the range `[val_l..=val_r]`.
 ///   Takes $O(n \log^2 n)$.
 /// 

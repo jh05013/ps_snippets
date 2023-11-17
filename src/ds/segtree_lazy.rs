@@ -1,5 +1,5 @@
 pub mod segtree_lazy_mod {
-	/// `T` must implement this trait for [`LazySegtree`].
+	/// `T` must implement this trait for [`SegtreeLazy`].
 	pub trait LazyMonoid {
 		type V: Copy;
 		type Lazy: Copy + PartialEq;
