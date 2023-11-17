@@ -13,7 +13,7 @@ pub mod oj_default_mod {
 			let mut inp = String::new();
 			stdin().read_to_string(&mut inp).unwrap();
 			let input = Box::leak(inp.into_boxed_str()).split_whitespace();
-			OJ { buffer: input, out: BufWriter::new(stdout()) }
+			Self { buffer: input, out: BufWriter::new(stdout()) }
 		}
 	
 		/// Tries to read a type `T`.
@@ -29,11 +29,11 @@ pub mod oj_default_mod {
 
 		/// Writes `v`.
 		pub fn write<T: Display>(&mut self, v: T) -> &mut Self {
-			write!(self.out, "{}", v).unwrap(); self
+			write!(self.out, "{v}").unwrap(); self
 		}
 		/// Writes `v` in debug form.
 		pub fn debug<T: Debug>(&mut self, v: T) -> &mut Self {
-			write!(self.out, "{:?}", v).unwrap(); self
+			write!(self.out, "{v:?}").unwrap(); self
 		}
 		/// Writes `' '`.
 		pub fn sp(&mut self) -> &mut Self { self.write(' ') }

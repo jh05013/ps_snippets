@@ -35,7 +35,7 @@ pub mod range_sum_mod {
 		/// Pushes `v` at the end of `vals`.
 		pub fn push(&mut self, v: T) {
 			let mut z = self.whole(); z += v;
-			self.pref.push(z)
+			self.pref.push(z);
 		}
 		/// Truncates or extends (with 0) `vals` to length `n`.
 		pub fn resize(&mut self, n: usize) {

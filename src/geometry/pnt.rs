@@ -12,7 +12,7 @@ pub mod pnt_mod {
 	}
 
 	impl Coord for i32 {
-		#[inline] fn to_f64(&self) -> f64 { *self as f64 }
+		#[inline] fn to_f64(&self) -> f64 { f64::from(*self) }
 	}
 	impl Coord for i64 {
 		#[inline] fn to_f64(&self) -> f64 { *self as f64 }
@@ -30,7 +30,7 @@ pub mod pnt_mod {
 		pub x: T, pub y: T
 	}
 
-	#[inline] pub fn pnt<T: Coord>(x: T, y: T) -> Pnt<T> { Pnt{x,y} }
+	#[inline] pub const fn pnt<T: Coord>(x: T, y: T) -> Pnt<T> { Pnt{x,y} }
 
 	impl<T: Coord> Pnt<T> {
 		/// Squared distance from (0, 0).
@@ -70,38 +70,38 @@ pub mod pnt_mod {
 		/// Rotated `theta` radians ccw, centered at (0, 0).
 		#[inline] pub fn rot(&self, theta: f64) -> Self {
 			let (s, c) = theta.sin_cos();
-			pnt(self.x*c - self.y*s, self.x*s + self.y*c)
+			pnt(self.x.mul_add(c, -self.y*s), self.x.mul_add(s, self.y*c))
 		}
 		/// Rotated `theta` radians ccw, centered at `c`.
 		#[inline] pub fn rot_at(&self, theta: f64, c: Self) -> Self { (*self-c).rot(theta)+c }
 	}
 
 	// ops
-	impl<T: Coord> Neg for Pnt<T> { type Output = Pnt<T>;
+	impl<T: Coord> Neg for Pnt<T> { type Output = Self;
 		fn neg(self) -> Self::Output { pnt(-self.x, -self.y) }
 	}
 	impl<T: Coord> AddAssign for Pnt<T> {
 		fn add_assign(&mut self, rhs: Self) { self.x += rhs.x; self.y += rhs.y; }
 	}
-	impl<T: Coord> Add for Pnt<T> { type Output = Pnt<T>;
+	impl<T: Coord> Add for Pnt<T> { type Output = Self;
 		fn add(self, rhs: Self) -> Self::Output { pnt(self.x+rhs.x, self.y+rhs.y) }
 	}
 	impl<T: Coord> SubAssign for Pnt<T> {
 		fn sub_assign(&mut self, rhs: Self) { self.x -= rhs.x; self.y -= rhs.y; }
 	}
-	impl<T: Coord> Sub for Pnt<T> { type Output = Pnt<T>;
+	impl<T: Coord> Sub for Pnt<T> { type Output = Self;
 		fn sub(self, rhs: Self) -> Self::Output { pnt(self.x-rhs.x, self.y-rhs.y) }
 	}
 	impl<T: Coord> MulAssign<T> for Pnt<T> {
 		fn mul_assign(&mut self, rhs: T) { self.x *= rhs; self.y *= rhs; }
 	}
-	impl<T: Coord> Mul<T> for Pnt<T> { type Output = Pnt<T>;
+	impl<T: Coord> Mul<T> for Pnt<T> { type Output = Self;
 		fn mul(self, rhs: T) -> Self::Output { pnt(self.x*rhs, self.y*rhs) }
 	}
 	impl<T: Coord> DivAssign<T> for Pnt<T> {
 		fn div_assign(&mut self, rhs: T) { self.x /= rhs; self.y /= rhs; }
 	}
-	impl<T: Coord> Div<T> for Pnt<T> { type Output = Pnt<T>;
+	impl<T: Coord> Div<T> for Pnt<T> { type Output = Self;
 		fn div(self, rhs: T) -> Self::Output { pnt(self.x/rhs, self.y/rhs) }
 	}
 }

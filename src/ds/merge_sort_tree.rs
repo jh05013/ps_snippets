@@ -24,22 +24,22 @@ pub mod merge_sort_tree_mod {
 		}
 		/// Returns the size of `vals`.
 		#[allow(clippy::len_without_is_empty)]
-		pub fn len(&self) -> usize { self.n }
+		pub const fn len(&self) -> usize { self.n }
 
 		/// Returns the number of elements in `vals[l..=r]` whose value lies in `[val_l..=val_r]`.
-		pub fn count(&self, l: usize, r: usize, val_l: T, val_r: T) -> usize {
+		pub fn count(&self, l: usize, r: usize, val_l: &T, val_r: &T) -> usize {
 			assert!(l <= r && r < self.n, "Bad query range [{}, {}]", l, r);
 			assert!(val_l <= val_r, "Bad query-value range [{}, {}]", val_l, val_r);
 			let mut ans = 0;
 			let (mut l, mut r) = (l + self.n, r + self.n+1);
 			while l < r {
 				if l&1 == 1 {
-					ans += Self::count_one(&self.tree[l], &val_l, &val_r);
+					ans += Self::count_one(&self.tree[l], val_l, val_r);
 					l += 1;
 				}
 				if r&1 == 1 {
 					r -= 1;
-					ans += Self::count_one(&self.tree[r], &val_l, &val_r);
+					ans += Self::count_one(&self.tree[r], val_l, val_r);
 				}
 				l >>= 1; r >>= 1;
 			}

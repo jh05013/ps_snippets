@@ -62,7 +62,7 @@ pub mod range_sum;
 /// ```
 /// # use ps_snippets::ds::merge_sort_tree::MergeSortTree;
 /// let mst = MergeSortTree::new(vec![1, 3, 5, 2, 4, 6]);
-/// assert_eq!(mst.count(1, 3, 3, 10), 2); // <3>, <5>, 2
+/// assert_eq!(mst.count(1, 3, &3, &10), 2); // <3>, <5>, 2
 /// ```
 /// 
 /// # Practice Problems

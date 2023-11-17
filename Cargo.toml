@@ -9,3 +9,27 @@ edition = "2021"
 rustdoc-args = [ "--html-in-header", "./katex.html" ]
 
 [dependencies]
+
+[lints.clippy]
+uninlined_format_args = "warn"
+if_not_else = "warn"
+cast_lossless = "warn"
+needless_pass_by_value = "warn"
+semicolon_if_nothing_returned = "warn"
+unreadable_literal = "warn"
+similar_names = "warn"
+
+# I use the following clippy setting:
+# cargo clippy -- -W clippy::pedantic -W clippy::nursery -A clippy::missing_panics_doc -A clippy::missing_errors_doc -A clippy::must_use_candidate -A clippy::wildcard_imports -A clippy::bool_to_int_with_if -A clippy::module_name_repetitions -A clippy::return_self_not_must_use -A clippy::cast_precision_loss -A clippy::doc_markdown -A clippy::uninlined_format_args
+#
+# Reasons on why I allow some of them:
+# - missing_panics_doc: Docs are separated from codes for PS reasons. Panics are documented there.
+# - missing_errors_doc: Same as above.
+# - must_use_candidate: Too much for PS codes.
+# - wildcard_imports: Too much for PS codes.
+# - bool_to_int_with_if: IMO converting a bool to an int is less intuitive.
+# - module_name_repetitions: I always re-import them in the same file.
+# - return_self_not_must_use: Too much for PS codes.
+# - cast_precision_loss: Only used in `pnt_mod::Coord::to_f64`, which is intended.
+# - doc_markdown: Trying to use Mathjax here, although I couldn't managed to do it yet.
+# - uninlined_format_args: `assert!(v, "{v}")` doesn't work in older versions, making it unsuitable for PS library.

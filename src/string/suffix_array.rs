@@ -61,7 +61,7 @@ pub mod suffix_array_mod {
 			if isa[i] != 0 {
 				let j = sa[isa[i]-1];
 				while i+k < n && j+k < n && arr[i+k] == arr[j+k] { k += 1; }
-				lcp[isa[i]] = if k != 0 { k -= 1; k + 1 } else { 0 };
+				lcp[isa[i]] = if k == 0 { 0 } else { k -= 1; k + 1 };
 			}
 		}
 		(sa, lcp)

@@ -1,5 +1,7 @@
 // edited from https://bamgoesn.github.io/rust-ps-md/graphs/flow/mcmf.html
 // TODO: support edge lookup
+#[allow(clippy::cast_possible_truncation)]
+#[allow(clippy::cast_possible_wrap)]
 pub mod mcmf_mod {
 	use std::collections::VecDeque;
 
@@ -10,7 +12,7 @@ pub mod mcmf_mod {
 	}
 
 	impl Edge {
-		fn new(dst: usize, opp: usize, flow: u64, cost: i64) -> Self {
+		const fn new(dst: usize, opp: usize, flow: u64, cost: i64) -> Self {
 			Self { dst: dst as u32, opp: opp as u32, cap: flow, cost, }
 		}
 	}
@@ -25,9 +27,9 @@ pub mod mcmf_mod {
 		pub fn new(n: usize) -> Self { Self { n, g: vec![vec![]; n], } }
 
 		pub fn connect(&mut self, s: usize, e: usize, cap: u64, cost: i64) {
-			let (slen, elen) = (self.g[s].len(), self.g[e].len());
-			self.g[s].push(Edge::new(e, elen, cap, cost));
-			self.g[e].push(Edge::new(s, slen, 0, -cost));
+			let (sl, el) = (self.g[s].len(), self.g[e].len());
+			self.g[s].push(Edge::new(e, el, cap, cost));
+			self.g[e].push(Edge::new(s, sl, 0, -cost));
 		}
 
 		fn augment(&mut self, s: usize, t: usize,

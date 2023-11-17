@@ -1,5 +1,3 @@
-#[cfg(test)]
-
 #[test]
 fn div_floors_test() {
 	use crate::math::div_floors::*;

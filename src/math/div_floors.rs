@@ -7,7 +7,7 @@ pub mod div_floors_mod {
 	/// Each item is of the form `(k, l, r)`, which denotes that
 	/// `n/x == k` for x in $[l, r]$. The items are given in the
 	/// decreasing order of `k`.
-	pub fn div_floors(n: u64) -> DivFloors {
+	pub const fn div_floors(n: u64) -> DivFloors {
 		if n == 0 { DivFloors { n, x: 0, last: 1 } }
 		else { DivFloors { n, x: 1, last: 0 } }
 	}

@@ -1,5 +1,3 @@
-#[cfg(test)]
-
 #[test]
 fn gcd_lcm_test() {
 	use crate::math::gcd::*;

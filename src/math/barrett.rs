@@ -6,12 +6,12 @@ pub mod barrett_mod {
 	impl Barrett {
 		/// Creates a new Barrett reduction interface modulo `n`.
 		pub fn new(n: u64) -> Self {
-			Barrett { n, m: (1u128 << 64) / n as u128 }
+			Self { n, m: (1u128 << 64) / u128::from(n) }
 		}
 	
 		/// Returns `x` mod `n`.
 		pub fn reduce(&self, x: u64) -> u64 {
-			let q = ((self.m * (x as u128)) >> 64) as u64;
+			let q = ((self.m * u128::from(x)) >> 64) as u64;
 			let r = x - q * self.n;
 			if r >= self.n { r - self.n } else { r }
 		}

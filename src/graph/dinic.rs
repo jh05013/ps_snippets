@@ -9,7 +9,7 @@ pub mod dinic_mod {
 	pub struct EdgeIndex(usize, usize);
 
 	impl Edge {
-		pub fn used(&self) -> u64 { self.orig - self.res }
+		pub const fn used(&self) -> u64 { self.orig - self.res }
 	}
 	
 	#[derive(Clone, Debug)]
