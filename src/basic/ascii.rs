@@ -20,11 +20,17 @@ mod ascii {
 	
 	// Str conversion
 	impl Ascii {
-		pub fn s(&self) -> String { self.0.iter().collect::<String>() }
+		pub fn s(&self) -> String { self.chars().collect::<String>() }
+		pub fn chars(&self) -> impl Iterator<Item = &char> { self.0.iter() }
 	}
 	impl From<String> for Ascii {
 		fn from(value: String) -> Self {
 			FromStr::from_str(&value).unwrap()
+		}
+	}
+	impl From<&str> for Ascii {
+		fn from(value: &str) -> Self {
+			FromStr::from_str(value).unwrap()
 		}
 	}
 	

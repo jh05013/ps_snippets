@@ -82,8 +82,10 @@ pub mod modint_1000000007;
 /// - `Lcm` trait supports `a.lcm(b)`, the least common multiple.
 ///   If either a or b is 0, assume their LCM is 0.
 /// 
-/// Primitive unsigned integers implement `Gcd` and `Lcm`, and both
-/// take $O(\log a + \log b)$.
+/// Primitive unsigned integers implement `Gcd` and `Lcm` in
+/// $O(\log a + \log b)$, using the
+/// [binary GCD algorithm](https://en.wikipedia.org/wiki/Binary_GCD_algorithm).
+/// It is much faster (like 2.5x!) than the well-known Euclidean algorithm.
 /// 
 /// # Example
 /// ```
@@ -101,6 +103,9 @@ pub mod modint_1000000007;
 /// - [eolymp 571 The greatest common divisor](https://www.eolymp.com/en/problems/571) `gcd`
 /// - [eolymp 135 LCM](https://www.eolymp.com/en/problems/135) `lcm` (use `u128`)
 /// - [PE 5 Smallest Multiple](https://projecteuler.net/problem=5) `lcm`
+/// - [BOJ 30449 Reafy 수열](https://www.acmicpc.net/problem/30449) blazingly fast `gcd`,
+///   can be used as a performance benchmark.
+///   My implementation gives 0.4s with `select_nth_unstable_by`.
 pub mod gcd;
 
 /// Barrett reduction, allowing for a fast runtime constant modulo.

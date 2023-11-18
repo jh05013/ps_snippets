@@ -36,8 +36,11 @@ pub mod ds;
 pub mod geometry;
 pub mod graph;
 pub mod math;
+pub mod matrix;
 pub mod prime;
 pub mod rand;
 pub mod string;
+
+pub mod slow;
 
 mod test;

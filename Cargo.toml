@@ -11,6 +11,7 @@ rustdoc-args = [ "--html-in-header", "./katex.html" ]
 [dependencies]
 
 [lints.clippy]
+len_without_is_empty = "allow"
 uninlined_format_args = "warn"
 if_not_else = "warn"
 cast_lossless = "warn"
@@ -20,13 +21,14 @@ unreadable_literal = "warn"
 similar_names = "warn"
 
 # I use the following clippy setting:
-# cargo clippy -- -W clippy::pedantic -W clippy::nursery -A clippy::missing_panics_doc -A clippy::missing_errors_doc -A clippy::must_use_candidate -A clippy::wildcard_imports -A clippy::bool_to_int_with_if -A clippy::module_name_repetitions -A clippy::return_self_not_must_use -A clippy::cast_precision_loss -A clippy::doc_markdown -A clippy::uninlined_format_args
+# cargo clippy -- -W clippy::pedantic -W clippy::nursery -A clippy::missing_panics_doc -A clippy::missing_errors_doc -A clippy::must_use_candidate -A clippy::wildcard_imports -A clippy::bool_to_int_with_if -A clippy::module_name_repetitions -A clippy::return_self_not_must_use -A clippy::cast_precision_loss -A clippy::doc_markdown -A clippy::uninlined_format_args -A clippy::enum_glob_use
 #
 # Reasons on why I allow some of them:
 # - missing_panics_doc: Docs are separated from codes for PS reasons. Panics are documented there.
 # - missing_errors_doc: Same as above.
 # - must_use_candidate: Too much for PS codes.
 # - wildcard_imports: Too much for PS codes.
+# - enum_glob_use: Too much for PS codes.
 # - bool_to_int_with_if: IMO converting a bool to an int is less intuitive.
 # - module_name_repetitions: I always re-import them in the same file.
 # - return_self_not_must_use: Too much for PS codes.
