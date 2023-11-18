@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["suffix_array_mod"]};

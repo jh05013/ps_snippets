@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["pnt"],"struct":["Pnt"],"trait":["Coord"]};

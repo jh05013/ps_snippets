@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["ds","geometry","graph","io","math","matrix","prime","rand","slow","string"]};

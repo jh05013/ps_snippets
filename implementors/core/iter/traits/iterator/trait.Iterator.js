@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"ps_snippets":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.0/core/iter/traits/iterator/trait.Iterator.html\" title=\"trait core::iter::traits::iterator::Iterator\">Iterator</a> for <a class=\"struct\" href=\"ps_snippets/math/div_floors/div_floors_mod/struct.DivFloors.html\" title=\"struct ps_snippets::math::div_floors::div_floors_mod::DivFloors\">DivFloors</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

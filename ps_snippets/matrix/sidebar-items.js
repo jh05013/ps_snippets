@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["char_poly","gauss_elim","square_matrix"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["binsearch_in_sa","sa_lcp","suffix_array"]};

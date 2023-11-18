@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A lazy segment tree."><title>ps_snippets::ds::segtree_lazy - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="ps_snippets" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0 (79e9716c9 2023-11-13)" data-channel="1.74.0" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../../../ps_snippets/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a></nav><nav class="sidebar"><a class="logo-container" href="../../../ps_snippets/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Module segtree_lazy</a></h2><div class="sidebar-elems"><section><ul class="block"><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Module <a href="../../index.html">ps_snippets</a>::<wbr><a href="../index.html">ds</a>::<wbr><a class="mod" href="#">segtree_lazy</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/ps_snippets/ds/segtree_lazy.rs.html#1-90">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A lazy segment tree.</p>
+<p>To use it, first define a zero-sized type and implement the
+following <code>LazyMonoid</code> trait on it:</p>
+<ul>
+<li><code>type V</code>: the type of the node value.</li>
+<li><code>type Lazy</code>: the type of the lazy operation.</li>
+<li><code>const ID: Self</code>: the identity element of the value operation.</li>
+<li><code>const LAZY_ID: Lazy</code>: the identity element of the lazy operation.</li>
+<li><code>op(lhs: Self, rhs: Self) -&gt; Self</code>: the value operation.</li>
+<li><code>op_lazy(cur: Lazy, up: Lazy) -&gt; Lazy</code>: the lazy operation, where
+<code>cur</code> is the current lazy of the node and <code>up</code> is the lazy which is
+propagating from the parent node.</li>
+<li><code>unlazy(v: Self, size: usize, lz: Lazy) -&gt; Self</code>:
+the updated value from <code>v</code> with lazy <code>lz</code> on a node of size <code>size</code>.</li>
+</ul>
+<p>Both <code>V</code> and <code>Lazy</code> must implement <a href="https://doc.rust-lang.org/1.74.0/core/marker/trait.Copy.html" title="trait core::marker::Copy"><code>Copy</code></a>.</p>
+<p>Let $O(t_V)$ and $O(t_L)$ be the time complexity of <code>op</code> and <code>op_lazy</code>
+respectively.</p>
+<h2 id="initialization"><a href="#initialization">Initialization</a></h2>
+<ul>
+<li><code>new(n)</code> constructs a lazy segtree with size <code>n</code> filled with <code>T::ID</code>.
+Takes $O(n)$.</li>
+<li><code>from_slice(vals: &amp;[T::V]) constructs a lazy segtree out of </code>vals`.
+Takes $O(|vals| t_L)$.</li>
+</ul>
+<h2 id="queries"><a href="#queries">Queries</a></h2>
+<ul>
+<li><code>update(l, r, lz: T::lazy)</code> updates all indices in <code>[l,r]</code> with <code>lz</code>.
+Takes $O(t_L \log n)$.</li>
+<li><code>query(l, r)</code> returns the result of the operation over all indices in
+<code>[l,r]</code>. Takes $O((t_V + t_L) \log n)$.</li>
+</ul>
+<h2 id="caution"><a href="#caution">Caution</a></h2>
+<ul>
+<li>If <code>LazyMonoid</code> does not satisfy the condition of a lazy segtree,
+the behavior is unspecified and meaningless.</li>
+<li><code>update</code> and <code>query</code> panics if <code>0 &lt;= l &lt;= r &lt; n</code> is not satisfied.</li>
+</ul>
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+<p>The following implementation supports range additon and range sum.
+Note that <code>RangeFenwick</code> (TODO) is better for this task,
+and this example is just for demonstration:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">struct </span>St;
+ 
+<span class="kw">impl </span>LazyMonoid <span class="kw">for </span>St {
+    <span class="kw">type </span>V = i64;
+    <span class="kw">type </span>Lazy = i64;
+    <span class="kw">const </span>ID: <span class="self">Self</span>::V = <span class="number">0</span>;
+    <span class="kw">const </span>LAZY_ID: <span class="self">Self</span>::Lazy = <span class="number">0</span>;
+    <span class="kw">fn </span>op(lhs: <span class="self">Self</span>::V, rhs: <span class="self">Self</span>::V) -&gt; <span class="self">Self</span>::V {
+        lhs + rhs
+    }
+    <span class="kw">fn </span>op_lazy(cur: <span class="self">Self</span>::Lazy, up: <span class="self">Self</span>::Lazy) -&gt; <span class="self">Self</span>::Lazy {
+        cur + up
+    }
+    <span class="kw">fn </span>unlazy(v: <span class="self">Self</span>::V, size: usize, lz: <span class="self">Self</span>::Lazy) -&gt; <span class="self">Self</span>::V {
+        v + (size <span class="kw">as </span>i64) * lz
+    }
+}
+ 
+<span class="kw">let </span><span class="kw-2">mut </span>st = SegtreeLazy::&lt;St&gt;::from_slice(<span class="kw-2">&amp;</span>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]);
+<span class="macro">assert_eq!</span>(st.query(<span class="number">1</span>, <span class="number">3</span>), <span class="number">2</span>+<span class="number">3</span>+<span class="number">4</span>);
+st.update(<span class="number">0</span>, <span class="number">2</span>, <span class="number">10</span>); <span class="comment">// [11, 12, 13, 4, 5]
+</span><span class="macro">assert_eq!</span>(st.query(<span class="number">1</span>, <span class="number">3</span>), <span class="number">12</span>+<span class="number">13</span>+<span class="number">4</span>);</code></pre></div>
+<h2 id="practice-problems"><a href="#practice-problems">Practice Problems</a></h2>
+<ul>
+<li><a href="https://www.acmicpc.net/problem/10999">BOJ 10999 구간 합 구하기 2</a> 1e6 elements, 2e4 queries</li>
+<li><a href="https://judge.yosupo.jp/problem/range_affine_range_sum">LC Range Affine Range Sum</a> 5e5 elements, 5e5 queries</li>
+</ul>
+</div></details><h2 id="reexports" class="small-section-header"><a href="#reexports">Re-exports</a></h2><ul class="item-table"><li><div class="item-name" id="reexport.LazyMonoid"><code>pub use segtree_lazy_mod::<a class="trait" href="segtree_lazy_mod/trait.LazyMonoid.html" title="trait ps_snippets::ds::segtree_lazy::segtree_lazy_mod::LazyMonoid">LazyMonoid</a>;</code></div></li><li><div class="item-name" id="reexport.SegtreeLazy"><code>pub use segtree_lazy_mod::<a class="struct" href="segtree_lazy_mod/struct.SegtreeLazy.html" title="struct ps_snippets::ds::segtree_lazy::segtree_lazy_mod::SegtreeLazy">SegtreeLazy</a>;</code></div></li></ul><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="segtree_lazy_mod/index.html" title="mod ps_snippets::ds::segtree_lazy::segtree_lazy_mod">segtree_lazy_mod</a></div></li></ul></section></div></main></body></html>

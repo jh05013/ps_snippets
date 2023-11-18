@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"ps_snippets":[["impl&lt;T: <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.0/core/fmt/trait.Display.html\" title=\"trait core::fmt::Display\">Display</a>&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.0/core/fmt/trait.Display.html\" title=\"trait core::fmt::Display\">Display</a> for <a class=\"struct\" href=\"ps_snippets/matrix/square_matrix/square_matrix_mod/struct.SquareMatrix.html\" title=\"struct ps_snippets::matrix::square_matrix::square_matrix_mod::SquareMatrix\">SquareMatrix</a>&lt;T&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

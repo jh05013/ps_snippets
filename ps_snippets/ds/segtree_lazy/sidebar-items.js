@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["segtree_lazy_mod"]};
