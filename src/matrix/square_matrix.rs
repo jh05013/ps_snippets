@@ -106,6 +106,18 @@ pub mod square_matrix_mod {
 			self
 		}
 	}
+	impl<T: MulAssign + Clone> MulAssign<T> for SquareMatrix<T> {
+		fn mul_assign(&mut self, k: T) {
+			self.elements_mut().for_each(|x| *x *= k.clone());
+		}
+	}
+	impl<T: Mul<Output = T> + Default + Clone> Mul<T> for SquareMatrix<T> {
+		type Output = Self;
+		fn mul(mut self, k: T) -> Self {
+			self.elements_mut().for_each(|x| *x = take(x) * k.clone());
+			self
+		}
+	}
 	impl<T: Semiring> MulAssign for SquareMatrix<T> {
 		fn mul_assign(&mut self, b: Self) { *self = take(self) * b; }
 	}

@@ -2,28 +2,11 @@
 use super::{square_matrix::*, gauss_elim::*};
 
 pub mod char_poly_mod {
-	use super::{SquareMatrix, ElementaryOp::{self, *}};
+	use super::SquareMatrix;
 	use super::gauss_elim_mod::Field;
 
 	impl<T: Field> SquareMatrix<T> {
-		pub fn apply_similar(&mut self, op: ElementaryOp<T>) { match op {
-			Swap(i, j) => {
-				assert_ne!(i, j, "Bad row-swap");
-				for row in &mut self.mat { row.swap(i, j); }
-			}
-			Mul(_i, k) => {
-				assert!(k != T::default(), "Bad row-mul");
-				todo!("Not used for Hessenberg")
-			}
-			Add(fr, k, to) => {
-				assert_ne!(fr, to, "Bad row-add");
-				for row in &mut self.mat {
-					let v = row[to].clone();
-					row[fr] += -k.clone() * v;
-				}
-			}
-		}}
-
+		/// Transforms it into upper Hessenberg form.
 		pub fn make_hessenberg(&mut self) {
 			let n = self.n();
 			for piv in 1..n {
@@ -34,22 +17,20 @@ pub mod char_poly_mod {
 					i += 1;
 				}
 				if i == n { continue; }
-				if i != piv {
-					self.apply_row_op(Swap(i, piv));
-					self.apply_similar(Swap(i, piv));
-				}
+				self.swap_row(i, piv); self.swap_col(i, piv);
 				// zero other rows
 				let x = T::from(1) / self[piv][piv-1].clone();
 				for i in i+1..n {
 					let mul = self[i][piv-1].clone() * x.clone();
-					self.apply_row_op(Add(piv, -mul.clone(), i));
-					self.apply_similar(Add(piv, -mul, i));
+					self.add_row(piv, -mul.clone(), i);
+					self.add_col(i, mul, piv);
 				}
 			}
 		}
 
-		// returns det(xI + A)
-		pub fn hessenberg_char_poly(&self) -> Vec<T> {
+		/// Transforms it into upper Hessenberg form and returns det(xI + A).
+		pub fn make_hessenberg_det_xia(&mut self) -> Vec<T> {
+			self.make_hessenberg();
 			let mut dets = vec![vec![T::from(1)]];
 			let mut det = vec![T::from(1)];
 			let n = self.n();
@@ -72,6 +53,77 @@ pub mod char_poly_mod {
 				dets.push(det.clone());
 			}
 			det
+		}
+
+		/// Returns det(Ax + B).
+		// https://tistory.joonhyung.xyz/19
+		pub fn det_axb(a: &mut Self, b: &mut Self) -> Vec<T> {
+			let n = a.n();
+			assert_eq!(n, b.n(), "Matrix sizes mismatch");
+
+			let (mut alpha, mut beta) = (0, 0);
+			let mut det = T::from(1);
+			while alpha + beta < n {
+				for i in 0..alpha {
+					b.add_col(i, -a[i][alpha].clone(), alpha);
+					a.add_col(i, -a[i][alpha].clone(), alpha);
+				}
+				for i in alpha..n-beta {
+					if a[i][alpha] != T::default() {
+						if a.swap_row(alpha, i) { det = -det; }
+						b.swap_row(alpha, i);
+						break;
+					}
+				}
+				if a[alpha][alpha] != T::default() {
+					det *= a[alpha][alpha].clone();
+					let v = T::from(1) / a[alpha][alpha].clone();
+					a.mul_row(alpha, v.clone()); b.mul_row(alpha, v);
+					for i in alpha+1..n {
+						b.add_row(alpha, -a[i][alpha].clone(), i);
+						a.add_row(alpha, -a[i][alpha].clone(), i);
+					}
+					alpha += 1;
+				}
+				else {
+					let r = n-1-beta;
+					if a.swap_col(alpha, r) { det = -det; }
+					b.swap_col(alpha, r);
+					let mut pos = None;
+					for i in (0..=r).rev() {
+						if b[i][r] != T::default() { pos = Some(i); break; }
+					}
+
+					let Some(pos) = pos else { return vec![]; };
+					if pos < alpha {
+						a.swap_row(pos, alpha-1); b.swap_row(pos, alpha-1);
+						a.swap_col(pos, alpha-1); b.swap_col(pos, alpha-1);
+						if a.swap_row(alpha-1, r) { det = -det; }
+						b.swap_row(alpha-1, r);
+						alpha -= 1;
+					}
+					else {
+						if a.swap_row(pos, r) { det = -det; }
+						b.swap_row(pos, r);
+					}
+					det *= b[r][r].clone();
+					let v = T::from(1) / b[r][r].clone();
+					a.mul_row(r, v.clone()); b.mul_row(r, v);
+					for i in 0..r {
+						a.add_row(r, -b[i][r].clone(), i);
+						b.add_row(r, -b[i][r].clone(), i);
+					}
+					beta += 1;
+				}
+			}
+
+			let mut c = SquareMatrix::new(alpha);
+			for i in 0..alpha { for j in 0..alpha {
+				c[i][j] = b[i][j].clone();
+			}}
+			let mut poly = c.make_hessenberg_det_xia();
+			poly.iter_mut().for_each(|x| *x *= det.clone());
+			poly
 		}
 	}
 }
