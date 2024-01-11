@@ -22,4 +22,9 @@ pub mod prime_sqrt_mod {
 	}
 
 	pub fn factorize(n: u64) -> Factorize { Factorize{n, d: 2} }
-} use prime_sqrt_mod::{factorize};
+
+	pub fn is_prime(n: u64) -> bool {
+		n >= 2 && factorize(n).next().unwrap().0 == n
+	}
+}
+pub use prime_sqrt_mod::{factorize, is_prime};
