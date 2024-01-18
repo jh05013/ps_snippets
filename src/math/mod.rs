@@ -2,7 +2,6 @@
 //! 
 //! For prime-related utilities such as Eratosthenes sieve, check out the `prime` module.
 
-/*
 /// Modulo `1000000007` integers.
 /// 
 /// There is also a `998244353` version: see [`modint_998244353`].
@@ -74,7 +73,9 @@
 /// - [BOJ 13977 이항 계수와 쿼리](https://www.acmicpc.net/problem/13977)
 /// 
 pub mod modint_1000000007;
-*/
+
+/// See `modint_1000000007`.
+pub mod modint_998244353;
 
 /// Greatest common divisor and least common multiple.
 /// - `Gcd` trait supports `a.gcd(b)`, the greatest common divisor.
