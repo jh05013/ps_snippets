@@ -12,7 +12,7 @@ pub mod oj_default_mod {
 			let mut inp = String::new();
 			stdin().read_to_string(&mut inp).unwrap();
 			let input = Box::leak(inp.into_boxed_str()).split_whitespace();
-			Self { buffer: input, out: BufWriter::new(stdout()) }
+			Self { buffer: input, out: BufWriter::with_capacity(1<<18, stdout()) }
 		}
 	
 		pub fn try_read<T: FromStr>(&mut self) -> std::result::Result<T, &str> {

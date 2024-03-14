@@ -70,6 +70,93 @@ pub mod range_sum;
 /// - [BOJ 13544 수열과 쿼리 3](https://www.acmicpc.net/problem/13544) 1e5 elements, 1e5 queries
 pub mod merge_sort_tree;
 
+/// A Fenwick tree.
+/// 
+/// To use it, first define a zero-sized type and implement the
+/// following `FenwickOp` trait on it:
+/// - `type V`: the type of the value.
+/// - `const ID: Self`: the identity element of the operation.
+/// - `fn add(cur: &mut Self::V, val: Self::V)`:
+///   mutates `cur` by adding `val`.
+///   The operation must be commutative and associative.
+/// 
+/// `V` must implement [`Clone`].
+/// 
+/// In addition, you may implement the following `InvOp` trait:
+/// - `fn sub(cur: &mut Self::V, val: Self::V)`:
+///   mutates `cur` by subtracting `val`.
+///   It must be the inverse operation of `add`.
+/// 
+/// Let $O(T)$ be the time complexity of `add` and `sub`.
+/// 
+/// Primitive integer and float types implement both traits.
+/// 
+/// # Initialization
+/// - `new(n)` constructs a Fenwick tree with size `n` filled with `T::ID`.
+///   Takes $O(n)$.
+/// - `Fenwick<T>` implements `From<Vec<T::V>>` which constructs a
+///   Fenwick tree out of given vector `vals`. Takes $O(|vals| T)$.
+/// 
+/// # Queries
+/// - `len()` returns `n`.
+/// - `add(i, v)` adds `v` at the index `i`. Takes $O(T \log n)$.
+/// - `prefix_sum(i)` returns the sum of the values at the indices up to `i`.
+///   Takes $O(T \log n)$.
+/// - `partition_point(pred)` returns the first index `i` that, when `x`
+///   is the sum of the values at the indices up to `i`, `pred(x)` is false;
+///   or `n` if the whole sum still satisfies `pred`.
+///   The usual assumption of [`slice::partition_point`] must be satisfied.
+///   Takes $O(T \log n)$.
+/// 
+/// If `InvOp` is impemented, you can also use:
+/// - `sub(i, v)` subtracts `v` at the index `i`. Takes $O(T \log n)$.
+/// - `range_sum(l, r)` returns the sum of the values at the indices
+///   from `l` to `r`, including both ends. Takes $O(T \log n)$.
+/// 
+/// # Caution
+/// - If the operation is not commutative, or it is not associative,
+///   or the identity element is incorrect, the behavior is unspecified.
+/// - Queries panic if `i < n` is not satisfied.
+/// - `range_sum` panics if `l <= r < n` is not satisfied.
+/// 
+/// # Examples
+/// ```
+/// # use ps_snippets::ds::fenwick::*;
+/// let mut fen = Fenwick::<i32>::from(vec![1, 2, 3, 4, 5]);
+/// assert_eq!(fen.prefix_sum(3), 1+2+3+4);
+/// fen.add(2, 4); // [1, 2, 7, 4, 5]
+/// assert_eq!(fen.range_sum(1, 3), 2+7+4);
+/// 
+/// assert_eq!(fen.partition_point(|&x| x < 1), 0);
+/// assert_eq!(fen.partition_point(|&x| x < 10), 2);
+/// assert_eq!(fen.partition_point(|&x| x < 100), 5);
+/// ```
+/// 
+/// Example using custom types:
+/// ```
+/// # use ps_snippets::ds::fenwick::*;
+/// #[derive(Clone)]
+/// struct Moom;
+/// impl FenwickOp for Moom {
+///     type V = i32;
+///     const ID: i32 = i32::MIN;
+///     fn add(cur: &mut i32, val: i32) {
+///         *cur = (*cur).max(val);
+///     }
+/// }
+/// 
+/// let mut fen = Fenwick::<Moom>::from(vec![1, 3, 2]);
+/// assert_eq!(fen.prefix_sum(2), 3);
+/// fen.add(0, 5); // [5, 3, 2]
+/// assert_eq!(fen.prefix_sum(2), 5);
+/// ```
+/// 
+/// # Practice Problems
+/// - [LC Point Add Range Sum](https://judge.yosupo.jp/problem/point_add_range_sum) 5e5 elements, 5e5 `add`/`range_sum`s
+/// - [BOJ 12899 데이터 구조](https://www.acmicpc.net/problem/12899) 2e6 elements, ~3e6 `add`/`sub`/`partition_point`s
+/// - [BOJ 27989 가장 큰 증가하는 부분 수열 2](https://www.acmicpc.net/problem/27989) custom operations (use [`CoordCompress`])
+pub mod fenwick;
+
 /// A lazy segment tree.
 /// 
 /// To use it, first define a zero-sized type and implement the
