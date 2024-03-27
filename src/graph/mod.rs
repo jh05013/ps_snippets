@@ -47,3 +47,55 @@ pub mod dinic;
 /// 
 /// TODO document.
 pub mod mcmf;
+
+/// MST in a dense graph in $O(n^2)$ time using Prim's algorithm.
+/// 
+/// To use it, first define a *cost function*:
+/// `F(i, j) = Some(v)` if there is an edge `i-j` with cost `v`,
+/// otherwise `None`.
+/// Then `dense_mst(n, F)` returns the `Mst` on the graph
+/// whose weights are defined by `F`.
+/// 
+/// The `Mst` struct has the following fields:
+/// - `is_connected`, representing whether the graph is connected;
+/// - `total_cost`, the sum of the weights of the chosen edges;
+/// - `edges`, the chosen edges, in the form of `(cost, vertex, vertex)`.
+/// 
+/// (Yes, this means this should technically be called `dense_msf`
+/// since it actually finds the minimum spanning forest.)
+/// 
+/// # Caution
+/// 
+/// - If `F` is not symmetric (i.e. `F(i, j) != F(j, i)`),
+///   the value `F(i, j)` is used where `i < j`.
+/// - `mst.edges` is not necessarily sorted by cost.
+/// 
+/// # Example
+/// ```
+/// # use ps_snippets::graph::dense_mst::*;
+/// // 0 1 2 3
+/// // 1 0 3 2    [1] [2] [1]
+/// // 2 3 0 1   0---1---3---2
+/// // 3 2 1 0
+/// let xor = |i, j| { Some(i^j) };
+/// let mst = dense_mst(4, xor);
+/// assert!(mst.is_connected);
+/// assert_eq!(mst.total_cost, 1+2+1);
+/// assert_eq!(mst.edges.len(), 3);
+/// 
+/// // . 1 . .
+/// // 1 . . .    [1]     [1]
+/// // . . . 1   0---1   2---3
+/// // . . 1 .
+/// let xor2 = |i, j| { (i^j == 1).then_some(i^j) };
+/// let mst2 = dense_mst(4, xor2);
+/// assert!(!mst2.is_connected);
+/// assert_eq!(mst2.total_cost, 1+1);
+/// assert_eq!(mst2.edges.len(), 2);
+/// ```
+/// 
+/// # Practice Problems
+/// - [BOJ 20390 완전그래프의 최소 스패닝 트리](https://www.acmicpc.net/problem/20390)
+/// - [USACO Mar2014 Silver1 Watering the Fields](https://www.acmicpc.net/problem/10021)
+/// - [USACO Open2019 Gold2 I Would Walk 500 Miles](https://www.acmicpc.net/problem/17193)
+pub mod dense_mst;
