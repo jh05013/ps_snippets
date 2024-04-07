@@ -37,6 +37,7 @@ pub mod geometry;
 pub mod graph;
 pub mod math;
 pub mod matrix;
+pub mod number;
 pub mod prime;
 pub mod rand;
 pub mod string;

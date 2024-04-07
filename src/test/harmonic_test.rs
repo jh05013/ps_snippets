@@ -1,6 +1,6 @@
 #[test]
 fn div_floors_test() {
-	use crate::math::div_floors::*;
+	use crate::math::harmonic::*;
 
 	fn div_floors_correct(n: u64) {
 		for (v, l, r) in div_floors(n) {

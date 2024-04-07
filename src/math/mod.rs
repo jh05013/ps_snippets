@@ -2,81 +2,6 @@
 //! 
 //! For prime-related utilities such as Eratosthenes sieve, check out the `prime` module.
 
-/// Modulo `1000000007` integers.
-/// 
-/// There is also a `998244353` version: see [`modint_998244353`].
-/// For any other prime modulo, copy-paste the source code and change
-/// the constant `MOD`.
-/// 
-/// # `Modint`
-/// 
-/// ## Initialization
-/// - `new(n)` constructs an integer for `n` modulo `1000000007`.
-/// - `modint(n)` is a shorthand for `Modint::new(n)`.
-/// 
-/// ## Operations
-/// - Input and output.
-/// - Conversion to/from `i32`.
-/// - All arithmetic operators, either in-place or not.
-///   Division takes $O(\log\ MOD)$.
-/// - `inv()` returns the multiplicative inverse in $O(\log\ MOD)$.
-/// - Negation.
-/// - `pow(n)` returns the `n`-th power in $O(\log n)$.
-/// 
-/// ## Caution
-/// Panics on division by or inversion of 0.
-/// 
-/// ## Examples
-/// ```
-/// # use ps_snippets::math::modint_1000000007::modint;
-/// let a = modint(12345);
-/// let b = modint(54321);
-/// assert_eq!(a*b, modint(12345i64 * 54321 % 1000000007));
-/// assert_eq!(a * a.inv(), modint(1));
-/// assert_eq!(a.pow(3), a*a*a);
-/// ```
-/// 
-/// ## Practice Problems
-/// - [BOJ 30155 Crazy Malvika discovers Crazy Fibonacci function](https://www.acmicpc.net/problem/30155) `Add`
-/// - [BOJ 11401 이항 계수 3](https://www.acmicpc.net/problem/11401) `Mul`, `Div`
-/// - [BOJ 13171 A](https://www.acmicpc.net/problem/13171) `pow`
-/// 
-/// # `Modfact`
-/// A modulo factorial map allowing for a constant-time modulo
-/// factorial for small values of `n`.
-/// 
-/// ## Initialization
-/// `new(n)` constructs a modulo factorial map up to `n`.
-/// 
-/// ## Fields
-/// - `fact[i]` is $i!$ modulo 1000000007.
-/// - `ifact[i]` is the inverse of $i!$ modulo 1000000007.
-/// 
-/// ## Queries
-/// - `len()` returns the length of `fact`.
-/// - `comb(n, r)` returns the binomial coefficient of `n` and `r`,
-///    modulo 1000000007, in $O(1)$.
-/// 
-/// ## Caution
-/// `comb` panics if `0 <= r <= n < fact.len()` is not satisfied.
-/// 
-/// ## Example
-/// ```
-/// # use ps_snippets::math::modint_1000000007::*;
-/// let mf = Modfact::new(10);
-/// assert_eq!(mf.fact[5], modint(5*4*3*2*1));
-/// assert_eq!(mf.fact[5] * mf.ifact[5], modint(1));
-/// assert_eq!(mf.comb(10, 4), modint(10*9*8*7/4/3/2/1));
-/// ```
-/// 
-/// ## Practice Problems
-/// - [BOJ 13977 이항 계수와 쿼리](https://www.acmicpc.net/problem/13977)
-/// 
-pub mod modint_1000000007;
-
-/// See `modint_1000000007`.
-pub mod modint_998244353;
-
 /// Greatest common divisor and least common multiple.
 /// - `Gcd` trait supports `a.gcd(b)`, the greatest common divisor.
 ///   If either a or b is 0, assume their GCD is the other one.
@@ -134,27 +59,30 @@ pub mod gcd;
 /// - [BOJ 17467 N! mod P (2)](https://www.acmicpc.net/problem/17467) (requires Wilson's theorem)
 pub mod barrett;
 
-/// Iterator for floor divisions of `n`.
+/// Iterator for division values of `n`.
 /// 
 /// It can be proven that for a non-negative integer $n$, the expression
 /// $\lfloor \frac{n}{x} \rfloor$ for positive integer $x$ can have
 /// $O(\sqrt{n})$ different values.
 /// 
 /// # Functions
-/// `div_floors(n)` returns an iterator. Each item is of the form
-/// `(k, l, r)`, where $k \geq 1$, which denotes that `n/x == k` for
-/// `x` in `[l..=r]`. The items are given in the decreasing order of `k`.
+/// - `div_floors(n)` returns an iterator. Each item is of the form
+///    `(k, l, r)`, where $k \geq 1$, which denotes that `floor(n/x) == k` for
+///    `x` in `[l..=r]`. The items are given in the decreasing order of `k`
+///    from `n` to `1`.
+/// - `div_ceils(n)` is the same, but `ceil(n/x) == k`, and from `n` to `2`.
 /// 
 /// Implementation note: only 1 division is carried out per item, which
 /// roughly maximizes the speed.
 /// 
 /// # Example
 /// ```
-/// # use ps_snippets::math::div_floors::div_floors;
+/// # use ps_snippets::math::harmonic::div_floors;
+/// # use ps_snippets::math::harmonic::div_ceils;
 /// /*
-/// x    1 2 3 4 5 6 7 8 9 10 11 12 13
+/// x           1 2 3 4 5 6 7 8 9 10 11 12 13
 /// ------------------------------------
-/// N/x 10 5 3 2 2 1 1 1 1  1  0  0  0
+/// floor(N/x) 10 5 3 2 2 1 1 1 1  1  0  0  0
 /// */
 /// let mut df = div_floors(10);
 /// assert_eq!(df.next(), Some((10, 1, 1)));
@@ -163,9 +91,23 @@ pub mod barrett;
 /// assert_eq!(df.next(), Some((2, 4, 5)));
 /// assert_eq!(df.next(), Some((1, 6, 10)));
 /// assert_eq!(df.next(), None);
+/// 
+/// /*
+/// x          1 2 3 4 5 6 7 8 9 10 11 12 13
+/// ------------------------------------
+/// ceil(N/x) 10 5 4 3 2 2 2 2 2  1  1  1  1
+/// */
+/// let mut df = div_ceils(10);
+/// assert_eq!(df.next(), Some((10, 1, 1)));
+/// assert_eq!(df.next(), Some((5, 2, 2)));
+/// assert_eq!(df.next(), Some((4, 3, 3)));
+/// assert_eq!(df.next(), Some((3, 4, 4)));
+/// assert_eq!(df.next(), Some((2, 5, 9)));
+/// assert_eq!(df.next(), None);
 /// ```
 /// 
 /// # Practice Problems
-/// - [LC Enumerate Quotients](https://judge.yosupo.jp/problem/enumerate_quotients) 1e12, 108 ms
-/// - [BOJ 26056 수열의 합 2](https://www.acmicpc.net/problem/26056) 1e14, twice in 436 ms
-pub mod div_floors;
+/// - [LC Enumerate Quotients](https://judge.yosupo.jp/problem/enumerate_quotients) 1e12, 108 ms, floor
+/// - [BOJ 26056 수열의 합 2](https://www.acmicpc.net/problem/26056) 1e14, twice in 436 ms, floor
+/// - [BOJ 15897 잘못 구현한 에라토스테네스의 체](https://www.acmicpc.net/problem/15897) ceil
+pub mod harmonic;
