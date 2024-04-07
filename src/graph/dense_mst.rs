@@ -30,7 +30,7 @@ mod dense_mst {
 				total_cost += mincost.clone();
 				edges.push((mincost, new_inn, inn));
 			}
-			for (prev_cost, out, inn) in candidates.iter_mut() {
+			for (prev_cost, out, inn) in &mut candidates {
 				let new_cost = cost((*out).min(new_inn), (*out).max(new_inn));
 				if cost_cmp(prev_cost, &new_cost).is_le() { continue; }
 				*prev_cost = new_cost; *inn = new_inn;

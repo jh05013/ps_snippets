@@ -34,7 +34,7 @@ pub mod div_floors {
 pub use div_floors::div_floors;
 
 pub mod div_ceils {
-	pub fn div_ceil(n: u64, x: u64) -> u64 {
+	pub const fn div_ceil(n: u64, x: u64) -> u64 {
 		n/x + if n%x == 0 { 0 } else { 1 }
 	}
 

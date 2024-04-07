@@ -1,19 +1,17 @@
 pub mod modint_1000000007 {
-	pub const MOD: i32 = 1000000007;
-	pub const MODL: i64 = MOD as i64;
+	pub const MOD: i32 = 1_000_000_007;
+	pub const MODL: i64 = 1_000_000_007;
+	pub const MODUL: u64 = 1_000_000_007;
+	pub const MODUS: usize = 1_000_000_007;
 	
-	use std::ops::*;
-	use std::fmt::*;
+	use std::{ops::*, fmt::*};
 	
 	#[derive(Default, Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
 	pub struct Modint { v: i32 }
-	pub fn modint(v: i64) -> Modint { Modint::new(v) }
-	
+
 	impl Modint {
-		pub fn new(v: i64) -> Modint { Self { v: v.rem_euclid(MODL) as i32 } }
-	
 		pub fn pow(&self, mut n: u64) -> Self {
-			let mut ans = Modint::new(1);
+			let mut ans = Self::from(1);
 			let mut a = *self;
 			while n != 0 {
 				if n&1 == 1 { ans*= a; }
@@ -24,7 +22,7 @@ pub mod modint_1000000007 {
 	
 		pub fn inv(&self) -> Self {
 			assert!(self.v != 0, "Cannot invert 0");
-			self.pow((MOD-2) as u64)
+			self.pow(MODUL-2)
 		}
 	}
 	
@@ -32,17 +30,32 @@ pub mod modint_1000000007 {
 	impl std::str::FromStr for Modint {
 		type Err = std::num::ParseIntError;
 		fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-			Ok(Self::new(s.parse::<i64>()?))
+			Ok(Self::from(s.parse::<i64>()?))
 		}
 	}
 	impl Display for Modint {
 		fn fmt(&self, f: &mut Formatter) -> Result { write!(f, "{}", self.v) }
 	}
 	impl From<Modint> for i32 {
-		fn from(num: Modint) -> i32 { num.v }
+		fn from(num: Modint) -> Self { num.v }
+	}
+	impl From<Modint> for i64 {
+		fn from(num: Modint) -> Self { Self::from(num.v) }
 	}
 	impl From<i32> for Modint {
-		fn from(num: i32) -> Modint { Modint::new(num as i64) }
+		fn from(num: i32) -> Self { Self { v: num.rem_euclid(MOD) } }
+	}
+	#[allow(clippy::as_conversions)]
+	impl From<i64> for Modint {
+		fn from(num: i64) -> Self { Self { v: num.rem_euclid(MODL) as i32 } }
+	}
+	#[allow(clippy::as_conversions)]
+	impl From<u64> for Modint {
+		fn from(num: u64) -> Self { Self { v: num.rem_euclid(MODUL) as i32 } }
+	}
+	#[allow(clippy::as_conversions)]
+	impl From<usize> for Modint {
+		fn from(num: usize) -> Self { Self { v: num.rem_euclid(MODUS) as i32 } }
 	}
 	
 	// arithmetic
@@ -66,12 +79,12 @@ pub mod modint_1000000007 {
 		fn sub(self, b: Self) -> Self { let mut z = self; z-= b; z }
 	}
 	impl MulAssign for Modint {
-		fn mul_assign(&mut self, b: Self) {
-			self.v = ((self.v as i64) * (b.v as i64) % MODL) as i32;
-		}
+		fn mul_assign(&mut self, b: Self) { *self = *self * b; }
 	}
 	impl Mul for Modint { type Output = Self;
-		fn mul(self, b: Self) -> Self { let mut z = self; z*= b; z }
+		fn mul(self, b: Self) -> Self { Self::from(
+			i64::from(self) * i64::from(b)
+		) }
 	}
 	impl DivAssign for Modint {
 		fn div_assign(&mut self, b: Self) { *self = *self / b; }
@@ -80,34 +93,5 @@ pub mod modint_1000000007 {
 	impl Div for Modint { type Output = Self;
 		fn div(self, b: Self) -> Self { self * b.inv() }
 	}
-	
-	// factorial
-	#[derive(Clone, Debug, Default)]
-	pub struct Modfact {
-		pub fact: Vec<Modint>,
-		pub ifact: Vec<Modint>,
-	}
-	
-	impl Modfact {
-		pub fn new(n: usize) -> Self {
-			let mut fact = vec![modint(1)];
-			for i in 1..=n {
-				fact.push(fact[i-1] * modint(i as i64));
-			}
-			let mut ifact = vec![fact[n].inv(); n+1];
-			for i in (0..n).rev() {
-				ifact[i] = ifact[i+1] * modint((i+1) as i64);
-			}
-			Self { fact, ifact }
-		}
-		pub fn len(&self) -> usize { self.fact.len() }
-	
-		pub fn comb(&self, n: usize, r: usize) -> Modint {
-			assert!(r <= n && n < self.len(),
-				"Bad comb-query values ({}, {})", n, r
-			);
-			self.fact[n] * self.ifact[r] * self.ifact[n-r]
-		}
-	}	
 }
-pub use modint_1000000007::{MOD, MODL, Modint, Modfact, modint};
+pub use modint_1000000007::{MOD, MODL, Modint};

@@ -10,6 +10,7 @@ pub mod barrett_mod {
 		}
 	
 		/// Returns `x` mod `n`.
+		#[allow(clippy::as_conversions)]
 		pub fn reduce(&self, x: u64) -> u64 {
 			let q = ((self.m * u128::from(x)) >> 64) as u64;
 			let r = x - q * self.n;

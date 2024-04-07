@@ -1,21 +1,23 @@
 pub mod dinic_mod {
 	#[derive(Clone, Debug)]
 	pub struct Edge {
-		pub src: usize, pub targ: usize,
-		res: u64, pub orig: u64,
+		src: usize, targ: usize,
+		res: u64, orig: u64,
 		rev: usize
 	}
 	#[derive(Copy, Clone, Debug)]
 	pub struct EdgeIndex(usize, usize);
 
 	impl Edge {
+		pub const fn direction(&self) -> (usize, usize) { (self.src, self.targ) }
+		pub const fn capacity(&self) -> u64 { self.orig }
 		pub const fn used(&self) -> u64 { self.orig - self.res }
 	}
 	
 	#[derive(Clone, Debug)]
 	pub struct Dinic {
-		pub n: usize,
-		pub adj: Vec<Vec<Edge>>,
+		n: usize,
+		adj: Vec<Vec<Edge>>,
 		dis: Vec<u32>,
 		pnt: Vec<usize>
 	}
@@ -26,6 +28,8 @@ pub mod dinic_mod {
 			n, adj: vec![vec![]; n],
 			dis: vec![0; n], pnt: vec![0; n]
 		}}
+		/// Returns the number of vertices.
+		pub fn vertex_count(&self) -> usize { self.n }
 
 		/// Connects from `s` to `e` with capacity `cap`,
 		/// and returns the edge index.

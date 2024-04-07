@@ -1,7 +1,6 @@
 // edited from https://bamgoesn.github.io/rust-ps-md/graphs/flow/mcmf.html
 // TODO: support edge lookup
-#[allow(clippy::cast_possible_truncation)]
-#[allow(clippy::cast_possible_wrap)]
+#[allow(clippy::as_conversions)]
 pub mod mcmf_mod {
 	use std::collections::VecDeque;
 

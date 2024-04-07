@@ -22,8 +22,8 @@ pub mod char_poly_mod {
 				let x = T::from(1) / self[piv][piv-1].clone();
 				for i in i+1..n {
 					let mul = self[i][piv-1].clone() * x.clone();
-					self.add_row(piv, -mul.clone(), i);
-					self.add_col(i, mul, piv);
+					self.add_row(piv, &-mul.clone(), i);
+					self.add_col(i, &mul, piv);
 				}
 			}
 		}
@@ -65,8 +65,8 @@ pub mod char_poly_mod {
 			let mut det = T::from(1);
 			while alpha + beta < n {
 				for i in 0..alpha {
-					b.add_col(i, -a[i][alpha].clone(), alpha);
-					a.add_col(i, -a[i][alpha].clone(), alpha);
+					b.add_col(i, &-a[i][alpha].clone(), alpha);
+					a.add_col(i, &-a[i][alpha].clone(), alpha);
 				}
 				for i in alpha..n-beta {
 					if a[i][alpha] != T::default() {
@@ -77,11 +77,12 @@ pub mod char_poly_mod {
 				}
 				if a[alpha][alpha] != T::default() {
 					det *= a[alpha][alpha].clone();
-					let v = T::from(1) / a[alpha][alpha].clone();
-					a.mul_row(alpha, v.clone()); b.mul_row(alpha, v);
+					let mul = T::from(1) / a[alpha][alpha].clone();
+					a.mul_row(alpha, &mul); b.mul_row(alpha, &mul);
 					for i in alpha+1..n {
-						b.add_row(alpha, -a[i][alpha].clone(), i);
-						a.add_row(alpha, -a[i][alpha].clone(), i);
+						let add = -a[i][alpha].clone();
+						b.add_row(alpha, &add, i);
+						a.add_row(alpha, &add, i);
 					}
 					alpha += 1;
 				}
@@ -107,17 +108,18 @@ pub mod char_poly_mod {
 						b.swap_row(pos, r);
 					}
 					det *= b[r][r].clone();
-					let v = T::from(1) / b[r][r].clone();
-					a.mul_row(r, v.clone()); b.mul_row(r, v);
+					let mul = T::from(1) / b[r][r].clone();
+					a.mul_row(r, &mul); b.mul_row(r, &mul);
 					for i in 0..r {
-						a.add_row(r, -b[i][r].clone(), i);
-						b.add_row(r, -b[i][r].clone(), i);
+						let add = -b[i][r].clone();
+						a.add_row(r, &add, i);
+						b.add_row(r, &add, i);
 					}
 					beta += 1;
 				}
 			}
 
-			let mut c = SquareMatrix::new(alpha);
+			let mut c = Self::new(alpha);
 			for i in 0..alpha { for j in 0..alpha {
 				c[i][j] = b[i][j].clone();
 			}}

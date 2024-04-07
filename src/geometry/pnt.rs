@@ -14,9 +14,11 @@ pub mod pnt_mod {
 	impl Coord for i32 {
 		#[inline] fn to_f64(&self) -> f64 { f64::from(*self) }
 	}
+	#[allow(clippy::as_conversions)]
 	impl Coord for i64 {
 		#[inline] fn to_f64(&self) -> f64 { *self as f64 }
 	}
+	#[allow(clippy::as_conversions)]
 	impl Coord for i128 {
 		#[inline] fn to_f64(&self) -> f64 { *self as f64 }
 	}

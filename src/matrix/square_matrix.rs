@@ -21,7 +21,9 @@ pub mod square_matrix_mod {
 		}
 		/// Cretaes a matrix out of `n * n` values.
 		pub fn from_line(n: usize, vals: &[T]) -> Self where T: Clone {
-			assert!(vals.len() == n*n);
+			assert!(vals.len() == n*n,
+				"{}x{} matrix cannot be made from {} values", n, n, vals.len()
+			);
 			if n == 0 { return Self { mat: vec![] }; }
 			Self { mat: vals.chunks(n).map(<[T]>::to_vec).collect() }
 		}
@@ -53,7 +55,7 @@ pub mod square_matrix_mod {
 	impl<T: Display> Display for SquareMatrix<T> {
 		fn fmt(&self, f: &mut Formatter) -> Result {
 			for row in &self.mat {
-				for x in row { write!(f, "{} ", x)?; }
+				for x in row { write!(f, "{x} ")?; }
 				writeln!(f)?;
 			}
 			Ok(())
@@ -129,6 +131,7 @@ pub mod square_matrix_mod {
 			for (j, bj) in b.mat.iter().enumerate() {
 			for (ai, si) in ans.mat.iter_mut().zip(self.mat.iter()) {
 			for (aik, bjk) in ai.iter_mut().zip(bj.iter()) {
+				// SAFETY: j < b.n == self.n
 				unsafe { *aik += si.get_unchecked(j).clone() * bjk.clone(); }
 			}}}
 			ans

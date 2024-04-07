@@ -2,12 +2,14 @@ pub mod rand_mod {
 	/// A random number generator.
 	pub struct Rng([u32; 4]);
 
+	#[allow(clippy::as_conversions)]
 	impl Rng {
 		/// Initializes a new generator.
 		#[allow(clippy::new_without_default)]
 		pub fn new() -> Self {
 			let mut seed = 0;
-			unsafe { std::arch::x86_64::_rdrand32_step(&mut seed) };
+			// SAFETY: yes
+			unsafe { std::arch::x86_64::_rdrand32_step(&mut seed); }
 			Self::seeded(seed)
 		}
 
@@ -49,9 +51,10 @@ pub mod rand_mod {
 		}
 
 		/// Shuffles the slice.
-		#[allow(clippy::cast_possible_truncation)]
 		pub fn shuffle<T>(&mut self, vals: &mut [T]) {
-			assert!(vals.len() < u32::MAX as usize);
+			assert!(vals.len() < u32::MAX as usize,
+				"This is PS, why do you need such a long list??"
+			);
 			for i in 1..vals.len() {
 				let j = self.next_u32(i as u32) as usize;
 				vals.swap(i, j);

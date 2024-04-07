@@ -11,27 +11,46 @@ rustdoc-args = [ "--html-in-header", "./katex.html" ]
 [dependencies]
 
 [lints.clippy]
-len_without_is_empty = "allow"
-uninlined_format_args = "warn"
-if_not_else = "warn"
-cast_lossless = "warn"
-needless_pass_by_value = "warn"
-semicolon_if_nothing_returned = "warn"
-unreadable_literal = "warn"
-similar_names = "warn"
+module_name_repetitions = "allow" # reimport for PS reasons
+module_inception = "allow" # reimport for PS reasons
+len_without_is_empty = "allow" # not always necessary
 
-# I use the following clippy setting:
-# cargo clippy -- -W clippy::pedantic -W clippy::nursery -A clippy::missing_panics_doc -A clippy::missing_errors_doc -A clippy::must_use_candidate -A clippy::wildcard_imports -A clippy::bool_to_int_with_if -A clippy::module_name_repetitions -A clippy::return_self_not_must_use -A clippy::cast_precision_loss -A clippy::doc_markdown -A clippy::uninlined_format_args -A clippy::enum_glob_use
-#
-# Reasons on why I allow some of them:
-# - missing_panics_doc: Docs are separated from codes for PS reasons. Panics are documented there.
-# - missing_errors_doc: Same as above.
-# - must_use_candidate: Too much for PS codes.
-# - wildcard_imports: Too much for PS codes.
-# - enum_glob_use: Too much for PS codes.
-# - bool_to_int_with_if: IMO converting a bool to an int is less intuitive.
-# - module_name_repetitions: I always re-import them in the same file.
-# - return_self_not_must_use: Too much for PS codes.
-# - cast_precision_loss: Only used in `pnt_mod::Coord::to_f64`, which is intended.
-# - doc_markdown: Trying to use Mathjax here, although I couldn't managed to do it yet.
-# - uninlined_format_args: `assert!(v, "{v}")` doesn't work in older versions, making it unsuitable for PS library.
+# pedantic
+unreadable_literal = "warn"
+needless_pass_by_value = "warn"
+explicit_iter_loop = "warn"
+many_single_char_names = "warn"
+
+# restriction
+as_conversions = "warn"
+deref_by_slicing = "warn"
+empty_enum_variants_with_brackets = "warn"
+empty_structs_with_brackets = "warn"
+format_push_string = "warn"
+get_unwrap = "warn"
+if_then_some_else_none = "warn"
+impl_trait_in_params = "warn"
+iter_over_hash_type = "warn"
+let_underscore_must_use = "warn"
+missing_assert_message = "warn"
+missing_asserts_for_indexing = "warn"
+multiple_inherent_impl = "warn"
+multiple_unsafe_ops_per_block = "warn"
+needless_raw_strings = "warn"
+panic_in_result_fn = "warn"
+partial_pub_fields = "warn"
+redundant_type_annotations = "warn"
+same_name_method = "warn"
+semicolon_inside_block = "warn"
+separated_literal_suffix = "warn"
+str_to_string = "warn"
+string_lit_chars_any = "warn"
+string_to_string = "warn"
+tests_outside_test_module = "warn"
+try_err = "warn"
+undocumented_unsafe_blocks = "warn"
+unnecessary_safety_comment = "warn"
+unnecessary_safety_doc = "warn"
+unnecessary_self_imports = "warn"
+
+# cargo clippy -- -W clippy::pedantic -W clippy::nursery -A clippy::missing_panics_doc -A clippy::missing_errors_doc -A clippy::must_use_candidate -A clippy::wildcard_imports -A clippy::module_name_repetitions -A clippy::return_self_not_must_use -A clippy::if_not_else -A clippy::uninlined_format_args -A clippy::doc_markdown

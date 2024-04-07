@@ -2,19 +2,18 @@ pub mod suffix_array_mod {
 	// https://bamgoesn.github.io/rust-ps-md/strings/salcp.html
 
 	pub fn suffix_array<T: Ord>(s: &[T]) -> Vec<usize> {
-		use std::collections::*;
 		if s.is_empty() { return vec![]; }
 		else if s.len() == 1 { return vec![0]; }
 
 		let n = s.len();
 		let mut r: Vec<usize> = vec![0; n*2];
-		let map: BTreeMap<_, _> = {
+		let map: std::collections::BTreeMap<_, _> = {
 			let mut sorted: Vec<_> = s.iter().collect();
 			sorted.sort_unstable();
 			sorted.into_iter().enumerate()
 				.map(|x| (x.1, x.0+1)).collect()
 		};
-		for i in 0..n { r[i] = *map.get(&s[i]).unwrap(); }
+		for i in 0..n { r[i] = map[&s[i]]; }
 
 		let m = n.max(map.len()) + 1;
 		let mut sa: Vec<usize> = (0..n).collect();
@@ -42,7 +41,7 @@ pub mod suffix_array_mod {
 			}
 			nr[sa[0]] = 1;
 			for i in 1..n {
-				nr[sa[i]] = nr[sa[i-1]] + if key!(sa[i-1]) < key!(sa[i]) { 1 } else { 0 };
+				nr[sa[i]] = nr[sa[i-1]] + usize::from(key!(sa[i-1]) < key!(sa[i]));
 			}
 			std::mem::swap(&mut r, &mut nr);
 			if r[sa[n-1]] == n { break; }
