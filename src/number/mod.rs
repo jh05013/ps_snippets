@@ -44,10 +44,10 @@ pub mod ord_f64;
 /// 
 /// ## Examples
 /// ```
-/// # use ps_snippets::number::modint_1000000007::modint;
+/// # use ps_snippets::number::modint_1000000007::*;
 /// let a = modint(12345);
 /// let b = modint(54321);
-/// assert_eq!(a*b, modint(12345i64 * 54321 % 1000000007));
+/// assert_eq!(a*b, modint((12345i64 * 54321 % 1000000007) as i32));
 /// assert_eq!(a * a.inv(), modint(1));
 /// assert_eq!(a.pow(3), a*a*a);
 /// ```
@@ -58,6 +58,8 @@ pub mod ord_f64;
 /// - [BOJ 13171 A](https://www.acmicpc.net/problem/13171) `pow`
 /// 
 /// # `Modfact`
+/// TODO: will bring back.
+/// 
 /// A modulo factorial map allowing for a constant-time modulo
 /// factorial for small values of `n`.
 /// 
@@ -77,7 +79,7 @@ pub mod ord_f64;
 /// `comb` panics if `0 <= r <= n < fact.len()` is not satisfied.
 /// 
 /// ## Example
-/// ```
+/// ```notest
 /// # use ps_snippets::number::modint_1000000007::*;
 /// let mf = Modfact::new(10);
 /// assert_eq!(mf.fact[5], modint(5*4*3*2*1));

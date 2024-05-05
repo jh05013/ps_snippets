@@ -17,7 +17,7 @@ pub mod oj_default_mod {
 	
 		pub fn try_read<T: FromStr>(&mut self) -> std::result::Result<T, String> {
 			let s = self.buffer.next().ok_or("EOF")?;
-			s.parse().or(Err(format!("Failed parse: {s}")))
+			s.parse().or(Err(format!("Failed parse: {}", s)))
 		}
 		pub fn read<T: FromStr>(&mut self) -> T { self.try_read().unwrap() }
 		pub fn i32(&mut self) -> i32 { self.read() }
@@ -34,11 +34,11 @@ pub mod oj_default_mod {
 			{ (0..n).map(|_| self.read_vec(m)).collect() }
 
 		pub fn write<T: Display>(&mut self, v: T) -> &mut Self
-			{ write!(self.out, "{v}").unwrap(); self }
+			{ write!(self.out, "{}", v).unwrap(); self }
 		pub fn writes<T: Display>(&mut self, vals: &[T]) -> &mut Self
 			{ for v in vals { self.write(v).sp(); } self }
 		pub fn debug<T: Debug>(&mut self, v: T) -> &mut Self
-			{ write!(self.out, "{v:?}").unwrap(); self }
+			{ write!(self.out, "{:?}", v).unwrap(); self }
 		pub fn sp(&mut self) -> &mut Self { self.write(' ') }
 		pub fn ln(&mut self) -> &mut Self { self.write('\n') }
 		pub fn quit<T: Display>(&mut self, v: T) -> !

@@ -55,7 +55,7 @@ pub mod square_matrix_mod {
 	impl<T: Display> Display for SquareMatrix<T> {
 		fn fmt(&self, f: &mut Formatter) -> Result {
 			for row in &self.mat {
-				for x in row { write!(f, "{x} ")?; }
+				for x in row { write!(f, "{} ", x)?; }
 				writeln!(f)?;
 			}
 			Ok(())

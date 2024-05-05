@@ -62,8 +62,8 @@ pub mod fenwick {
 			let mut step = self.len().next_power_of_two() >> 1;
 			let mut left = T::ID;
 			while step > 0 {
-				let Some(val) = self.0.get(i + step-1) else {
-					step >>= 1; continue;
+				let val = match self.0.get(i + step-1) {
+					Some(val) => val, None => { step >>= 1; continue }
 				};
 				let mut sum = left.clone();
 				T::add(&mut sum, val);

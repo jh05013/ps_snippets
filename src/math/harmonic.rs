@@ -61,7 +61,7 @@ pub mod div_ceils {
 			if x == 1 { return None; }
 			let new_last = div_ceil(n, x-1) - 1;
 			let item = Some((x, self.last + 1, new_last));
-			(self.x, self.last) = (x-1, new_last);
+			self.x = x-1; self.last = new_last;
 			item
 		}
 	}

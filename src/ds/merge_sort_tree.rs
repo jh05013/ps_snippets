@@ -6,7 +6,7 @@ pub mod merge_sort_tree_mod {
 		tree: Vec<Vec<T>>,
 	}
 
-	impl<T: Clone + PartialOrd + std::fmt::Display> MergeSortTree<T> {
+	impl<T: Clone + PartialOrd> MergeSortTree<T> {
 		/// Constructs a new merge-sort tree out of `vals`.
 		pub fn new(vals: Vec<T>) -> Self {
 			let n = vals.len();
@@ -24,12 +24,12 @@ pub mod merge_sort_tree_mod {
 		}
 		/// Returns the size of `vals`.
 		#[allow(clippy::len_without_is_empty)]
-		pub const fn len(&self) -> usize { self.n }
+		pub fn len(&self) -> usize { self.n }
 
 		/// Returns the number of elements in `vals[l..=r]` whose value lies in `[val_l..=val_r]`.
 		pub fn count(&self, l: usize, r: usize, val_l: &T, val_r: &T) -> usize {
 			assert!(l <= r && r < self.n, "Bad query range [{}, {}]", l, r);
-			assert!(val_l <= val_r, "Bad query-value range [{}, {}]", val_l, val_r);
+			assert!(val_l <= val_r, "Bad query-value range");
 			let mut ans = 0;
 			let (mut l, mut r) = (l + self.n, r + self.n+1);
 			while l < r {

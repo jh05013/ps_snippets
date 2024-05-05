@@ -124,7 +124,7 @@ pub mod merge_sort_tree;
 /// # use ps_snippets::ds::fenwick::*;
 /// let mut fen = Fenwick::<i32>::from(vec![1, 2, 3, 4, 5]);
 /// assert_eq!(fen.prefix_sum(3), 1+2+3+4);
-/// fen.add(2, 4); // [1, 2, 7, 4, 5]
+/// fen.add(2, &4); // [1, 2, 7, 4, 5]
 /// assert_eq!(fen.range_sum(1, 3), 2+7+4);
 /// 
 /// assert_eq!(fen.partition_point(|&x| x < 1), 0);
@@ -140,14 +140,14 @@ pub mod merge_sort_tree;
 /// impl FenwickOp for Moom {
 ///     type V = i32;
 ///     const ID: i32 = i32::MIN;
-///     fn add(cur: &mut i32, val: i32) {
-///         *cur = (*cur).max(val);
+///     fn add(cur: &mut i32, val: &i32) {
+///         *cur = (*cur).max(*val);
 ///     }
 /// }
 /// 
 /// let mut fen = Fenwick::<Moom>::from(vec![1, 3, 2]);
 /// assert_eq!(fen.prefix_sum(2), 3);
-/// fen.add(0, 5); // [5, 3, 2]
+/// fen.add(0, &5); // [5, 3, 2]
 /// assert_eq!(fen.prefix_sum(2), 5);
 /// ```
 /// 

@@ -139,9 +139,9 @@ pub mod ubigint_mod {
 	//////////////// Basic/helper stuff ////////////////
 	impl UbigInt {
 		pub fn len(&self) -> usize {
-			let x = self.0.last().unwrap();
-			let last_len = usize::try_from((*x+1).ilog10()).unwrap();
-			self.0.len()*D - (D - last_len)
+			if self.is_zero() { return 0; }
+			let x = format!("{}", self.0.last().unwrap());
+			self.0.len()*D - (D - x.len())
 		}
 		fn raw_len(&self) -> usize { self.0.len() }
 
@@ -198,8 +198,8 @@ pub mod ubigint_mod {
 			fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 				if self.is_zero() { return write!(f, "0"); }
 				for (i, v) in self.0.iter().rev().enumerate() {
-					if i == 0 { write!(f, "{v}")?; }
-					else { write!(f, "{v:05}")?; } // TODO don't hardcode
+					if i == 0 { write!(f, "{}", v)?; }
+					else { write!(f, "{:05}", v)?; } // TODO don't hardcode
 				}
 				Ok(())
 			}
@@ -241,7 +241,7 @@ pub mod ubigint_mod {
 
 		impl SubAssign for UbigInt {
 			fn sub_assign(&mut self, mut rhs: Self) {
-				assert!(self >= &mut rhs, "{self:?} - {rhs:?} < 0");
+				assert!(self >= &mut rhs, "{:?} - {:?} < 0", self, rhs);
 				if self.is_zero() { return; }
 				self.0[0] += 1;
 				for a in &mut self.0 { *a += BASE-1; }

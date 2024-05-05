@@ -7,10 +7,10 @@ fn div_floors_test() {
 			assert_eq!(v, n / l);
 			assert_eq!(v, n / r);
 			assert!(l == 1 || v != n / (l-1),
-				"wrong left end for {n}: ({v}, {l}, {r})"
+				"wrong left end for {}: ({}, {}, {})", n,v,l,r
 			);
 			assert!(v != n / (r+1),
-				"wrong right end for {n}: ({v}, {l}, {r})"
+				"wrong right end for {}: ({}, {}, {})", n,v,l,r
 			);
 		}
 	}

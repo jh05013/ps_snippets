@@ -87,7 +87,7 @@ pub mod mcmf;
 /// // 1 . . .    [1]     [1]
 /// // . . . 1   0---1   2---3
 /// // . . 1 .
-/// let xor2 = |i, j| { (i^j == 1).then_some(i^j) };
+/// let xor2 = |i, j| { if i^j == 1 { Some(i^j) } else { None } };
 /// let mst2 = dense_mst(4, xor2);
 /// assert!(!mst2.is_connected);
 /// assert_eq!(mst2.total_cost, 1+1);

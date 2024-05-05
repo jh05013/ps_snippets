@@ -32,7 +32,7 @@ pub mod pnt_mod {
 		pub x: T, pub y: T
 	}
 
-	#[inline] pub const fn pnt<T: Coord>(x: T, y: T) -> Pnt<T> { Pnt{x,y} }
+	#[inline] pub fn pnt<T: Coord>(x: T, y: T) -> Pnt<T> { Pnt{x,y} }
 
 	impl<T: Coord> Pnt<T> {
 		/// Squared distance from (0, 0).

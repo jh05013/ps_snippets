@@ -10,12 +10,12 @@ pub mod queue_min_mod {
 
 	impl<T: PartialOrd> QueueMin<T> {
 		/// Initializes an empty queue.
-		pub const fn new() -> Self { Self { q: VecDeque::new(), i: 0, j: 0 } }
+		pub fn new() -> Self { Self { q: VecDeque::new(), i: 0, j: 0 } }
 
 		/// Returns the number of elements.
-		pub const fn len(&self) -> usize { self.j - self.i }
+		pub fn len(&self) -> usize { self.j - self.i }
 		/// Returns `true` iff empty.
-		pub const fn is_empty(&self) -> bool { self.i == self.j }
+		pub fn is_empty(&self) -> bool { self.i == self.j }
 
 		/// Pushes `v` into the queue.
 		pub fn push(&mut self, v: T) {
@@ -30,7 +30,9 @@ pub mod queue_min_mod {
 		/// Pops from the queue and returns `true` if the queue is not empty;
 		/// otherwise returns `false`.
 		pub fn pop(&mut self) -> bool {
-			let Some(y) = self.q.front() else { return false };
+			let y = match self.q.front() {
+				Some(y) => y, None => return false
+			};
 			if y.1 == self.i { self.q.pop_front(); }
 			self.i += 1;
 			true

@@ -14,14 +14,13 @@ pub mod rand_mod {
 		}
 
 		pub fn seeded(seed: u32) -> Self {
-			let mut prev = seed;
-			Self(std::array::from_fn(|_| {
-				prev = Self::split_mix(prev); prev
-			}))
+			let a = seed; let b = Self::split_mix(a);
+			let c = Self::split_mix(b); let d = Self::split_mix(c);
+			Self([a,b,c,d])
 		}
 
 		const fn split_mix(v: u32) -> u32 {
-			let mut z =  v.wrapping_add(0x9e37_79b9);
+			let mut z = v.wrapping_add(0x9e37_79b9);
 			z = (z ^ (z >> 15)).wrapping_mul(0x85eb_ca6b);
 			z = (z ^ (z >> 13)).wrapping_mul(0xc2b2_ae35);
 			z ^ (z >> 16)

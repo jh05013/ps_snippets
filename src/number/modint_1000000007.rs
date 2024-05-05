@@ -93,5 +93,7 @@ pub mod modint_1000000007 {
 	impl Div for Modint { type Output = Self;
 		fn div(self, b: Self) -> Self { self * b.inv() }
 	}
+
+	pub fn modint(v: i32) -> Modint { Modint { v } }
 }
-pub use modint_1000000007::{MOD, MODL, Modint};
+pub use modint_1000000007::{MOD, MODL, Modint, modint};

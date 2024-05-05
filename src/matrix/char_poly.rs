@@ -95,7 +95,9 @@ pub mod char_poly_mod {
 						if b[i][r] != T::default() { pos = Some(i); break; }
 					}
 
-					let Some(pos) = pos else { return vec![]; };
+					let pos = match pos {
+						Some(pos) => pos, None => return vec![]
+					};
 					if pos < alpha {
 						a.swap_row(pos, alpha-1); b.swap_row(pos, alpha-1);
 						a.swap_col(pos, alpha-1); b.swap_col(pos, alpha-1);

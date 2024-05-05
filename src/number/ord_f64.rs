@@ -23,7 +23,7 @@ pub mod ord_f64 {
 	}
 	impl Ord for OrdF64 {
 		fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-			self.partial_cmp(other).unwrap()
+			self.0.partial_cmp(&other.0).unwrap()
 		}
 	}
 
