@@ -14,6 +14,8 @@ rustdoc-args = [ "--html-in-header", "./katex.html" ]
 module_name_repetitions = "allow" # reimport for PS reasons
 module_inception = "allow" # reimport for PS reasons
 len_without_is_empty = "allow" # not always necessary
+new_without_default = "allow" # not always necessary
+multiple_inherent_impl = "allow" # easy navigation for very long structs
 
 # pedantic
 unreadable_literal = "warn"
@@ -34,7 +36,6 @@ iter_over_hash_type = "warn"
 let_underscore_must_use = "warn"
 missing_assert_message = "warn"
 missing_asserts_for_indexing = "warn"
-multiple_inherent_impl = "warn"
 multiple_unsafe_ops_per_block = "warn"
 needless_raw_strings = "warn"
 panic_in_result_fn = "warn"

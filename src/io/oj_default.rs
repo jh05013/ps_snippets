@@ -15,9 +15,9 @@ pub mod oj_default_mod {
 			Self { buffer: input, out: BufWriter::with_capacity(1<<18, stdout()) }
 		}
 	
-		pub fn try_read<T: FromStr>(&mut self) -> std::result::Result<T, &str> {
-			self.buffer.next().ok_or("EOF")?
-				.parse().or(Err("Failed parse"))
+		pub fn try_read<T: FromStr>(&mut self) -> std::result::Result<T, String> {
+			let s = self.buffer.next().ok_or("EOF")?;
+			s.parse().or(Err(format!("Failed parse: {s}")))
 		}
 		pub fn read<T: FromStr>(&mut self) -> T { self.try_read().unwrap() }
 		pub fn i32(&mut self) -> i32 { self.read() }

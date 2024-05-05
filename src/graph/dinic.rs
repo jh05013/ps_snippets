@@ -14,7 +14,7 @@ pub mod dinic_mod {
 		pub const fn used(&self) -> u64 { self.orig - self.res }
 	}
 	
-	#[derive(Clone, Debug)]
+	#[derive(Clone, Debug, Default)]
 	pub struct Dinic {
 		n: usize,
 		adj: Vec<Vec<Edge>>,
@@ -107,3 +107,44 @@ pub mod dinic_mod {
 	}
 }
 pub use dinic_mod::Dinic;
+
+pub mod mincut_modeller {
+	use super::Dinic;
+
+	#[derive(Clone, Debug, Default)]
+	pub struct MincutModeller {
+		n: usize,
+		inner: Dinic,
+		score_offset: i128,
+	}
+
+	impl MincutModeller {
+		pub fn new(n: usize) -> Self {
+			Self { n, inner: Dinic::new(n+2), score_offset: 0 }
+		}
+		pub fn object_count(&self) -> usize { self.n }
+		
+		pub fn bonus_on_pick(&mut self, i: usize, bonus: u64) {
+			self.score_offset += i128::from(bonus);
+			self.inner.connect(self.n, i, bonus);
+		}
+		pub fn penalty_on_pick(&mut self, i: usize, penalty: u64) {
+			self.inner.connect(i, self.n+1, penalty);
+		}
+		pub fn bonus_on_unpick(&mut self, i: usize, bonus: u64) {
+			self.score_offset += i128::from(bonus);
+			self.inner.connect(i, self.n+1, bonus);
+		}
+		pub fn penalty_on_unpick(&mut self, i: usize, penalty: u64) {
+			self.inner.connect(self.n, i, penalty);
+		}
+		pub fn penalty_on_yesno(&mut self, yes: usize, no: usize, penalty: u64) {
+			self.inner.connect(yes, no, penalty);
+		}
+
+		pub fn solve(&mut self) -> (i128, Vec<usize>) {
+			let (mf, mincut) = self.inner.min_cut(self.n, self.n+1);
+			(self.score_offset - i128::from(mf), mincut)
+		}
+	}
+} pub use mincut_modeller::MincutModeller;
