@@ -6,3 +6,5 @@
 /// 
 /// TODO: change to a struct.
 pub mod suffix_array;
+
+pub mod rabin_karp;
