@@ -111,3 +111,34 @@ pub mod barrett;
 /// - [BOJ 26056 수열의 합 2](https://www.acmicpc.net/problem/26056) 1e14, twice in 436 ms, floor
 /// - [BOJ 15897 잘못 구현한 에라토스테네스의 체](https://www.acmicpc.net/problem/15897) ceil
 pub mod harmonic;
+
+/// Super large integers.
+/// 
+/// `UbigInt` is unsigned and `BigInt` is signed. Both support
+/// arithmetic operations (with $O(nlogn)$ multiplication and division),
+/// comparison, and IO.
+/// Signed division follows the C/Rust definition,
+/// and signed euclidean division is available via `BigInt::divmod_euclid`.
+/// 
+/// TODO: document stuff. For now, look inside the structs.
+/// 
+/// TODO: optimize division.
+/// 
+/// # Test Problems
+/// - Unsigned addition
+///   - [BOJ 10757 큰 수 A+B](https://www.acmicpc.net/problem/10757)
+/// - Signed addition
+///   - [BOJ 15740 A+B - 9](https://www.acmicpc.net/problem/15740)
+///   - [LC Addition of Big Integers](https://judge.yosupo.jp/problem/addition_of_big_integers)
+/// - Unsigned multiplication
+///   - [BOJ 22289 큰 수 곱셈 (3)](https://www.acmicpc.net/problem/22289)
+/// - Signed multiplication
+///   - [LC Multiplication of Big Integers](https://judge.yosupo.jp/problem/multiplication_of_big_integers)
+/// - Unsigned division
+///   - [BOJ 1271 엄청난 부자2](https://www.acmicpc.net/problem/1271)
+///   - [BOJ 2407 조합](https://www.acmicpc.net/problem/2407)
+///   - [LC Division of Big Integers](https://judge.yosupo.jp/problem/division_of_big_integers) (won't pass... TODO...)
+/// - Signed division
+///   - [BOJ 16428 A/B - 3](https://www.acmicpc.net/problem/16428)
+///   - [BOJ 1287 할 수 있다](https://www.acmicpc.net/problem/1287)
+pub mod bigint;
