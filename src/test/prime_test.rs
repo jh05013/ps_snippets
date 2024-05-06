@@ -1,6 +1,31 @@
-/*
 #[cfg(test)]
 
+#[test]
+fn basic_sieve_discard_test() {
+	use crate::prime::basic_sieve_discard::*;
+
+	let p100 = vec![2, 3, 5, 7, 11,
+		13, 17, 19, 23, 29,
+		31, 37, 41, 43, 47,
+		53, 59, 61, 67, 71,
+		73, 79, 83, 89, 97
+	];
+
+	let real_primes = |n: usize| {
+		p100.iter().copied().filter(|x| *x <= n)
+			.collect::<Vec<_>>()
+	};
+	for n in 0..=100 {
+		assert_eq!(primes(n), real_primes(n));
+	}
+
+	assert_eq!(
+		primes(2000000).into_iter().sum::<usize>(),
+		142_913_828_922
+	);
+}
+
+/*
 #[test]
 fn prime_sqrt_test() {
 	use crate::math::prime_sqrt::*;
@@ -33,7 +58,9 @@ fn prime_sqrt_test() {
 		}
 	}
 }
+*/
 
+/*
 #[test]
 fn factorization_sqrt_test() {
 	use crate::math::prime_sqrt::*;

@@ -132,11 +132,12 @@ pub mod harmonic;
 ///   - [LC Addition of Big Integers](https://judge.yosupo.jp/problem/addition_of_big_integers)
 /// - Unsigned multiplication
 ///   - [BOJ 22289 큰 수 곱셈 (3)](https://www.acmicpc.net/problem/22289)
+///   - [SPOJ VFMUL](https://www.spoj.com/problems/VFMUL/)
 /// - Signed multiplication
 ///   - [LC Multiplication of Big Integers](https://judge.yosupo.jp/problem/multiplication_of_big_integers)
 /// - Unsigned division
 ///   - [BOJ 1271 엄청난 부자2](https://www.acmicpc.net/problem/1271)
-///   - [BOJ 2407 조합](https://www.acmicpc.net/problem/2407)
+///   - [SPOJ VFDIV](https://www.spoj.com/problems/VFDIV/)
 ///   - [LC Division of Big Integers](https://judge.yosupo.jp/problem/division_of_big_integers) (won't pass... TODO...)
 /// - Signed division
 ///   - [BOJ 16428 A/B - 3](https://www.acmicpc.net/problem/16428)
