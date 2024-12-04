@@ -1,8 +1,10 @@
 *.code-workspace
 
 src/main.rs
+sub.rs
 *.txt
 
 # Added by cargo
 
 /target
+crates/*/target
