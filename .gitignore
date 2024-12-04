@@ -1,4 +1,3 @@
-book
 *.code-workspace
 
 src/main.rs
