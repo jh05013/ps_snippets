@@ -88,6 +88,14 @@ impl<R: BufRead, W: Write> OJ<R, W> {
         self.tokens.pop().unwrap()
     }
 
+    /// Reads and returns the list of [`char`]s in `word()`.
+    ///
+    /// ⚠️ Panics on EOF.
+    #[inline]
+    pub fn chars(&mut self) -> Vec<char> {
+        self.word().chars().collect()
+    }
+
     fn parse<T: FromStr>(&mut self) -> T
     where
         <T as FromStr>::Err: Debug,

@@ -10,5 +10,6 @@ rustdoc-args = [ "--html-in-header", "./katex.html" ]
 
 [dependencies]
 io = { path = "crates/io" }
+ord_f64 = { path = "crates/number/ord_f64" }
 
 [lints.clippy]
