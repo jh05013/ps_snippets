@@ -3,6 +3,10 @@
 version = 3
 
 [[package]]
+name = "dijkstra"
+version = "0.1.0"
+
+[[package]]
 name = "io"
 version = "0.1.0"
 
@@ -14,6 +18,7 @@ version = "0.1.0"
 name = "ps-snippets"
 version = "0.1.0"
 dependencies = [
+ "dijkstra",
  "io",
  "ord_f64",
 ]

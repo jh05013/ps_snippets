@@ -1,0 +1,13 @@
+[package]
+name = "_"
+version = "0.1.0"
+edition = "2015"
+license = "CC0-1.0"
+
+[dependencies]
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_panics_doc = "allow" # use ⚠️ instead
+
+nursery = { level = "warn", priority = -1 }
