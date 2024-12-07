@@ -1,0 +1,1 @@
+cargo equip --remove docs comments --minify libs o> src/sub.rs

@@ -1,7 +1,11 @@
 //! Easy I/O utilities.
 
 use std::{
-    fmt::{Debug, Display}, io::{self, BufRead, BufWriter, Lines, StdinLock, Stdout, Write}, iter::Peekable, process::exit, str::FromStr
+    fmt::{Debug, Display},
+    io::{self, BufRead, BufWriter, Lines, StdinLock, Stdout, Write},
+    iter::Peekable,
+    process::exit,
+    str::FromStr,
 };
 
 /// Easy reader/writer utility.
@@ -54,6 +58,10 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// Reads and returns a line.
     ///
     /// ⚠️ Panics on EOF.
+    ///
+    /// ⚠️ Panics if the current line hasn't finished reading.
+    /// For example, if the input is `1 2\n3 4`, you cannot
+    /// call `i32()` once and then `line()`.
     #[inline]
     pub fn line(&mut self) -> String {
         assert!(
@@ -85,6 +93,17 @@ impl<R: BufRead, W: Write> OJ<R, W> {
         <T as FromStr>::Err: Debug,
     {
         self.word().parse().unwrap()
+    }
+
+    /// Reads `n` values into a [`Vec`], separated by whitespace.
+    ///
+    /// ⚠️ Panics on EOF or failure to parse.
+    #[inline]
+    pub fn vec<T: FromStr>(&mut self, n: usize) -> Vec<T>
+    where
+        <T as FromStr>::Err: Debug,
+    {
+        (0..n).map(|_| self.parse()).collect()
     }
 
     /// Reads and returns an `i32`.
@@ -136,8 +155,6 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     }
 
     /// Writes `val` in [`Display`] format.
-    ///
-    /// ⚠️ Panics if writing fails for some reason.
     #[inline]
     pub fn write<T: Display>(&mut self, val: T) -> &mut Self {
         write!(self.out, "{val}").unwrap();
@@ -145,8 +162,6 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     }
 
     /// Writes `val` in [`Debug`] format.
-    ///
-    /// ⚠️ Panics if writing fails for some reason.
     #[inline]
     pub fn debug<T: Debug>(&mut self, val: T) -> &mut Self {
         write!(self.out, "{val:?}").unwrap();
@@ -154,24 +169,18 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     }
 
     /// Writes a blank character.
-    ///
-    /// ⚠️ Panics if writing fails for some reason.
     #[inline]
     pub fn sp(&mut self) -> &mut Self {
         self.write(' ')
     }
 
     /// Writes a newline character.
-    ///
-    /// ⚠️ Panics if writing fails for some reason.
     #[inline]
     pub fn ln(&mut self) -> &mut Self {
         self.write('\n')
     }
 
     /// Flushes the output.
-    ///
-    /// ⚠️ Panics if flushing fails for some reason.
     #[inline]
     pub fn flush(&mut self) -> &mut Self {
         self.out.flush().unwrap();
@@ -179,8 +188,6 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     }
 
     /// Writes `val` in [`Display`] format and quits.
-    ///
-    /// ⚠️ Panics if writing or flushing fails for some reason.
     #[inline]
     pub fn quit<T: Display>(&mut self, val: T) -> ! {
         self.write(val);
@@ -194,10 +201,7 @@ impl<R: BufRead, W: Write> OJ<R, W> {
 #[inline]
 pub fn stdin() -> OJ<StdinLock<'static>, BufWriter<Stdout>> {
     let lock = io::stdin().lock();
-    OJ::new(
-        lock,
-        BufWriter::with_capacity(1 << 18, io::stdout()),
-    )
+    OJ::new(lock, BufWriter::with_capacity(1 << 18, io::stdout()))
 }
 
 #[cfg(test)]
@@ -213,6 +217,17 @@ mod test {
         assert_eq!(oj.f64(), 0.5);
         assert_eq!(oj.line(), "as  df");
         assert!(oj.is_eof());
+    }
+
+    #[test]
+    fn test_read_vec() {
+        let input = "1 2\n3 4   the string".as_bytes();
+        let mut oj = OJ::new(input, vec![]);
+        assert_eq!(oj.vec::<u32>(4), vec![1, 2, 3, 4]);
+        assert_eq!(
+            oj.vec::<String>(2),
+            vec!["the".to_string(), "string".to_string()]
+        );
     }
 
     #[test]
