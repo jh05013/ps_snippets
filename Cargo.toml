@@ -14,6 +14,9 @@ io = { path = "crates/io" }
 # number
 ord_f64 = { path = "crates/number/ord_f64" }
 
+# math
+kth_root = { path = "crates/math/kth_root" }
+
 # graph
 dijkstra = { path = "crates/graph/dijkstra" }
 
