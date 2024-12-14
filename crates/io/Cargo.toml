@@ -1,0 +1,23 @@
+[package]
+name = "io"
+version = "0.1.0"
+edition = "2015"
+license = "CC0-1.0"
+
+[dependencies]
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_panics_doc = "allow" # use ⚠️ instead
+
+restriction = { level = "warn", priority = -1 }
+implicit_return = "allow"
+unwrap_used = "allow"
+expect_used = "allow"
+use_debug = "allow"
+missing_docs_in_private_items = "allow"
+missing_assert_message = "allow" # doesn't even work...
+std_instead_of_core = "allow"
+blanket_clippy_restriction_lints = "allow"
+
+nursery = { level = "warn", priority = -1 }

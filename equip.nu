@@ -1,0 +1,1 @@
+cargo equip --remove docs comments --minify libs --no-rustfmt o> src/sub.rs
