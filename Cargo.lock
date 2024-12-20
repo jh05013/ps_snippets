@@ -11,11 +11,19 @@ name = "dyadic"
 version = "0.1.0"
 
 [[package]]
+name = "gcd"
+version = "0.1.0"
+
+[[package]]
 name = "io"
 version = "0.1.0"
 
 [[package]]
 name = "kth_root"
+version = "0.1.0"
+
+[[package]]
+name = "modint"
 version = "0.1.0"
 
 [[package]]
@@ -28,7 +36,9 @@ version = "0.1.0"
 dependencies = [
  "dijkstra",
  "dyadic",
+ "gcd",
  "io",
  "kth_root",
+ "modint",
  "ord_f64",
 ]

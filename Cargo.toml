@@ -13,9 +13,11 @@ io = { path = "crates/io" }
 
 # number
 dyadic = { path = "crates/number/dyadic" }
+modint = { path = "crates/number/modint" }
 ord_f64 = { path = "crates/number/ord_f64" }
 
 # math
+gcd = { path = "crates/math/gcd" }
 kth_root = { path = "crates/math/kth_root" }
 
 # graph
