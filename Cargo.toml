@@ -20,6 +20,9 @@ ord_f64 = { path = "crates/number/ord_f64" }
 gcd = { path = "crates/math/gcd" }
 kth_root = { path = "crates/math/kth_root" }
 
+# prime
+primality = { path = "crates/prime/primality" }
+
 # graph
 dijkstra = { path = "crates/graph/dijkstra" }
 

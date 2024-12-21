@@ -26,7 +26,7 @@ jobs:
       - name: Clean docs folder
         run: cargo clean --doc
       - name: Build docs
-        run: cargo doc #--no-deps
+        run: mv src/__lib.rs src/lib.rs && cargo doc
       #- name: Add redirect
       #  run: echo '<meta http-equiv="refresh" content="0;url=ps_snippets/ps_snippets/index.html">' > target/ps_snippets/index.html
       - name: Remove lock file

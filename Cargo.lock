@@ -31,6 +31,10 @@ name = "ord_f64"
 version = "0.1.0"
 
 [[package]]
+name = "primality"
+version = "0.1.0"
+
+[[package]]
 name = "ps-snippets"
 version = "0.1.0"
 dependencies = [
@@ -41,4 +45,5 @@ dependencies = [
  "kth_root",
  "modint",
  "ord_f64",
+ "primality",
 ]
