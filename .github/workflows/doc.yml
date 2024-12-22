@@ -24,9 +24,9 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
       - name: Clean docs folder
-        run: cargo clean --doc
+        run: mv src/__lib.rs src/lib.rs && cargo clean --doc
       - name: Build docs
-        run: mv src/__lib.rs src/lib.rs && cargo doc
+        run: cargo doc
       #- name: Add redirect
       #  run: echo '<meta http-equiv="refresh" content="0;url=ps_snippets/ps_snippets/index.html">' > target/ps_snippets/index.html
       - name: Remove lock file
