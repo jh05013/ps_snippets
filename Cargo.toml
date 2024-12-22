@@ -21,6 +21,7 @@ gcd = { path = "crates/math/gcd" }
 kth_root = { path = "crates/math/kth_root" }
 
 # prime
+factorization = { path = "crates/prime/factorization" }
 primality = { path = "crates/prime/primality" }
 
 # graph

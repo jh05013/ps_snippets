@@ -11,6 +11,14 @@ name = "dyadic"
 version = "0.1.0"
 
 [[package]]
+name = "factorization"
+version = "0.1.0"
+dependencies = [
+ "gcd",
+ "primality",
+]
+
+[[package]]
 name = "gcd"
 version = "0.1.0"
 
@@ -40,6 +48,7 @@ version = "0.1.0"
 dependencies = [
  "dijkstra",
  "dyadic",
+ "factorization",
  "gcd",
  "io",
  "kth_root",
