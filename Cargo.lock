@@ -31,6 +31,10 @@ name = "kth_root"
 version = "0.1.0"
 
 [[package]]
+name = "lis"
+version = "0.1.0"
+
+[[package]]
 name = "modint"
 version = "0.1.0"
 
@@ -52,6 +56,7 @@ dependencies = [
  "gcd",
  "io",
  "kth_root",
+ "lis",
  "modint",
  "ord_f64",
  "primality",

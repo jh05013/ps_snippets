@@ -27,5 +27,8 @@ primality = { path = "crates/prime/primality" }
 # graph
 dijkstra = { path = "crates/graph/dijkstra" }
 
+# misc
+lis = { path = "crates/misc/lis" }
+
 [workspace]
 members = []
