@@ -15,7 +15,7 @@
 //! - [DMOJ Next Prime (Hard)](https://dmoj.ca/problem/bf3hard)
 
 // TODO: montgomery reduction
-fn mod_mul(a: u64, b: u64, m: u64) -> u64 {
+pub fn mod_mul(a: u64, b: u64, m: u64) -> u64 {
     use std::convert::TryInto;
     (u128::from(a) * u128::from(b) % u128::from(m))
         .try_into()
@@ -23,7 +23,7 @@ fn mod_mul(a: u64, b: u64, m: u64) -> u64 {
 }
 
 /// `a^n mod m`.
-fn mod_pow(mut a: u64, mut n: u64, m: u64) -> u64 {
+pub fn mod_pow(mut a: u64, mut n: u64, m: u64) -> u64 {
     let mut ans = 1;
     while n != 0 {
         if n & 1 == 1 {
@@ -42,7 +42,7 @@ const BASES: [u64; 7] = [2, 325, 9375, 28178, 450_775, 9_780_504, 1_795_265_022]
 ///
 /// Uses [Miller-Rabin test](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)
 /// with [7 witnesses](https://en.wikipedia.org/wiki/Strong_pseudoprime#Examples).
-/// 
+///
 /// 🕒 `O(log^2 n)`.
 ///
 /// # Example

@@ -7,7 +7,7 @@ pub struct Modint<const MOD: u32>(u32);
 
 impl<const MOD: u32> Modint<MOD> {
     #[must_use]
-    pub fn inner(&self) -> u32 {
+    pub const fn inner(&self) -> u32 {
         self.0
     }
 
@@ -137,8 +137,9 @@ mod test {
 
     #[test]
     fn test_modint_from() {
-        assert_eq!(0u32, ModintPs1::from(0u32).into());
-        assert_eq!(0u32, ModintPs1::from(1000000007u32).into());
-        assert_eq!(86u32, ModintPs1::from(2000000100u32).into());
+        type M = Modint<1000000007>;
+        assert_eq!(0u32, M::from(0u32).into());
+        assert_eq!(0u32, M::from(1000000007u32).into());
+        assert_eq!(86u32, M::from(2000000100u32).into());
     }
 }

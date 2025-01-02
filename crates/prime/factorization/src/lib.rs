@@ -1,12 +1,12 @@
 //! Integer factorization.
-//! 
+//!
 //! Uses [Pollard's rho algorithm](https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm).
 //! Tested against inputs that break when using a fixed
 //! PRNG; this implementation, of course, uses different
 //! PRNGs when one fails. See
 //! [this blog](https://lpha-z.hatenablog.com/entry/2023/01/15/231500)
 //! for more information.
-//! 
+//!
 //! # Examples
 //! - [LC Factorize](https://judge.yosupo.jp/problem/factorize)
 //! ```ignore
@@ -37,8 +37,6 @@ fn f(a: u64, step: u64, m: u64) -> u64 {
 /// If `n` is composite, returns `Some(d)` where
 /// `d` is a non-trivial divisor of `n`.
 /// Otherwise, returns `None`.
-/// 
-/// Uses [Pollard's rho algorithm](https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm).
 ///
 /// 🕒 Maybe `O(n^1/4)`.
 ///
@@ -77,9 +75,7 @@ pub fn find_nontrivial_divisor(n: u64) -> Option<u64> {
 
 /// Returns the factorization of `n` as the sorted list
 /// of prime factors. If `n <= 1`, returns `vec![]`.
-/// 
-/// Uses [Pollard's rho algorithm](https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm).
-/// 
+///
 /// 🕒 Maybe `O(n^1/4)`.
 ///
 /// # Example
@@ -108,11 +104,43 @@ pub fn factorize(n: u64) -> Vec<u64> {
     ans
 }
 
+/// Returns the factorization of `n` as the sorted list
+/// of (prime factor, exponent). If `n <= 1`, returns `vec![]`.
+///
+/// 🕒 Maybe `O(n^1/4)`.
+///
+/// # Example
+/// ```
+/// # use factorization::factorize_grouped;
+/// assert_eq!(factorize_grouped(12), vec![(2, 2), (3, 1)]);
+/// assert_eq!(factorize_grouped(17), vec![(17, 1)]);
+/// assert_eq!(factorize_grouped(1), vec![]);
+/// ```
+#[must_use]
+pub fn factorize_grouped(n: u64) -> Vec<(u64, usize)> {
+    if n <= 1 {
+        return vec![];
+    }
+
+    // `chunk_by` would've worked here but that breaks MSRV
+    let fac = factorize(n);
+    let mut ans = vec![];
+    let mut i = 0;
+    for (j, x) in fac.iter().enumerate() {
+        if fac[i] != *x {
+            ans.push((fac[i], j - i));
+            i = j;
+        }
+    }
+    ans.push((fac[i], fac.len() - i));
+    ans
+}
+
 #[cfg(test)]
 mod test {
     use primality::is_prime;
 
-    use crate::{factorize, find_nontrivial_divisor};
+    use crate::{factorize, factorize_grouped, find_nontrivial_divisor};
 
     #[test]
     fn test_find_nontrivial_divisor() {
@@ -175,5 +203,33 @@ mod test {
         do_test(7816550168663);
         do_test(814483663644399613);
         do_test(999381247093216751);
+    }
+
+    #[test]
+    fn test_factorize_grouped() {
+        fn do_test(n: u64) {
+            let fac = factorize_grouped(n);
+            for w in fac.windows(2) {
+                assert!(w[0] <= w[1]);
+            }
+            for (p, _) in &fac {
+                assert!(1 < *p && *p <= n, "{} {}", p, n);
+                assert!(is_prime(*p), "{}", p);
+            }
+            assert_eq!(
+                fac.into_iter()
+                    .map(|(p, e)| p.pow(e as u32))
+                    .product::<u64>(),
+                n
+            );
+        }
+
+        assert_eq!(factorize(0), vec![]);
+        for n in 1..=1000 {
+            do_test(n);
+        }
+        for n in u64::MAX - 100..=u64::MAX {
+            do_test(n);
+        }
     }
 }

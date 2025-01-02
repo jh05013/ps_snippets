@@ -1,5 +1,5 @@
 //! k-th root (i.e. `n ^ (1/k)`).
-//! 
+//!
 //! # Examples
 //! - [LC Kth Root (Integer)](https://judge.yosupo.jp/problem/kth_root_integer)
 //! ```ignore
@@ -16,7 +16,7 @@ pub trait KthRoot: Sized {
     /// Otherwise, returns `Err(floor(x))`.
     ///
     /// ⚠️ Panics if `k == 0`.
-    /// 
+    ///
     /// # Example
     /// ```
     /// # use kth_root::KthRoot;
@@ -29,7 +29,7 @@ pub trait KthRoot: Sized {
     /// Returns the ceiling of `self ^ (1/k)`.
     ///
     /// ⚠️ Panics if `k == 0`.
-    /// 
+    ///
     /// # Example
     /// ```
     /// # use kth_root::KthRoot;
@@ -43,7 +43,7 @@ pub trait KthRoot: Sized {
     /// Returns the floor of `self ^ (1/k)`.
     ///
     /// ⚠️ Panics if `k == 0`.
-    /// 
+    ///
     /// # Example
     /// ```
     /// # use kth_root::KthRoot;
