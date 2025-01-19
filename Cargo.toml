@@ -25,10 +25,13 @@ factorization = { path = "crates/prime/factorization" }
 primality = { path = "crates/prime/primality" }
 
 # graph
+bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
 dijkstra = { path = "crates/graph/dijkstra" }
+hungarian = { path = "crates/graph/hungarian" }
 
 # misc
 lis = { path = "crates/misc/lis" }
+dnc_opt = { path = "crates/misc/dnc_opt" }
 
 [workspace]
 members = []

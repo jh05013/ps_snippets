@@ -136,11 +136,44 @@ pub fn factorize_grouped(n: u64) -> Vec<(u64, usize)> {
     ans
 }
 
+/// Returns the divisors of `n` in increasing order.
+/// If `n == 0`, returns `vec![]`.
+///
+/// 🕒 Maybe `O(n^1/4)`.
+///
+/// # Example
+/// ```
+/// # use factorization::divisors;
+/// assert_eq!(divisors(6), vec![1, 2, 3, 6]);
+/// assert_eq!(divisors(1), vec![1]);
+/// assert_eq!(divisors(1), vec![]);
+/// ```
+pub fn divisors(n: u64) -> Vec<u64> {
+	if n == 0 {
+		return vec![];
+	}
+
+	let mut ans = vec![1];
+	for (p, exp) in factorize_grouped(n) {
+		let cnt = ans.len();
+		ans.reserve(cnt * (exp + 1));
+		let mut mult = 1;
+		for _ in 0..exp {
+			mult *= p;
+			for i in 0..cnt {
+				ans.push(ans[i] * mult);
+			}
+		}
+	}
+	ans.sort_unstable();
+	ans
+}
+
 #[cfg(test)]
 mod test {
     use primality::is_prime;
 
-    use crate::{factorize, factorize_grouped, find_nontrivial_divisor};
+    use crate::{divisors, factorize, factorize_grouped, find_nontrivial_divisor};
 
     #[test]
     fn test_find_nontrivial_divisor() {
@@ -232,4 +265,31 @@ mod test {
             do_test(n);
         }
     }
+
+	#[test]
+	fn test_divisors() {
+        fn do_test(n: u64) {
+			let divs = divisors(n);
+			for d in &divs {
+				assert_eq!(n % d, 0);
+			}
+			for w in divs.windows(2) {
+				assert!(w[0] < w[1]);
+			}
+			
+			let div_count = factorize_grouped(n)
+				.into_iter()
+				.map(|(_, e)| e + 1)
+				.product::<usize>();
+			assert_eq!(divs.len(), div_count);
+        }
+
+        assert_eq!(divisors(0), vec![]);
+        for n in 1..=1000 {
+            do_test(n);
+        }
+        for n in u64::MAX - 100..=u64::MAX {
+            do_test(n);
+        }
+	}
 }
