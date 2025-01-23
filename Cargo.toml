@@ -25,8 +25,12 @@ factorization = { path = "crates/prime/factorization" }
 primality = { path = "crates/prime/primality" }
 
 # graph
-bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
+edge_list = { path = "crates/graph/edge_list" }
+## distance
+bfs = { path = "crates/graph/bfs" }
 dijkstra = { path = "crates/graph/dijkstra" }
+## flow & matching
+bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
 hungarian = { path = "crates/graph/hungarian" }
 
 # misc

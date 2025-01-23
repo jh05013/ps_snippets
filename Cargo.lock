@@ -3,6 +3,13 @@
 version = 4
 
 [[package]]
+name = "bfs"
+version = "0.1.0"
+dependencies = [
+ "edge_list",
+]
+
+[[package]]
 name = "bottleneck_hungarian"
 version = "0.1.0"
 
@@ -16,6 +23,10 @@ version = "0.1.0"
 
 [[package]]
 name = "dyadic"
+version = "0.1.0"
+
+[[package]]
+name = "edge_list"
 version = "0.1.0"
 
 [[package]]
@@ -62,10 +73,12 @@ version = "0.1.0"
 name = "ps-snippets"
 version = "0.1.0"
 dependencies = [
+ "bfs",
  "bottleneck_hungarian",
  "dijkstra",
  "dnc_opt",
  "dyadic",
+ "edge_list",
  "factorization",
  "gcd",
  "hungarian",
