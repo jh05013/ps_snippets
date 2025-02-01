@@ -146,7 +146,7 @@ pub fn factorize_grouped(n: u64) -> Vec<(u64, usize)> {
 /// # use factorization::divisors;
 /// assert_eq!(divisors(6), vec![1, 2, 3, 6]);
 /// assert_eq!(divisors(1), vec![1]);
-/// assert_eq!(divisors(1), vec![]);
+/// assert_eq!(divisors(0), vec![]);
 /// ```
 pub fn divisors(n: u64) -> Vec<u64> {
 	if n == 0 {
