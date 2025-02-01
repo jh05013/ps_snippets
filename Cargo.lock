@@ -10,6 +10,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "binary_search"
+version = "0.1.0"
+
+[[package]]
+name = "bit_helper"
+version = "0.1.0"
+
+[[package]]
 name = "bottleneck_hungarian"
 version = "0.1.0"
 
@@ -74,6 +82,8 @@ name = "ps-snippets"
 version = "0.1.0"
 dependencies = [
  "bfs",
+ "binary_search",
+ "bit_helper",
  "bottleneck_hungarian",
  "dijkstra",
  "dnc_opt",

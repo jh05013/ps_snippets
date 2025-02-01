@@ -34,6 +34,8 @@ bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
 hungarian = { path = "crates/graph/hungarian" }
 
 # misc
+binary_search = { path = "crates/misc/binary_search" }
+bit_helper = { path = "crates/misc/bit_helper" }
 lis = { path = "crates/misc/lis" }
 dnc_opt = { path = "crates/misc/dnc_opt" }
 
