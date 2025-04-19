@@ -96,7 +96,11 @@ impl<R: BufRead, W: Write> OJ<R, W> {
         self.word().chars().collect()
     }
 
-    fn parse<T: FromStr>(&mut self) -> T
+    /// Reads and returns a `T`.
+    ///
+    /// ⚠️ Panics on EOF or failure to parse.
+    #[inline]
+    pub fn parse<T: FromStr>(&mut self) -> T
     where
         <T as FromStr>::Err: Debug,
     {

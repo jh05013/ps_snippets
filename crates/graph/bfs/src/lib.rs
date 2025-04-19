@@ -34,9 +34,9 @@ use edge_list::Graph;
 /// let dist = bfs(&graph, 0);
 /// assert_eq!(dist, vec![Some(0), Some(1), None, Some(2)]);
 /// ```
-pub fn bfs<T>(graph: &Graph<T>, v: usize) -> Vec<Option<usize>> {
+pub fn bfs<T>(graph: &Graph<T>, v: usize) -> Vec<Option<u32>> {
 	let mut dist = vec![None; graph.vertex_count()];
-	dist[v] = Some(0usize);
+	dist[v] = Some(0);
 	let mut queue = VecDeque::from([v]);
 	while let Some(from) = queue.pop_front() {
 		let d = dist[from].unwrap();

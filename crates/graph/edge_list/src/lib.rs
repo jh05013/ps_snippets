@@ -57,7 +57,7 @@ pub struct Graph<T> {
 impl<T> Graph<T> {
 	/// Returns an edge-less graph with `n` vertices.
 	/// 
-	/// ⚠️ Panics if `n < u32::MAX`. (That's 4e9 vertices!)
+	/// ⚠️ Panics if `n >= u32::MAX`. (That's 4e9 vertices!)
 	/// It turns out that using `u32` instead of `usize`
 	/// for vertex indices leads to non-trivial speedup...
 	#[inline]

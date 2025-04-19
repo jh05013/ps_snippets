@@ -12,7 +12,7 @@ rustdoc-args = [ "--html-in-header", "./katex.html" ]
 io = { path = "crates/io" }
 
 # number
-dyadic = { path = "crates/number/dyadic" }
+# dyadic = { path = "crates/number/dyadic" } TODO
 modint = { path = "crates/number/modint" }
 ord_f64 = { path = "crates/number/ord_f64" }
 
