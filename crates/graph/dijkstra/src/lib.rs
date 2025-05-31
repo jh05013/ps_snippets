@@ -54,16 +54,16 @@ where
     /// ```
     /// # use dijkstra::Dijkstra;
     /// let graph = Dijkstra::<u32>::new(4);
-    /// assert_eq!(graph.len(), 4);
+    /// assert_eq!(graph.n(), 4);
     /// ```
     #[inline]
     #[must_use]
-    pub fn len(&self) -> usize {
+    pub fn n(&self) -> usize {
         self.adj.len()
     }
     #[inline]
     fn verify_vertex(&self, v: usize) {
-        assert!((0..self.len()).contains(&v), "invalid vertex {}", v);
+        assert!(v < self.n(), "invalid vertex {}", v);
     }
 
     /// Adds an edge `a --> b` with cost `cost`.
@@ -122,9 +122,9 @@ where
     pub fn solve(&mut self, start: usize) -> &Vec<Option<T>> {
         self.verify_vertex(start);
 
-        let mut dist = vec![None; self.len()];
+        let mut dist = vec![None; self.n()];
         dist[start] = Some(T::default());
-        self.prv = vec![None; self.len()];
+        self.prv = vec![None; self.n()];
         let mut pq = BinaryHeap::from([Reverse((T::default(), start))]);
 
         while let Some(Reverse((d, v))) = pq.pop() {

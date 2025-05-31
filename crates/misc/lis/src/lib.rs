@@ -1,10 +1,10 @@
 //! [Longest increasing subsequence](https://en.wikipedia.org/wiki/Longest_increasing_subsequence).
-//! 
+//!
 //! Uses an `O(n logn)` binary search algorithm.
-//! 
+//!
 //! Returns the list of indices, so to recover the subsequence,
 //! use `seq[lis[0]], seq[lis[1]], ...`
-//! 
+//!
 //! # Example
 //! - [LC Longest Increasing Subsequence](https://judge.yosupo.jp/problem/longest_increasing_subsequence)
 //! ```ignore
@@ -16,11 +16,11 @@
 //!     oj.write(x).sp();
 //! }
 //! ```
-//! 
+//!
 //! To find a decreasing subsequence, use one of:
 //! - `lis_by(&seq, |x, y| x.cmp(y).reverse())`
 //! - `lis_by_key(&seq, |x| -x)`
-//! 
+//!
 //! To find a weakly increasing subsequence
 //! (i.e. it can contain equal elements), pair each
 //! element with its index.
@@ -30,7 +30,7 @@ use std::cmp::Ordering;
 
 /// Returns a longest increasing list of indices such that
 /// the `list[i]` values are also strictly increasing.
-/// 
+///
 /// If there can be multiple such lists, returns one
 /// of them. This function is deterministic though, so the
 /// same input gives the same output list (as long as the
@@ -51,7 +51,7 @@ pub fn lis<T: Ord>(list: &[T]) -> Vec<usize> {
 /// Returns a longest increasing list of indices such that
 /// the `list[i]` values are also strictly increasing
 /// in terms of `compare`.
-/// 
+///
 /// If there can be multiple such lists, returns one
 /// of them. This function is deterministic though, so the
 /// same input gives the same output list (as long as the
@@ -78,7 +78,7 @@ where
         return vec![];
     }
 
-	let n = list.len();
+    let n = list.len();
     let mut prev = Vec::<usize>::with_capacity(n);
     let mut optimal_ends = vec![];
     for (i, x) in list.iter().enumerate() {
@@ -106,7 +106,7 @@ where
 
 /// Returns a longest increasing list of indices such that
 /// the `f(list[i])` values are also strictly increasing.
-/// 
+///
 /// If there can be multiple such lists, returns one
 /// of them. This function is deterministic though, so the
 /// same input gives the same output list (as long as the
