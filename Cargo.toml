@@ -33,6 +33,9 @@ dijkstra = { path = "crates/graph/dijkstra" }
 bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
 hungarian = { path = "crates/graph/hungarian" }
 
+# geometry (simple)
+polygon_simple = { path = "crates/geom_simple/polygon_simple" }
+
 # misc
 binary_search = { path = "crates/misc/binary_search" }
 bit_helper = { path = "crates/misc/bit_helper" }

@@ -70,6 +70,10 @@ name = "ord_f64"
 version = "0.1.0"
 
 [[package]]
+name = "polygon_simple"
+version = "0.1.0"
+
+[[package]]
 name = "primality"
 version = "0.1.0"
 
@@ -92,5 +96,6 @@ dependencies = [
  "lis",
  "modint",
  "ord_f64",
+ "polygon_simple",
  "primality",
 ]
