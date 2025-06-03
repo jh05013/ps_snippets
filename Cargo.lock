@@ -54,6 +54,10 @@ name = "io"
 version = "0.1.0"
 
 [[package]]
+name = "io_short"
+version = "0.1.0"
+
+[[package]]
 name = "kth_root"
 version = "0.1.0"
 
@@ -92,6 +96,7 @@ dependencies = [
  "gcd",
  "hungarian",
  "io",
+ "io_short",
  "kth_root",
  "lis",
  "modint",

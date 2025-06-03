@@ -2,10 +2,9 @@
 
 use std::{
     fmt::{Debug, Display},
-    io::{self, BufRead, BufWriter, Lines, StdinLock, Stdout, Write},
+    io::{self, BufRead as X, BufWriter, Lines, StdinLock, Stdout, Write as Y},
     iter::Peekable,
-    process::exit,
-    str::FromStr,
+    str::FromStr as F,
 };
 
 /// Easy reader/writer utility.
@@ -27,15 +26,30 @@ use std::{
 ///   - [BOJ 15552 빠른 A+B](https://www.acmicpc.net/problem/15552)
 ///   - [LC Many A+B](https://judge.yosupo.jp/problem/many_aplusb)
 ///   - [DMOJ A Plus B](https://dmoj.ca/problem/aplusb)
-pub struct OJ<R: BufRead, W: Write> {
+pub struct OJ<R: X, W: Y> {
     lines: Peekable<Lines<R>>,
     out: W,
     tokens: Vec<String>,
 }
 
-impl<R: BufRead, W: Write> OJ<R, W> {
+macro_rules! a {
+    ($ty:ident) => {
+        impl<R: X, W: Y> OJ<R, W> {
+            pub fn $ty(&mut self) -> $ty {
+                self.parse()
+            }
+        }
+    };
+}
+a!(i32);
+a!(u32);
+a!(i64);
+a!(u64);
+a!(usize);
+a!(f64);
+
+impl<R: X, W: Y> OJ<R, W> {
     /// Builds a reader/writer.
-    #[inline]
     pub fn new(reader: R, writer: W) -> Self {
         Self {
             lines: reader.lines().peekable(),
@@ -50,7 +64,6 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// end with 0 or 1 newlines. I want to change the behavior
     /// someday, but for now, remember that it checks whether
     /// there are no more **lines** to read, not words.
-    #[inline]
     pub fn is_eof(&mut self) -> bool {
         self.tokens.is_empty() && self.lines.peek().is_none()
     }
@@ -62,12 +75,8 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// ⚠️ Panics if the current line hasn't finished reading.
     /// For example, if the input is `1 2\n3 4`, you cannot
     /// call `i32()` once and then `line()`.
-    #[inline]
     pub fn line(&mut self) -> String {
-        assert!(
-            self.tokens.is_empty(),
-            "please finish the current line before reading the next"
-        );
+        assert!(self.tokens.is_empty(), "please finish the current line");
         self.lines.next().expect("EOF").unwrap()
     }
 
@@ -75,7 +84,6 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// Each word is a string separated by spaces.
     ///
     /// ⚠️ Panics on EOF.
-    #[inline]
     pub fn word(&mut self) -> String {
         while self.tokens.is_empty() {
             self.tokens = self
@@ -91,7 +99,6 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// Reads and returns the list of [`char`]s in `word()`.
     ///
     /// ⚠️ Panics on EOF.
-    #[inline]
     pub fn chars(&mut self) -> Vec<char> {
         self.word().chars().collect()
     }
@@ -99,10 +106,9 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// Reads and returns a `T`.
     ///
     /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn parse<T: FromStr>(&mut self) -> T
+    pub fn parse<T: F>(&mut self) -> T
     where
-        <T as FromStr>::Err: Debug,
+        <T as F>::Err: Debug,
     {
         self.word().parse().unwrap()
     }
@@ -110,107 +116,51 @@ impl<R: BufRead, W: Write> OJ<R, W> {
     /// Reads `n` values into a [`Vec`], separated by whitespace.
     ///
     /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn vec<T: FromStr>(&mut self, n: usize) -> Vec<T>
+    pub fn vec<T: F>(&mut self, n: usize) -> Vec<T>
     where
-        <T as FromStr>::Err: Debug,
+        <T as F>::Err: Debug,
     {
         (0..n).map(|_| self.parse()).collect()
     }
 
-    /// Reads and returns an `i32`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn i32(&mut self) -> i32 {
-        self.parse()
-    }
-
-    /// Reads and returns an `i64`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn i64(&mut self) -> i64 {
-        self.parse()
-    }
-
-    /// Reads and returns an `usize`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn usize(&mut self) -> usize {
-        self.parse()
-    }
-
-    /// Reads and returns an `u32`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn u32(&mut self) -> u32 {
-        self.parse()
-    }
-
-    /// Reads and returns an `u64`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn u64(&mut self) -> u64 {
-        self.parse()
-    }
-
-    /// Reads and returns an `f64`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    #[inline]
-    pub fn f64(&mut self) -> f64 {
-        self.parse()
-    }
-
     /// Writes `val` in [`Display`] format.
-    #[inline]
     pub fn write<T: Display>(&mut self, val: T) -> &mut Self {
         write!(self.out, "{val}").unwrap();
         self
     }
 
     /// Writes `val` in [`Debug`] format.
-    #[inline]
     pub fn debug<T: Debug>(&mut self, val: T) -> &mut Self {
         write!(self.out, "{val:?}").unwrap();
         self
     }
 
     /// Writes a blank character.
-    #[inline]
     pub fn sp(&mut self) -> &mut Self {
         self.write(' ')
     }
 
     /// Writes a newline character.
-    #[inline]
     pub fn ln(&mut self) -> &mut Self {
         self.write('\n')
     }
 
     /// Flushes the output.
-    #[inline]
     pub fn flush(&mut self) -> &mut Self {
         self.out.flush().unwrap();
         self
     }
 
     /// Writes `val` in [`Display`] format and quits.
-    #[inline]
     pub fn quit<T: Display>(&mut self, val: T) -> ! {
         self.write(val);
         self.out.flush().unwrap();
-        exit(0)
+        std::process::exit(0)
     }
 }
 
 /// Builds a fast reader/writer out of stdin and stdout.
 #[must_use]
-#[inline]
 pub fn stdin() -> OJ<StdinLock<'static>, BufWriter<Stdout>> {
     let lock = io::stdin().lock();
     OJ::new(lock, BufWriter::with_capacity(1 << 18, io::stdout()))

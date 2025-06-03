@@ -9,7 +9,8 @@ edition = "2021"
 rustdoc-args = [ "--html-in-header", "./katex.html" ]
 
 [dependencies]
-io = { path = "crates/io" }
+io = { path = "crates/io/io" }
+io_short = { path = "crates/io/io_short" }
 
 # number
 # dyadic = { path = "crates/number/dyadic" } TODO
