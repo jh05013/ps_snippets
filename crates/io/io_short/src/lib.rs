@@ -3,12 +3,11 @@
 use std::{
     fmt::{Debug, Display},
     io::{self, BufWriter, Read, Stdout, Write},
-    str::FromStr as F,
 };
 
 /// Easy reader/writer utility, but with shorter code
 /// and less functionalities.
-/// 
+///
 /// This reads the entire stdin at initialization, and
 /// is slightly (1.1x?) slower than [`io`].
 ///
@@ -38,7 +37,7 @@ macro_rules! a {
     ($ty:ident) => {
         impl OJ {
             pub fn $ty(&mut self) -> $ty {
-                self.parse()
+                self.word().parse().unwrap()
             }
         }
     };
@@ -51,28 +50,12 @@ a!(usize);
 a!(f64);
 
 impl OJ {
+    pub fn try_word(&mut self) -> Option<String> {
+        self.inp.pop()
+    }
+
     pub fn word(&mut self) -> String {
         self.inp.pop().expect("EOF")
-    }
-
-    /// Reads and returns a `T`.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    pub fn parse<T: F>(&mut self) -> T
-    where
-        <T as F>::Err: Debug,
-    {
-        self.word().parse().unwrap()
-    }
-
-	/// Reads `n` values into a [`Vec`], separated by whitespace.
-    ///
-    /// ⚠️ Panics on EOF or failure to parse.
-    pub fn vec<T: F>(&mut self, n: usize) -> Vec<T>
-    where
-        <T as F>::Err: Debug,
-    {
-        (0..n).map(|_| self.parse()).collect()
     }
 
     /// Writes `val` in [`Display`] format.
