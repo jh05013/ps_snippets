@@ -22,6 +22,7 @@ use std::ops::*;
 /// the area is a half-integer.
 /// # Example
 /// ```
+/// # use polygon_simple::twice_signed_area;
 /// assert_eq!(
 ///     twice_signed_area(&[(0, 0), (2, 0), (2, 2), (0, 2)]),
 ///     8

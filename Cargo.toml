@@ -40,6 +40,7 @@ polygon_simple = { path = "crates/geom_simple/polygon_simple" }
 # misc
 binary_search = { path = "crates/misc/binary_search" }
 bit_helper = { path = "crates/misc/bit_helper" }
+calendar = { path = "crates/misc/calendar" }
 lis = { path = "crates/misc/lis" }
 dnc_opt = { path = "crates/misc/dnc_opt" }
 
