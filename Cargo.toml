@@ -25,6 +25,9 @@ kth_root = { path = "crates/math/kth_root" }
 factorization = { path = "crates/prime/factorization" }
 primality = { path = "crates/prime/primality" }
 
+# string
+ascii = { path = "crates/string/ascii" }
+
 # graph
 edge_list = { path = "crates/graph/edge_list" }
 ## distance

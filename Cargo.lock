@@ -3,6 +3,10 @@
 version = 3
 
 [[package]]
+name = "ascii"
+version = "0.1.0"
+
+[[package]]
 name = "bfs"
 version = "0.1.0"
 dependencies = [
@@ -89,6 +93,7 @@ version = "0.1.0"
 name = "ps-snippets"
 version = "0.1.0"
 dependencies = [
+ "ascii",
  "bfs",
  "binary_search",
  "bit_helper",
