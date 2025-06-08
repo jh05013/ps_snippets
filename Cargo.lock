@@ -50,6 +50,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "fraction"
+version = "0.1.0"
+dependencies = [
+ "gcd",
+]
+
+[[package]]
 name = "gcd"
 version = "0.1.0"
 
@@ -103,6 +110,7 @@ dependencies = [
  "dnc_opt",
  "edge_list",
  "factorization",
+ "fraction",
  "gcd",
  "hungarian",
  "io",

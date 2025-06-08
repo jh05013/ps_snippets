@@ -14,6 +14,7 @@ io_short = { path = "crates/io/io_short" }
 
 # number
 # dyadic = { path = "crates/number/dyadic" } TODO
+fraction = { path = "crates/number/fraction" }
 modint = { path = "crates/number/modint" }
 ord_f64 = { path = "crates/number/ord_f64" }
 
