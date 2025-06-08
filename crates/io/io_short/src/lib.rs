@@ -50,8 +50,8 @@ a!(usize);
 a!(f64);
 
 impl OJ {
-    pub fn try_word(&mut self) -> Option<String> {
-        self.inp.pop()
+    pub fn is_eof(&mut self) -> bool {
+        self.inp.is_empty()
     }
 
     pub fn word(&mut self) -> String {

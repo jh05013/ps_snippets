@@ -13,7 +13,7 @@
 //! efficiency, add `alias e = nu equip.nu` at `config.nu`.
 //! 
 //! # Supported Versions
-//! Since most online judges don't update their compilers frequently,
+//! Since some online judges have rather old compilers,
 //! it is important to support much older versions of Rust.
 //! However, we can't go all the way back to like 1.0 since that would
 //! limit the implementation too much.
