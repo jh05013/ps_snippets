@@ -82,27 +82,21 @@ impl FromStr for Frac64 {
         let mut split = s.split('/');
 
         // numerator
-        let numer = split.next();
-        if numer.is_none() {
-            return Err(());
-        }
-        let numer: Result<i64, _> = numer.unwrap().parse();
-        if numer.is_err() {
-            return Err(());
-        }
-        let numer = numer.unwrap();
+        let Some(numer) = split.next() else {
+			return Err(());
+		};
+        let Ok(numer) = numer.parse() else {
+			return Err(());
+		};
 
         // denominator
-        let denom = split.next();
-        if denom.is_none() {
+        let Some(denom) = split.next() else {
             // treat as integer
             return Ok(Self { numer, denom: 1 });
-        }
-        let denom: Result<i64, _> = denom.unwrap().parse();
-        if denom.is_err() {
-            return Err(());
-        }
-        let denom = denom.unwrap();
+        };
+        let Ok(denom) = denom.parse() else {
+			return Err(());
+		};
 
         if split.next().is_some() {
             return Err(());

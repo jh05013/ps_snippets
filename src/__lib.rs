@@ -18,8 +18,8 @@
 //! However, we can't go all the way back to like 1.0 since that would
 //! limit the implementation too much.
 //! 
-//! The MSRV for this crate is **1.61**, mainly because
-//! `oj` requires [stdio handles to have static lifetimes](https://blog.rust-lang.org/2022/05/19/Rust-1.61.0.html#static-handles-for-locked-stdio).
+//! The MSRV for this crate is **1.68**, mainly because of
+//! [let-else statements introduced in 1.65](https://blog.rust-lang.org/2022/11/03/Rust-1.65.0/).
 //! The table of Rust versions (last updated 2025 Jun 1)
 //! is as follows:
 //! 
