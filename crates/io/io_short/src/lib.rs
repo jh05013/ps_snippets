@@ -3,6 +3,7 @@
 use std::{
     fmt::{Debug, Display},
     io::{self, BufWriter, Read, Stdout, Write},
+    str::FromStr,
 };
 
 /// Easy reader/writer utility, but with shorter code
@@ -56,6 +57,13 @@ impl OJ {
 
     pub fn word(&mut self) -> String {
         self.inp.pop().expect("EOF")
+    }
+
+    pub fn vec<T: FromStr>(&mut self, n: usize) -> Vec<T>
+    where
+        <T as FromStr>::Err: Debug,
+    {
+        (0..n).map(|_| self.word().parse().unwrap()).collect()
     }
 
     /// Writes `val` in [`Display`] format.
