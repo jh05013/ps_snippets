@@ -121,4 +121,9 @@ dependencies = [
  "ord_f64",
  "polygon_simple",
  "primality",
+ "sieve",
 ]
+
+[[package]]
+name = "sieve"
+version = "0.1.0"

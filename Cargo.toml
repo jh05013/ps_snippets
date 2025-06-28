@@ -19,8 +19,10 @@ modint = { path = "crates/number/modint" }
 ord_f64 = { path = "crates/number/ord_f64" }
 
 # math
-gcd = { path = "crates/math/gcd" }
 kth_root = { path = "crates/math/kth_root" }
+## number theory
+gcd = { path = "crates/math/gcd" }
+sieve = { path = "crates/math/sieve" }
 
 # prime
 factorization = { path = "crates/prime/factorization" }
