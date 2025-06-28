@@ -35,6 +35,7 @@ ascii = { path = "crates/string/ascii" }
 edge_list = { path = "crates/graph/edge_list" }
 ## distance
 bfs = { path = "crates/graph/bfs" }
+bicolor = { path = "crates/graph/bicolor" }
 dijkstra = { path = "crates/graph/dijkstra" }
 ## flow & matching
 bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
@@ -49,6 +50,8 @@ bit_helper = { path = "crates/misc/bit_helper" }
 calendar = { path = "crates/misc/calendar" }
 lis = { path = "crates/misc/lis" }
 dnc_opt = { path = "crates/misc/dnc_opt" }
+## gadgets, only included for docs. do not directly import.
+gadgets = { path = "crates/misc/gadgets" }
 
 [workspace]
 members = []

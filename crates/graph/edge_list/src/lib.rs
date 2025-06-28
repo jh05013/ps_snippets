@@ -18,7 +18,7 @@
 //! assert_eq!(edge.to, 1);
 //! assert_eq!(edge.content, 8);
 //! let v = graph.neighbors(1).next().unwrap();
-//! assert_eq!(v, 3);
+//! assert_eq!(v, (3, &8));
 //! ```
 
 use std::convert::TryFrom;
@@ -144,15 +144,17 @@ impl<T> Graph<T> {
         })
     }
 
-    /// Returns the neighboring vertices of `v`.
+    /// Returns the neighboring vertices of `v`
+    /// and the contents of the corresponding edges.
     ///
     /// If there are parallel edges, neighbors may appear
     /// more than once. If there are loops, `v` itself may appear.
     ///
     /// ⚠️ Panics if `v >= n`.
     #[inline]
-    pub fn neighbors(&self, v: usize) -> impl Iterator<Item = usize> + '_ {
-        self.edges_from(v).map(|edge| edge.to as usize)
+    pub fn neighbors(&self, v: usize) -> impl Iterator<Item = (usize, &T)> + '_ {
+        self.edges_from(v)
+            .map(|edge| (edge.to as usize, &edge.content))
     }
 }
 

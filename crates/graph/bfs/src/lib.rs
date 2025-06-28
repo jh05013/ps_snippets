@@ -17,7 +17,7 @@ use edge_list::Graph;
 /// not just unweighted graphs. However, the weights
 /// will be ignored as if every weight is 1.
 ///
-/// 🕒 `O(|V(G)| + |E(G)|)`.
+/// 🕒 `O(V+E)`.
 ///
 /// TODO: support multiple starts.
 /// TODO: support path recovery.
@@ -40,7 +40,7 @@ pub fn bfs<T>(graph: &Graph<T>, v: usize) -> Vec<Option<u32>> {
     let mut queue = VecDeque::from([v]);
     while let Some(from) = queue.pop_front() {
         let d = dist[from].unwrap();
-        for to in graph.neighbors(from) {
+        for (to, _) in graph.neighbors(from) {
             if let Some(nd) = dist[to] {
                 if nd <= d + 1 {
                     continue;
