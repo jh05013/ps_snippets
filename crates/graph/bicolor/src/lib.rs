@@ -12,11 +12,11 @@ use edge_list::Graph;
 /// determines whether the graph is bicolorable.
 /// If so, returns the lexicographically first coloring.
 /// Otherwise, returns `None`.
-/// 
+///
 /// 🕒 `O(V+E)`.
-/// 
+///
 /// TODO: generalize by `T`, passing a predicate.
-/// 
+///
 /// TODO: add examples.
 pub fn bicolor_graph(graph: &Graph<bool>) -> Option<Vec<bool>> {
     let mut color = vec![None; graph.vertex_count()];

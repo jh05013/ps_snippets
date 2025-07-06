@@ -2,7 +2,7 @@
 use std::collections::*;
 
 fn main() {
-	let mut oj = io::stdin();
+	let mut oj = io_short::stdin();
 	
 	;
 }
