@@ -88,11 +88,19 @@ name = "kth_root"
 version = "0.1.0"
 
 [[package]]
+name = "lazy_segtree"
+version = "0.1.0"
+
+[[package]]
 name = "lis"
 version = "0.1.0"
 
 [[package]]
 name = "modint"
+version = "0.1.0"
+
+[[package]]
+name = "modpow"
 version = "0.1.0"
 
 [[package]]
@@ -129,14 +137,33 @@ dependencies = [
  "io",
  "io_short",
  "kth_root",
+ "lazy_segtree",
  "lis",
  "modint",
+ "modpow",
  "ord_f64",
  "polygon_simple",
  "primality",
+ "scc",
  "sieve",
+ "two_sat",
+]
+
+[[package]]
+name = "scc"
+version = "0.1.0"
+dependencies = [
+ "edge_list",
 ]
 
 [[package]]
 name = "sieve"
 version = "0.1.0"
+
+[[package]]
+name = "two_sat"
+version = "0.1.0"
+dependencies = [
+ "edge_list",
+ "scc",
+]

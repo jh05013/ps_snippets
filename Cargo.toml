@@ -18,8 +18,12 @@ fraction = { path = "crates/number/fraction" }
 modint = { path = "crates/number/modint" }
 ord_f64 = { path = "crates/number/ord_f64" }
 
+# ds
+lazy_segtree = { path = "crates/ds/lazy_segtree" }
+
 # math
 kth_root = { path = "crates/math/kth_root" }
+modpow = { path = "crates/math/modpow" }
 ## number theory
 gcd = { path = "crates/math/gcd" }
 sieve = { path = "crates/math/sieve" }
@@ -37,6 +41,8 @@ edge_list = { path = "crates/graph/edge_list" }
 bfs = { path = "crates/graph/bfs" }
 bicolor = { path = "crates/graph/bicolor" }
 dijkstra = { path = "crates/graph/dijkstra" }
+## scc
+scc = { path = "crates/graph/scc" }
 ## flow & matching
 bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
 hungarian = { path = "crates/graph/hungarian" }
@@ -50,6 +56,8 @@ bit_helper = { path = "crates/misc/bit_helper" }
 calendar = { path = "crates/misc/calendar" }
 lis = { path = "crates/misc/lis" }
 dnc_opt = { path = "crates/misc/dnc_opt" }
+## logic
+two_sat = { path = "crates/misc/two_sat" }
 ## gadgets, only included for docs. do not directly import.
 gadgets = { path = "crates/misc/gadgets" }
 
