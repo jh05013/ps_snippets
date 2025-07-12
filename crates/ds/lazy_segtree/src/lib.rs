@@ -1,5 +1,5 @@
 //! Segment tree with lazy propagation.
-//! 
+//!
 //! TODO add doc stuff
 
 use std::fmt::Debug;

@@ -1,5 +1,5 @@
 //! Exponentiation by squaring.
-//! 
+//!
 //! TODO add examples
 
 /// Returns `a^b modulo m`.
