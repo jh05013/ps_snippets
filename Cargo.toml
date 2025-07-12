@@ -19,6 +19,8 @@ modint = { path = "crates/number/modint" }
 ord_f64 = { path = "crates/number/ord_f64" }
 
 # ds
+disjoint_set = { path = "crates/ds/disjoint_set" }
+fenwick = { path = "crates/ds/fenwick" }
 lazy_segtree = { path = "crates/ds/lazy_segtree" }
 
 # math

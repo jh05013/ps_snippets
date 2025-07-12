@@ -41,6 +41,10 @@ name = "dijkstra"
 version = "0.1.0"
 
 [[package]]
+name = "disjoint_set"
+version = "0.1.0"
+
+[[package]]
 name = "dnc_opt"
 version = "0.1.0"
 
@@ -55,6 +59,10 @@ dependencies = [
  "gcd",
  "primality",
 ]
+
+[[package]]
+name = "fenwick"
+version = "0.1.0"
 
 [[package]]
 name = "fraction"
@@ -127,9 +135,11 @@ dependencies = [
  "bottleneck_hungarian",
  "calendar",
  "dijkstra",
+ "disjoint_set",
  "dnc_opt",
  "edge_list",
  "factorization",
+ "fenwick",
  "fraction",
  "gadgets",
  "gcd",
