@@ -1,4 +1,52 @@
-//! Explanation
+//! [Fenwick tree](https://en.wikipedia.org/wiki/Fenwick_tree).
+//!
+//! # Usage
+//! A Fenwick tree is defined over a type `V` and an operation `op`
+//! that together form a commutative semigroup:
+//! - **Associativity**: `a op (b op c) = (a op b) op c`
+//! - **Commutativity**: `a op b = b op a`
+//!
+//! Create a new type (likely zero-sized), and implement [`FenwickOp`]
+//! for it. See examples below.
+//!
+//! Furthermore, if the following **cancellativity** holds,
+//! then we can also implement [`InvOp`] that cancels `val` from `cur`.
+//! - `a op b = a op c ==> b = c`
+//!
+//! ## Common Types
+//! Here we collect common operators for Fenwick trees.
+//! Copy and paste at your leisure.
+//! - Integers with addition: already implemented for `i64`, `u64`, etc.
+//! - Integers with maximum
+//! ```ignore
+//! struct MaxI64;
+//! impl FenwickOp for MaxI64 {
+//!     type V = i64;
+//!     fn add(cur: &mut Self::V, val: &Self::V) {
+//!         *cur = (*cur).max(*val);
+//!     }
+//! }
+//! ```
+//!
+//! # Examples
+//! - [LC Point Add Range Sum](https://judge.yosupo.jp/submission/299105)
+//! ```ignore
+//! fn main() {
+//! 	let mut oj = io_short::stdin();
+//!
+//! 	let n = oj.usize();
+//! 	let q = oj.usize();
+//! 	let mut fen = Fenwick::<i64>::from(oj.vec(n));
+//! 	for _ in 0..q {
+//! 		let qty = oj.usize();
+//! 		if qty == 0 { fen.add(oj.usize(), oj.i64()); }
+//! 		else {
+//! 			let ans = fen.sum(oj.usize(), oj.usize()-1);
+//! 			oj.write(ans).ln();
+//! 		}
+//! 	}
+//! }
+//! ```
 
 pub trait FenwickOp {
     type V: Clone;

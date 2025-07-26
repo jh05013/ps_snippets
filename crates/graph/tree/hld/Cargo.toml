@@ -1,0 +1,16 @@
+[package]
+name = "hld"
+version = "0.1.0"
+edition = "2015"
+license = "CC0-1.0"
+
+[dependencies]
+edge_list = { path = "../../edge_list" }
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_panics_doc = "allow" # use ⚠️ instead
+missing_errors_doc = "allow"
+wildcard_imports = "allow" # reduce bytes
+
+nursery = { level = "warn", priority = -1 }

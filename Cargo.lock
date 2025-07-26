@@ -53,6 +53,13 @@ name = "edge_list"
 version = "0.1.0"
 
 [[package]]
+name = "enum_comb"
+version = "0.1.0"
+dependencies = [
+ "modint",
+]
+
+[[package]]
 name = "factorization"
 version = "0.1.0"
 dependencies = [
@@ -78,6 +85,13 @@ version = "0.1.0"
 [[package]]
 name = "gcd"
 version = "0.1.0"
+
+[[package]]
+name = "hld"
+version = "0.1.0"
+dependencies = [
+ "edge_list",
+]
 
 [[package]]
 name = "hungarian"
@@ -138,11 +152,13 @@ dependencies = [
  "disjoint_set",
  "dnc_opt",
  "edge_list",
+ "enum_comb",
  "factorization",
  "fenwick",
  "fraction",
  "gadgets",
  "gcd",
+ "hld",
  "hungarian",
  "io",
  "io_short",
@@ -156,6 +172,7 @@ dependencies = [
  "primality",
  "scc",
  "sieve",
+ "tree_compress",
  "two_sat",
 ]
 
@@ -169,6 +186,14 @@ dependencies = [
 [[package]]
 name = "sieve"
 version = "0.1.0"
+
+[[package]]
+name = "tree_compress"
+version = "0.1.0"
+dependencies = [
+ "edge_list",
+ "hld",
+]
 
 [[package]]
 name = "two_sat"

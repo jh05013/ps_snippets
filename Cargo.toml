@@ -29,6 +29,8 @@ modpow = { path = "crates/math/modpow" }
 ## number theory
 gcd = { path = "crates/math/gcd" }
 sieve = { path = "crates/math/sieve" }
+## combinatorics
+enum_comb = { path = "crates/math/enum_comb" }
 
 # prime
 factorization = { path = "crates/prime/factorization" }
@@ -48,6 +50,9 @@ scc = { path = "crates/graph/scc" }
 ## flow & matching
 bottleneck_hungarian = { path = "crates/graph/bottleneck_hungarian" }
 hungarian = { path = "crates/graph/hungarian" }
+## tree
+hld = { path = "crates/graph/tree/hld" }
+tree_compress = { path = "crates/graph/tree/compress" }
 
 # geometry (simple)
 polygon_simple = { path = "crates/geom_simple/polygon_simple" }
