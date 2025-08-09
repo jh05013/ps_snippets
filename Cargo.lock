@@ -114,8 +114,19 @@ name = "lazy_segtree"
 version = "0.1.0"
 
 [[package]]
+name = "lazy_segtree_dyn"
+version = "0.1.0"
+
+[[package]]
 name = "lis"
 version = "0.1.0"
+
+[[package]]
+name = "modfact"
+version = "0.1.0"
+dependencies = [
+ "modint",
+]
 
 [[package]]
 name = "modint"
@@ -164,7 +175,9 @@ dependencies = [
  "io_short",
  "kth_root",
  "lazy_segtree",
+ "lazy_segtree_dyn",
  "lis",
+ "modfact",
  "modint",
  "modpow",
  "ord_f64",
@@ -172,6 +185,7 @@ dependencies = [
  "primality",
  "scc",
  "sieve",
+ "toposort",
  "tree_compress",
  "two_sat",
 ]
@@ -186,6 +200,13 @@ dependencies = [
 [[package]]
 name = "sieve"
 version = "0.1.0"
+
+[[package]]
+name = "toposort"
+version = "0.1.0"
+dependencies = [
+ "edge_list",
+]
 
 [[package]]
 name = "tree_compress"
