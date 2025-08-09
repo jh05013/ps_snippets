@@ -1,0 +1,18 @@
+[package]
+name = "modfact"
+version = "0.1.0"
+edition = "2015"
+license = "CC0-1.0"
+
+[dependencies]
+modint = { path = "../modint" }
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_panics_doc = "allow" # use ⚠️ instead
+missing_errors_doc = "allow"
+wildcard_imports = "allow" # reduce bytes
+cast_possible_truncation = "allow"
+cast_lossless = "allow"
+
+nursery = { level = "warn", priority = -1 }
